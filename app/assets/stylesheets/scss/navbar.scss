@@ -1,0 +1,10 @@
+@import "variables";
+$navbar-height: 50px;
+$navbar-margin-bottom: 10px;
+
+.navbar {
+  position: relative;
+  min-height: $navbar-height;
+  margin-bottom: $navbar-margin-bottom;
+  border: 1px solid transparent;
+}
