@@ -15,7 +15,11 @@ var AppComponent = (function () {
     AppComponent = __decorate([
         core_1.Component({
             selector: 'my-app',
-            template: '<h1>Hello World</h1>'
+            template: "\n  <div>\n    <!-- Navigation Bar -->\n    <navbar class=navbar>\n      <ul>\n        <!-- test logo. replace with proair logo\u0095\u0095\u0095 -->\n        <a href=\"/\">\n          <img src=\"http://whitelions.org/wp-content/uploads/2013/08/1-Info-icon-logo-50x50.png\" alt=\"Proair\">\n        </a>\n        <li><a href=\"#Careers\">Careers</a></li>\n        <li><a href=\"#ContactUs\">Contact</a></li>\n        <li><a href=\"#Services\">Services</a></li>\n        <li><a href=\"#About\">About</a></li>\n        <li><a href=\"#Home\">Home</a></li>\n      </ul>\n    </navbar>\n  </div>\n  <div>\n    <!-- Main Body -->\n    <!-- Banner -->\n    <banner class=banner>\n      <img src=\"http://www.9newz.com/wp-content/uploads/2011/02/freedom.jpg\" alt=\"Proair Sdn Bhd\">\n    </banner>\n  </div>\n  ",
+            styleUrls: [
+                'app/assets/stylesheets/css/navbar.css',
+                'app/assets/stylesheets/css/banner.css'
+            ]
         }), 
         __metadata('design:paramtypes', [])
     ], AppComponent);
