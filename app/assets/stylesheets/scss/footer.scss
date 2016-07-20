@@ -1,0 +1,13 @@
+@import "variables";
+
+.footer {
+  font-family: $font-main;
+  ul {
+    background-color: $color-proairblue;
+    li {
+      font-size: 13px;
+
+			padding: 25px 25px;
+    }
+  }
+}

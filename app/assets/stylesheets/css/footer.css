@@ -7,5 +7,12 @@
 /*------------------*/
 /*----- SIZES  -----*/
 /*------------------*/
+.footer {
+  font-family: "Muli", sans-serif; }
+  .footer ul {
+    background-color: #363DA7; }
+    .footer ul li {
+      font-size: 13px;
+      padding: 25px 25px; }
 
-/*# sourceMappingURL=main.css.map */
+/*# sourceMappingURL=footer.css.map */
