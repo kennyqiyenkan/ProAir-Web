@@ -3,7 +3,6 @@ import { Component } from '@angular/core';
   selector: 'my-app',
   template:
   `
-
   <div>
     <!-- Navigation Bar -->
     <navbar class=navbar id="navBar">
@@ -16,61 +15,86 @@ import { Component } from '@angular/core';
         <li><a href="#ContactUs">Contact</a></li>
         <li><a href="#Services">Services</a></li>
         <li><a href="#About">About</a></li>
-        <li><a href="#Home">Home</a></li>
         <li class=icon>
           <a href="javascript:void(0);" style="font-size:15px;" onclick="myFunction()">☰</a>
         </li>
       </ul>
     </navbar>
-
   </div>
   <div>
     <section class="module parallax parallax-1">
       <div class="container">
-        <h1>Serene</h1>
-      </div>
-      </section>
-
-      <section class="module content">
-      <div class="container">
-        <h2>Lorem Ipsum Dolor</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-      </div>
-      </section>
-
-      <section class="module parallax parallax-2">
-      <div class="container">
-        <h1>Rise</h1>
-      </div>
-      </section>
-
-      <section class="module content">
-      <div class="container">
-        <h2>Lorem Ipsum Dolor</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-      </div>
-    </section>
-
-    <section class="module parallax parallax-3">
-      <div class="container">
-        <h1>Calm</h1>
+        <h1>Proair</h1>
       </div>
     </section>
 
     <section class="module content">
       <div class="container">
-        <h2>Lorem Ipsum Dolor</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+        <h2>We Settle All Your Marine HVAC Needs</h2>
+        <p>Company introduction here. Please get contents from a file</p>
+      </div>
+    </section>
+
+    <section class="module parallax parallax-2">
+      <div class="container">
+        <h1>About</h1>
+      </div>
+    </section>
+
+    <section class="module content">
+      <div class="container">
+        <h2>Who We Are</h2>
+        <p>Information about the company here. Please get contents from a file</p>
+      </div>
+    </section>
+
+    <section class="module parallax parallax-3">
+      <div class="container">
+        <h1>Services</h1>
+      </div>
+    </section>
+
+    <section class="module content">
+      <div class="container">
+        <h2>What We Do</h2>
+        <p>List of services here. Please get contents from a file</p>
+      </div>
+    </section>
+
+    <section class="module parallax parallax-3">
+      <div class="container">
+        <h1>Contact</h1>
+      </div>
+    </section>
+
+    <section class="module content">
+      <div class="container">
+        <h2>Where We Are</h2>
+        <p>Contact information here. Please get contents from a file</p>
+      </div>
+    </section>
+
+    <section class="module parallax parallax-3">
+      <div class="container">
+        <h1>Careers</h1>
+      </div>
+    </section>
+
+    <section class="module content">
+      <div class="container">
+        <h2>Want To Work Here?</h2>
+        <p>List of openings here. Please get contents from a file</p>
       </div>
     </section>
   </div>
   <div>
 
     <!-- Main Body -->
-    <!-- Banner -->
+    <!-- Banner
     <banner class=banner>
       <img src="http://www.9newz.com/wp-content/uploads/2011/02/freedom.jpg" alt="Proair Sdn Bhd">
     </banner>
+    -->
   </div>
 
 
@@ -83,12 +107,5 @@ import { Component } from '@angular/core';
     ]
 })
 export class AppComponent {
-  myFunction() {
-    var x = document.getElementById("navBar");
-    if (x.className === "navbar") {
-      x.className += " responsive";
-    } else {
-        x.className = "navbar";
-    }
-  }
+
 }

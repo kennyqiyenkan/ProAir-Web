@@ -13,7 +13,7 @@ section.module {
 		margin-bottom: 0;
 	}
 	h2 {
-		margin-bottom: 40px;
+    margin-bottom: 40px;
 		font-size: 30px;
 	}
 	p {
@@ -35,14 +35,18 @@ section.module.parallax {
 	background-attachment: fixed;
 	background-size: cover;
 	h1 {
-		color: rgba(255, 255, 255, 0.8);
-		font-size: 48px;
+    font-family: $font-title;
+		color: $color-proairblue;//rgba(255, 255, 255, 0.8);
+    opacity: 0.8;
+    font-size: 48px;
 		line-height: 600px;
 		font-weight: 700;
 		text-align: center;
 		text-transform: uppercase;
 		text-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-	}
+  }
+
+
 }
 section.module.parallax-1 {
 	background-image: url("app/assets/images/parallex1test.jpg");

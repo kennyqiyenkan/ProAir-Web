@@ -37,7 +37,9 @@ section.module.parallax {
   background-attachment: fixed;
   background-size: cover; }
   section.module.parallax h1 {
-    color: rgba(255, 255, 255, 0.8);
+    font-family: "Raleway", sans-serif;
+    color: #363DA7;
+    opacity: 0.8;
     font-size: 48px;
     line-height: 600px;
     font-weight: 700;
