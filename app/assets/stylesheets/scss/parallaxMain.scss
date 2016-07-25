@@ -2,60 +2,71 @@
 
 .container {
 	max-width: 960px;
-	margin: 0 auto;
 }
 
 section.module {
   font-family: $font-main;
-  margin: -10px;
-  padding: -10px;
-	&:last-child {
+  text-align: center;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &:last-child {
 		margin-bottom: 0;
 	}
 	h2 {
-    margin-bottom: 40px;
-		font-size: 30px;
+    padding: 25px;
+    font-size: 30px;
 	}
 	p {
-		margin-bottom: 40px;
+    padding: 25px;
+    margin-bottom: 40px;
 		font-size: 16px;
-		font-weight: 300;
 		&:last-child {
 			margin-bottom: 0;
 		}
 	}
 }
+
 section.module.content {
-	padding: 40px 0;
+	padding: 50px 0;
+  background: $color-white;
 }
+
 section.module.parallax {
-	height: 600px;
+  height: 400px;
 	background-position: 50% 50%;
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 	background-size: cover;
-	h1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  h1 {
     font-family: $font-title;
-		color: $color-proairblue;//rgba(255, 255, 255, 0.8);
-    opacity: 0.8;
+		color: rgba(255, 255, 255, 0.8);
     font-size: 48px;
-		line-height: 600px;
-		font-weight: 700;
-		text-align: center;
 		text-transform: uppercase;
 		text-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   }
-
-
 }
 section.module.parallax-1 {
-	background-image: url("app/assets/images/parallex1test.jpg");
+  background-image: linear-gradient(
+                     rgba(20,20,20, .3),
+                     rgba(20,20,20, .3)),
+                     url($folder-images + "parallex1test.jpg");
 }
 section.module.parallax-2 {
-	background-image: url("app/assets/images/parallex2test.jpg");
+  background-image: linear-gradient(
+                     rgba(20,20,20, .3),
+                     rgba(20,20,20, .3)),
+                     url($folder-images + "parallex2test.jpg");
 }
 section.module.parallax-3 {
-	background-image: url("app/assets/images/parallex3test.png");
+  background-image: linear-gradient(
+                     rgba(20,20,20, .3),
+                     rgba(20,20,20, .3)),
+                     url($folder-images + "parallex3test.png");
 }
 @media all and (min-width: 600px) {
 	section.module {
@@ -67,6 +78,7 @@ section.module.parallax-3 {
 		}
 	}
 	section.module.parallax {
+    height: 450px;
 		h1 {
 			font-size: 96px;
 		}
@@ -74,6 +86,7 @@ section.module.parallax-3 {
 }
 @media all and (min-width: 960px) {
 	section.module.parallax {
+    height: 500px;
 		h1 {
 			font-size: 160px;
 		}
