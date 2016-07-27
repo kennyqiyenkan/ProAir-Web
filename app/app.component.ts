@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-//import {SimplePageScroll} from 'ng2-simple-page-scroll';
 @Component({
   selector: 'my-app',
   template:
@@ -12,7 +11,7 @@ import { Component } from '@angular/core';
           <img src="http://whitelions.org/wp-content/uploads/2013/08/1-Info-icon-logo-50x50.png" alt="Proair">
         </a>
         <li *ngIf="!isMobileSizedWidth"><a href="#Careers">Careers</a></li>
-        <li *ngIf="!isMobileSizedWidth"><a href="#ContactUs">Contact</a></li>
+        <li *ngIf="!isMobileSizedWidth"><a href="#Contact">Contact</a></li>
         <li *ngIf="!isMobileSizedWidth"><a href="#Services">Services</a></li>
         <li *ngIf="!isMobileSizedWidth"><a href="#About">About</a></li>
         <li *ngIf="isMobileSizedWidth"><button (click)="toggleMenu($event)">☰</button></li>
@@ -24,14 +23,14 @@ import { Component } from '@angular/core';
       <ul>
         <li><a href="#About">About</a></li>
         <li><a href="#Services">Services</a></li>
-        <li><a href="#ContactUs">Contact</a></li>
+        <li><a href="#Contact">Contact</a></li>
         <li><a href="#Careers">Careers</a></li>
       </ul>
     </navMenu>
   </div>
    <!-- Parallax Body -->
-  <div style="margin-top:50px;">
-    <section class="module parallax parallax-1" name="Home">
+  <div style="margin-top:50px;" id="Home">
+    <section class="module parallax parallax-1">
       <div class="container">
         <h1>Proair</h1>
       </div>
@@ -44,7 +43,7 @@ import { Component } from '@angular/core';
       </div>
     </section>
 
-    <section class="module parallax parallax-2" name="About">
+    <section class="module parallax parallax-2" id="About">
       <div class="container">
         <h1>About</h1>
       </div>
@@ -57,7 +56,7 @@ import { Component } from '@angular/core';
       </div>
     </section>
 
-    <section class="module parallax parallax-3" name="Services">
+    <section class="module parallax parallax-3" id="Services">
       <div class="container">
         <h1>Services</h1>
       </div>
@@ -70,7 +69,7 @@ import { Component } from '@angular/core';
       </div>
     </section>
 
-    <section class="module parallax parallax-3" name="Contact">
+    <section class="module parallax parallax-3" id="Contact">
       <div class="container">
         <h1>Contact</h1>
       </div>
@@ -83,7 +82,7 @@ import { Component } from '@angular/core';
       </div>
     </section>
 
-    <section class="module parallax parallax-3" name="Careers">
+    <section class="module parallax parallax-3" id="Careers">
       <div class="container">
         <h1>Careers</h1>
       </div>
@@ -109,8 +108,6 @@ import { Component } from '@angular/core';
         'app/assets/stylesheets/css/parallaxMain.css',
         'app/assets/stylesheets/css/footer.css'
     ]
-  // ,
-  // directives: [SimplePageScroll]
 })
 export class AppComponent{
   private isMobileSizedWidth = true;
