@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 @Component({
   selector: 'my-app',
   template:
@@ -7,7 +8,7 @@ import { Component } from '@angular/core';
     <navbar class=navbar id="navBar">
       <ul>
         <!-- test logo. replace with proair logo -->
-        <a href="/">
+        <a href="#Home">
           <img src="http://whitelions.org/wp-content/uploads/2013/08/1-Info-icon-logo-50x50.png" alt="Proair">
         </a>
         <li *ngIf="!isMobileSizedWidth"><a href="#Careers">Careers</a></li>
@@ -20,7 +21,7 @@ import { Component } from '@angular/core';
   </div>
 
   <div style="margin-top:-20px;">
-    <section class="module parallax parallax-1" id="sectionHome">
+    <section class="module parallax parallax-1" name="Home">
       <div class="container">
         <h1>Proair</h1>
       </div>
@@ -33,7 +34,7 @@ import { Component } from '@angular/core';
       </div>
     </section>
 
-    <section class="module parallax parallax-2" id="sectionAbout">
+    <section class="module parallax parallax-2" name="About">
       <div class="container">
         <h1>About</h1>
       </div>
@@ -46,7 +47,7 @@ import { Component } from '@angular/core';
       </div>
     </section>
 
-    <section class="module parallax parallax-3" id="sectionServices">
+    <section class="module parallax parallax-3" name="Services">
       <div class="container">
         <h1>Services</h1>
       </div>
@@ -59,7 +60,7 @@ import { Component } from '@angular/core';
       </div>
     </section>
 
-    <section class="module parallax parallax-3" id="sectionContact">
+    <section class="module parallax parallax-3" name="Contact">
       <div class="container">
         <h1>Contact</h1>
       </div>
@@ -72,7 +73,7 @@ import { Component } from '@angular/core';
       </div>
     </section>
 
-    <section class="module parallax parallax-3" id="sectionCareers">
+    <section class="module parallax parallax-3" name="Careers">
       <div class="container">
         <h1>Careers</h1>
       </div>
@@ -93,12 +94,12 @@ import { Component } from '@angular/core';
   `
   ,
   styleUrls: [
-        'app/assets/stylesheets/css/navbar.css'
-        'app/assets/stylesheets/css/parallaxMain.css'
+        'app/assets/stylesheets/css/navbar.css',
+        'app/assets/stylesheets/css/parallaxMain.css',
         'app/assets/stylesheets/css/footer.css'
     ]
 })
-export class AppComponent implements OnInit{
+export class AppComponent{
   private isMobileSizedWidth = true;
 
   ngOnInit()
