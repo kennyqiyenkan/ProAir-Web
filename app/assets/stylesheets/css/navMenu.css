@@ -10,34 +10,26 @@
 /*------------------*/
 /*----- SIZES  -----*/
 /*------------------*/
-.navbar {
+.navMenu {
   font-family: "Muli", sans-serif;
   position: fixed;
-  width: 100%;
-  z-index: 150; }
-  .navbar ul {
+  right: 0;
+  z-index: 151; }
+  .navMenu ul {
     padding: 0;
-    margin-top: -50px;
-    height: 70px;
+    margin-right: 0;
     list-style: none;
     overflow: hidden;
     background-color: #333;
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.4); }
-    .navbar ul img {
-      float: left;
-      padding: 12px;
-      max-width: 45px;
-      max-height: 45px; }
-    .navbar ul li {
-      float: right;
-      padding: 25px 25px;
+    .navMenu ul li {
+      padding: 10px 40px;
       display: flex;
       align-items: center;
       justify-content: center; }
-      .navbar ul li a {
-        padding-top: 3px;
+      .navMenu ul li a {
         position: relative;
-        display: inline-block;
+        display: block;
         color: #ffffff;
         text-align: center;
         opacity: 0.8;
@@ -45,7 +37,7 @@
         font-size: 16px;
         -webkit-transition: all 0.3s ease-in-out 0s;
         transition: all 0.3s ease-in-out 0s; }
-        .navbar ul li a:before {
+        .navMenu ul li a:before {
           content: "";
           position: absolute;
           width: 100%;
@@ -58,13 +50,13 @@
           transform: scaleX(0);
           -webkit-transition: all 0.3s ease-in-out 0s;
           transition: all 0.3s ease-in-out 0s; }
-        .navbar ul li a:hover:before {
+        .navMenu ul li a:hover:before {
           visibility: visible;
           -webkit-transform: scaleX(1);
           transform: scaleX(1); }
-        .navbar ul li a:hover {
+        .navMenu ul li a:hover {
           opacity: 1.0; }
-      .navbar ul li button {
+      .navMenu ul li button {
         background: transparent;
         color: #ffffff;
         font-size: 16px;
@@ -73,9 +65,9 @@
         text-decoration: none;
         display: inline-block;
         cursor: pointer; }
-      .navbar ul li:last-child {
+      .navMenu ul li:last-child {
         border-left: none; }
-      .navbar ul li .icon {
+      .navMenu ul li .icon {
         display: none; }
 
-/*# sourceMappingURL=navbar.css.map */
+/*# sourceMappingURL=navMenu.css.map */

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+//import {SimplePageScroll} from 'ng2-simple-page-scroll';
 @Component({
   selector: 'my-app',
   template:
@@ -15,12 +15,22 @@ import { Component } from '@angular/core';
         <li *ngIf="!isMobileSizedWidth"><a href="#ContactUs">Contact</a></li>
         <li *ngIf="!isMobileSizedWidth"><a href="#Services">Services</a></li>
         <li *ngIf="!isMobileSizedWidth"><a href="#About">About</a></li>
-        <li *ngIf="isMobileSizedWidth"><button>☰</button></li>
+        <li *ngIf="isMobileSizedWidth"><button (click)="toggleMenu($event)">☰</button></li>
       </ul>
     </navbar>
   </div>
-
-  <div style="margin-top:-20px;">
+  <div *ngIf="isMenuShown" (window:scroll)="dismissMenu($event)"> <!-- Navigation Menu Dropdown -->
+    <navMenu class=navMenu>
+      <ul>
+        <li><a href="#About">About</a></li>
+        <li><a href="#Services">Services</a></li>
+        <li><a href="#ContactUs">Contact</a></li>
+        <li><a href="#Careers">Careers</a></li>
+      </ul>
+    </navMenu>
+  </div>
+   <!-- Parallax Body -->
+  <div style="margin-top:50px;">
     <section class="module parallax parallax-1" name="Home">
       <div class="container">
         <h1>Proair</h1>
@@ -95,26 +105,39 @@ import { Component } from '@angular/core';
   ,
   styleUrls: [
         'app/assets/stylesheets/css/navbar.css',
+        'app/assets/stylesheets/css/navMenu.css',
         'app/assets/stylesheets/css/parallaxMain.css',
         'app/assets/stylesheets/css/footer.css'
     ]
+  // ,
+  // directives: [SimplePageScroll]
 })
 export class AppComponent{
   private isMobileSizedWidth = true;
-
+  private isMenuShown = false;
   ngOnInit()
   {
-    this.isMobileSizedWidth = this.checkMobileSized();
+    this.isMobileSizedWidth = this.checkIfMobileSized();
   }
 
   onResize()
   {
-    this.isMobileSizedWidth = this.checkMobileSized();
+    this.isMobileSizedWidth = this.checkIfMobileSized();
   }
 
-  checkMobileSized()
+  checkIfMobileSized()
   {
     if(window.innerWidth <= 680) { return true; }
     else{ return false; }
+  }
+
+  toggleMenu()
+  {
+    this.isMenuShown = !(this.isMenuShown);
+  }
+
+  dismissMenu()
+  {
+    if(this.isMenuShown == true) { this.isMenuShown = false; }
   }
 }
