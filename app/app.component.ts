@@ -36,7 +36,7 @@ import './rxjs-operators';
     <section class="module parallax parallax-1">
       <div class="container">
         <img src={{logoSource}} alt="Proair">
-        <!--<h1>Proair</h1>-->
+        <h1 style="margin:5px;">Proair</h1>
       </div>
     </section>
 
