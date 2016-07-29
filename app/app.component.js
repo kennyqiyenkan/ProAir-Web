@@ -9,13 +9,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var app_service_1 = require("./app.service");
+require('./rxjs-operators');
 var AppComponent = (function () {
-    function AppComponent() {
+    function AppComponent(appService) {
+        this.appService = appService;
+        this.logoSource = "app/assets/images/proairlogo.png";
         this.isMobileSizedWidth = true;
         this.isMenuShown = false;
     }
     AppComponent.prototype.ngOnInit = function () {
         this.isMobileSizedWidth = this.checkIfMobileSized();
+        this.getAllContent();
     };
     AppComponent.prototype.onResize = function () {
         this.isMobileSizedWidth = this.checkIfMobileSized();
@@ -36,18 +41,51 @@ var AppComponent = (function () {
             this.isMenuShown = false;
         }
     };
+    AppComponent.prototype.getAllContent = function () {
+        this.getHomeContent();
+        this.getAboutContent();
+        this.getServicesContent();
+        this.getContactContent();
+        this.getCareersContent();
+    };
+    AppComponent.prototype.getHomeContent = function () {
+        var _this = this;
+        this.appService.getHomeContent()
+            .subscribe(function (content) { return _this.contentHome = content; }, function (error) { return console.log("app.component:getHomeContent() - \n" + error); });
+    };
+    AppComponent.prototype.getAboutContent = function () {
+        var _this = this;
+        this.appService.getAboutContent()
+            .subscribe(function (content) { return _this.contentAbout = content; }, function (error) { return console.log("app.component:getAboutContent() - \n" + error); });
+    };
+    AppComponent.prototype.getServicesContent = function () {
+        var _this = this;
+        this.appService.getServicesContent()
+            .subscribe(function (content) { return _this.contentServices = content; }, function (error) { return console.log("app.component:getServicesContent() - \n" + error); });
+    };
+    AppComponent.prototype.getContactContent = function () {
+        var _this = this;
+        this.appService.getContactContent()
+            .subscribe(function (content) { return _this.contentContact = content; }, function (error) { return console.log("app.component:getContactContent() - \n" + error); });
+    };
+    AppComponent.prototype.getCareersContent = function () {
+        var _this = this;
+        this.appService.getCareersContent()
+            .subscribe(function (content) { return _this.contentCareers = content; }, function (error) { return console.log("app.component:getCareersContent() - \n" + error); });
+    };
     AppComponent = __decorate([
         core_1.Component({
             selector: 'my-app',
-            template: "\n  <div (window:resize)=\"onResize($event)\"> <!-- Navigation Bar -->\n    <navbar class=navbar id=\"navBar\">\n      <ul>\n        <!-- test logo. replace with proair logo\u0095\u0095\u0095 -->\n        <a href=\"#Home\">\n          <img src=\"http://whitelions.org/wp-content/uploads/2013/08/1-Info-icon-logo-50x50.png\" alt=\"Proair\">\n        </a>\n        <li *ngIf=\"!isMobileSizedWidth\"><a href=\"#Careers\">Careers</a></li>\n        <li *ngIf=\"!isMobileSizedWidth\"><a href=\"#Contact\">Contact</a></li>\n        <li *ngIf=\"!isMobileSizedWidth\"><a href=\"#Services\">Services</a></li>\n        <li *ngIf=\"!isMobileSizedWidth\"><a href=\"#About\">About</a></li>\n        <li *ngIf=\"isMobileSizedWidth\"><button (click)=\"toggleMenu($event)\">\u2630</button></li>\n      </ul>\n    </navbar>\n  </div>\n  <div *ngIf=\"isMenuShown\" (window:scroll)=\"dismissMenu($event)\"> <!-- Navigation Menu Dropdown -->\n    <navMenu class=navMenu>\n      <ul>\n        <li><a href=\"#About\">About</a></li>\n        <li><a href=\"#Services\">Services</a></li>\n        <li><a href=\"#Contact\">Contact</a></li>\n        <li><a href=\"#Careers\">Careers</a></li>\n      </ul>\n    </navMenu>\n  </div>\n   <!-- Parallax Body -->\n  <div style=\"margin-top:50px;\" id=\"Home\">\n    <section class=\"module parallax parallax-1\">\n      <div class=\"container\">\n        <h1>Proair</h1>\n      </div>\n    </section>\n\n    <section class=\"module content\">\n      <div class=\"container\">\n        <h2>We Settle All Your Marine HVAC Needs</h2>\n        <p>Company introduction here. Please get contents from a file</p>\n      </div>\n    </section>\n\n    <section class=\"module parallax parallax-2\" id=\"About\">\n      <div class=\"container\">\n        <h1>About</h1>\n      </div>\n    </section>\n\n    <section class=\"module content\">\n      <div class=\"container\">\n        <h2>Who We Are</h2>\n        <p>Information about the company here. Please get contents from a file</p>\n      </div>\n    </section>\n\n    <section class=\"module parallax parallax-3\" id=\"Services\">\n      <div class=\"container\">\n        <h1>Services</h1>\n      </div>\n    </section>\n\n    <section class=\"module content\">\n      <div class=\"container\">\n        <h2>What We Do</h2>\n        <p>List of services here. Please get contents from a file</p>\n      </div>\n    </section>\n\n    <section class=\"module parallax parallax-3\" id=\"Contact\">\n      <div class=\"container\">\n        <h1>Contact</h1>\n      </div>\n    </section>\n\n    <section class=\"module content\">\n      <div class=\"container\">\n        <h2>Where We Are</h2>\n        <p>Contact information here. Please get contents from a file</p>\n      </div>\n    </section>\n\n    <section class=\"module parallax parallax-3\" id=\"Careers\">\n      <div class=\"container\">\n        <h1>Careers</h1>\n      </div>\n    </section>\n\n    <section class=\"module content\">\n      <div class=\"container\">\n        <h2>Want To Work Here?</h2>\n        <p>List of openings here. Please get contents from a file</p>\n      </div>\n    </section>\n  </div>\n  <div>\n    <footer class=\"footer\">\n      <p>Proair Sdn. Bhd.</p>\n    </footer>\n  </div>\n  ",
+            template: "\n  <div (window:resize)=\"onResize($event)\"> <!-- Navigation Bar -->\n    <navbar class=navbar id=\"navBar\">\n      <ul>\n        <!-- test logo. replace with proair logo\u0095\u0095\u0095 -->\n        <a href=\"#Home\">\n          <img src={{logoSource}} alt=\"Proair\">\n        </a>\n        <li *ngIf=\"!isMobileSizedWidth\"><a href=\"#Careers\">Careers</a></li>\n        <li *ngIf=\"!isMobileSizedWidth\"><a href=\"#Contact\">Contact</a></li>\n        <li *ngIf=\"!isMobileSizedWidth\"><a href=\"#Services\">Services</a></li>\n        <li *ngIf=\"!isMobileSizedWidth\"><a href=\"#About\">About</a></li>\n        <li *ngIf=\"isMobileSizedWidth\"><button (click)=\"toggleMenu($event)\">\u2630</button></li>\n      </ul>\n    </navbar>\n  </div>\n  <div *ngIf=\"isMenuShown\" (window:scroll)=\"dismissMenu($event)\"> <!-- Navigation Menu Dropdown -->\n    <navMenu class=navMenu>\n      <ul>\n        <li><a href=\"#About\">About</a></li>\n        <li><a href=\"#Services\">Services</a></li>\n        <li><a href=\"#Contact\">Contact</a></li>\n        <li><a href=\"#Careers\">Careers</a></li>\n      </ul>\n    </navMenu>\n  </div>\n   <!-- Parallax Body -->\n  <div style=\"margin-top:50px;\" id=\"Home\">\n    <section class=\"module parallax parallax-1\">\n      <div class=\"container\">\n        <img src={{logoSource}} alt=\"Proair\">\n        <!--<h1>Proair</h1>-->\n      </div>\n    </section>\n\n    <section class=\"module content\">\n      <div class=\"container\">\n        <h2>{{contentHome?.title}}</h2>\n        <p>{{contentHome?.content}}</p>\n      </div>\n    </section>\n\n    <section class=\"module parallax parallax-2\" id=\"About\">\n      <div class=\"container\">\n        <h1>About</h1>\n      </div>\n    </section>\n\n    <section class=\"module content\">\n      <div class=\"container\">\n        <h2>{{contentAbout?.title}}</h2>\n        <p>{{contentAbout?.content}}</p>\n      </div>\n    </section>\n\n    <section class=\"module parallax parallax-3\" id=\"Services\">\n      <div class=\"container\">\n        <h1>Services</h1>\n      </div>\n    </section>\n\n    <section class=\"module content\">\n      <div class=\"container\">\n        <h2>{{contentServices?.title}}</h2>\n        <p>{{contentServices?.content}}</p>\n      </div>\n    </section>\n\n    <section class=\"module parallax parallax-3\" id=\"Contact\">\n      <div class=\"container\">\n        <h1>Contact</h1>\n      </div>\n    </section>\n\n    <section class=\"module content\">\n      <div class=\"container\">\n        <h2>{{contentContact?.title}}</h2>\n        <p>{{contentContact?.content}}</p>\n      </div>\n    </section>\n\n    <section class=\"module parallax parallax-3\" id=\"Careers\">\n      <div class=\"container\">\n        <h1>Careers</h1>\n      </div>\n    </section>\n\n    <section class=\"module content\">\n      <div class=\"container\">\n        <h2>{{contentCareers?.title}}</h2>\n        <p>{{contentCareers?.content}}</p>\n      </div>\n    </section>\n  </div>\n  <div>\n    <footer class=\"footer\">\n      <p>Proair Sdn. Bhd.</p>\n    </footer>\n  </div>\n  ",
             styleUrls: [
                 'app/assets/stylesheets/css/navbar.css',
                 'app/assets/stylesheets/css/navMenu.css',
                 'app/assets/stylesheets/css/parallaxMain.css',
                 'app/assets/stylesheets/css/footer.css'
-            ]
+            ],
+            providers: [app_service_1.AppService]
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [app_service_1.AppService])
     ], AppComponent);
     return AppComponent;
 }());

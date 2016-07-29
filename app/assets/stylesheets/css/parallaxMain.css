@@ -52,6 +52,9 @@ section.module.parallax {
     font-size: 48px;
     text-transform: uppercase;
     text-shadow: 0 0 10px rgba(0, 0, 0, 0.2); }
+  section.module.parallax img {
+    max-width: 200px;
+    max-height: 200px; }
 
 section.module.parallax-1 {
   background-image: linear-gradient(rgba(20, 20, 20, 0.3), rgba(20, 20, 20, 0.3)), url("app/assets/images/parallex1test.jpg"); }

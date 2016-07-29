@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { AppService } from "./app.service";
+import './rxjs-operators';
+
 @Component({
   selector: 'my-app',
   template:
@@ -8,7 +11,7 @@ import { Component } from '@angular/core';
       <ul>
         <!-- test logo. replace with proair logo -->
         <a href="#Home">
-          <img src="http://whitelions.org/wp-content/uploads/2013/08/1-Info-icon-logo-50x50.png" alt="Proair">
+          <img src={{logoSource}} alt="Proair">
         </a>
         <li *ngIf="!isMobileSizedWidth"><a href="#Careers">Careers</a></li>
         <li *ngIf="!isMobileSizedWidth"><a href="#Contact">Contact</a></li>
@@ -32,14 +35,15 @@ import { Component } from '@angular/core';
   <div style="margin-top:50px;" id="Home">
     <section class="module parallax parallax-1">
       <div class="container">
-        <h1>Proair</h1>
+        <img src={{logoSource}} alt="Proair">
+        <!--<h1>Proair</h1>-->
       </div>
     </section>
 
     <section class="module content">
       <div class="container">
-        <h2>We Settle All Your Marine HVAC Needs</h2>
-        <p>Company introduction here. Please get contents from a file</p>
+        <h2>{{contentHome?.title}}</h2>
+        <p>{{contentHome?.content}}</p>
       </div>
     </section>
 
@@ -51,8 +55,8 @@ import { Component } from '@angular/core';
 
     <section class="module content">
       <div class="container">
-        <h2>Who We Are</h2>
-        <p>Information about the company here. Please get contents from a file</p>
+        <h2>{{contentAbout?.title}}</h2>
+        <p>{{contentAbout?.content}}</p>
       </div>
     </section>
 
@@ -64,8 +68,8 @@ import { Component } from '@angular/core';
 
     <section class="module content">
       <div class="container">
-        <h2>What We Do</h2>
-        <p>List of services here. Please get contents from a file</p>
+        <h2>{{contentServices?.title}}</h2>
+        <p>{{contentServices?.content}}</p>
       </div>
     </section>
 
@@ -77,8 +81,8 @@ import { Component } from '@angular/core';
 
     <section class="module content">
       <div class="container">
-        <h2>Where We Are</h2>
-        <p>Contact information here. Please get contents from a file</p>
+        <h2>{{contentContact?.title}}</h2>
+        <p>{{contentContact?.content}}</p>
       </div>
     </section>
 
@@ -90,8 +94,8 @@ import { Component } from '@angular/core';
 
     <section class="module content">
       <div class="container">
-        <h2>Want To Work Here?</h2>
-        <p>List of openings here. Please get contents from a file</p>
+        <h2>{{contentCareers?.title}}</h2>
+        <p>{{contentCareers?.content}}</p>
       </div>
     </section>
   </div>
@@ -108,13 +112,29 @@ import { Component } from '@angular/core';
         'app/assets/stylesheets/css/parallaxMain.css',
         'app/assets/stylesheets/css/footer.css'
     ]
+  ,
+  providers: [AppService]
 })
 export class AppComponent{
+  private errorMessage: string;
+
+  private logoSource = "app/assets/images/proairlogo.png";
+
   private isMobileSizedWidth = true;
   private isMenuShown = false;
+
+  private contentHome:Object;
+  private contentAbout:Object;
+  private contentServices:Object;
+  private contentContact:Object;
+  private contentCareers:Object;
+
+  constructor(private appService: AppService) { }
+
   ngOnInit()
   {
     this.isMobileSizedWidth = this.checkIfMobileSized();
+    this.getAllContent();
   }
 
   onResize()
@@ -136,5 +156,54 @@ export class AppComponent{
   dismissMenu()
   {
     if(this.isMenuShown == true) { this.isMenuShown = false; }
+  }
+
+  getAllContent()
+  {
+    this.getHomeContent();
+    this.getAboutContent();
+    this.getServicesContent();
+    this.getContactContent();
+    this.getCareersContent();
+  }
+
+  getHomeContent()
+  {
+    this.appService.getHomeContent()
+                     .subscribe(
+                       content => this.contentHome = content,
+                       error =>  console.log("app.component:getHomeContent() - \n" + <any>error));
+  }
+
+  getAboutContent()
+  {
+    this.appService.getAboutContent()
+                     .subscribe(
+                       content => this.contentAbout = content,
+                       error =>  console.log("app.component:getAboutContent() - \n" + <any>error));
+  }
+
+  getServicesContent()
+  {
+    this.appService.getServicesContent()
+                     .subscribe(
+                       content => this.contentServices = content,
+                       error =>  console.log("app.component:getServicesContent() - \n" + <any>error));
+  }
+
+  getContactContent()
+  {
+    this.appService.getContactContent()
+                     .subscribe(
+                       content => this.contentContact = content,
+                       error =>  console.log("app.component:getContactContent() - \n" + <any>error));
+  }
+
+  getCareersContent()
+  {
+    this.appService.getCareersContent()
+                     .subscribe(
+                       content => this.contentCareers = content,
+                       error =>  console.log("app.component:getCareersContent() - \n" + <any>error));
   }
 }

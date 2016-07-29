@@ -25,6 +25,7 @@
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.4); }
     .navbar ul img {
       float: left;
+      margin-left: 25px;
       padding: 12px;
       max-width: 45px;
       max-height: 45px; }

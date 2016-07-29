@@ -50,6 +50,10 @@ section.module.parallax {
 		text-transform: uppercase;
 		text-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   }
+	img {
+		max-width: 200px;
+		max-height: 200px;
+	}
 }
 section.module.parallax-1 {
   background-image: linear-gradient(
