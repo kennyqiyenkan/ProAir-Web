@@ -1,0 +1,31 @@
+/* Style Sheet for PROAIR SDN BHD */
+/* 24th August 2006 */
+
+BODY { margin:0; font-family: arial, sans-serif; font-size: 10; }
+TABLE { font-size: 13; }
+
+H1 { font-size:30; font-family: arial; color: #5500aa; }
+H2 { font-size:25; }
+
+HR { color: #0000aa; }
+
+A { text-decoration: none; color: #3333ff; }
+A:hover { color: #0000aa; text-decoration: underline;}
+
+A.menu { font-weight: bold; color: #ffffee; text-transform: uppercase;}
+A.menu:hover { color: #C5E3FF; text-decoration: none; }
+
+
+A.sidemenu { 
+color: #eeeeee;
+font-weight: bold; 
+* width: 150; 
+* padding:4;
+}
+
+
+A.sidemenu:hover { 
+color: #000088;
+text-decoration: none; 
+* background-color: #eeeeee; 
+}
