@@ -1,0 +1,81 @@
+/*-----------------*/
+/*----- FILES -----*/
+/*-----------------*/
+/*-----------------*/
+/*----- FONTS -----*/
+/*-----------------*/
+/*------------------*/
+/*----- COLORS -----*/
+/*------------------*/
+/*------------------*/
+/*----- SIZES  -----*/
+/*------------------*/
+.container {
+  max-width: 960px; }
+
+section.module {
+  font-family: "Muli", sans-serif;
+  color: #333;
+  text-align: center;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  section.module:last-child {
+    margin-bottom: 0; }
+  section.module h2 {
+    padding: 10px;
+    font-size: 30px; }
+  section.module p {
+    padding: 25px;
+    margin-bottom: 40px;
+    font-size: 16px; }
+    section.module p:last-child {
+      margin-bottom: 0; }
+
+section.module.content {
+  padding: 50px 0;
+  background: #ffffff; }
+
+section.module.parallax {
+  height: 400px;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  section.module.parallax h1 {
+    font-family: "Raleway", sans-serif;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 48px;
+    text-transform: uppercase;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.2); }
+
+section.module.parallax-1 {
+  background-image: linear-gradient(rgba(20, 20, 20, 0.3), rgba(20, 20, 20, 0.3)), url("app/assets/images/parallex1test.jpg"); }
+
+section.module.parallax-2 {
+  background-image: linear-gradient(rgba(20, 20, 20, 0.3), rgba(20, 20, 20, 0.3)), url("app/assets/images/parallex2test.jpg"); }
+
+section.module.parallax-3 {
+  background-image: linear-gradient(rgba(20, 20, 20, 0.3), rgba(20, 20, 20, 0.3)), url("app/assets/images/parallex3test.png"); }
+
+@media all and (min-width: 600px) {
+  section.module h2 {
+    font-size: 42px; }
+  section.module p {
+    font-size: 20px; }
+
+  section.module.parallax {
+    height: 450px; }
+    section.module.parallax h1 {
+      font-size: 96px; } }
+@media all and (min-width: 960px) {
+  section.module.parallax {
+    height: 500px; }
+    section.module.parallax h1 {
+      font-size: 160px; } }
+
+/*# sourceMappingURL=parallaxMain.css.map */
