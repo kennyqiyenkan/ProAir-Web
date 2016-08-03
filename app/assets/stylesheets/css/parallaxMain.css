@@ -11,16 +11,30 @@
 /*----- SIZES  -----*/
 /*------------------*/
 .container {
-  max-width: 960px; }
+  max-width: 960px;
+  -webkit-transition: all 0.5s ease-in-out 0s;
+  transition: all 0.5s ease-in-out 0s; }
+  .container.overlay {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 100px; }
+  .container.inactive {
+    opacity: 0;
+    visibility: hidden; }
 
 section.module {
   font-family: "Muli", sans-serif;
   color: #333;
+  position: relative;
   text-align: center;
   padding: 0;
+  width: 100%;
+  overflow: hidden;
   display: flex;
   align-items: center;
-  justify-content: center; }
+  justify-content: center;
+  flex-wrap: nowrap; }
   section.module:last-child {
     margin-bottom: 0; }
   section.module h2 {
@@ -32,9 +46,30 @@ section.module {
     font-size: 16px; }
     section.module p:last-child {
       margin-bottom: 0; }
+  section.module button {
+    border-radius: 25px;
+    font-size: 1.2em;
+    line-height: 1.2em;
+    color: #333;
+    background-color: transparent;
+    border-color: #363DA7;
+    width: 200px;
+    height: 50px;
+    -webkit-transition: all 0.2s ease-in-out 0s;
+    transition: all 0.2s ease-in-out 0s; }
+    section.module button.cancel:focus {
+      outline: none; }
+    section.module button.cancel:hover {
+      background-color: #e74c3c;
+      color: #ffffff; }
+    section.module button:focus {
+      outline: none; }
+    section.module button:hover {
+      background-color: #363DA7;
+      color: #ffffff; }
 
 section.module.content {
-  padding: 50px 0;
+  padding: 100px 0;
   background: #ffffff; }
 
 section.module.parallax {
@@ -71,6 +106,10 @@ section.module.parallax-3 {
     font-size: 42px; }
   section.module p {
     font-size: 20px; }
+  section.module button {
+    border-radius: 25px;
+    font-size: 1.0em;
+    line-height: 1.0em; }
 
   section.module.parallax {
     height: 450px; }

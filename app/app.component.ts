@@ -80,9 +80,16 @@ import './rxjs-operators';
     </section>
 
     <section class="module content">
-      <div class="container">
+      <div class="container" [ngClass]="{ 'inactive' : isFormShown }">
         <h2>{{contentContact?.title}}</h2>
         <p>{{contentContact?.content}}</p>
+        <button (click)="showForm(true,false)">Contact Us</button>
+      </div>
+      <div class="container overlay" [ngClass]="{ 'inactive' : !isFormShown}">
+        <h2>{{contentContact?.title}}</h2>
+        <p>{{contentContact?.content}}</p>
+        <button class="cancel" (click)="showForm(false,true)">Cancel</button>
+        <button (click)="showForm(false,false)">Send</button>
       </div>
     </section>
 
@@ -122,6 +129,7 @@ export class AppComponent{
 
   private isMobileSizedWidth = true;
   private isMenuShown = false;
+  private isFormShown = false;
 
   private contentHome:Object;
   private contentAbout:Object;
@@ -151,6 +159,18 @@ export class AppComponent{
   toggleMenu()
   {
     this.isMenuShown = !(this.isMenuShown);
+  }
+
+  showForm(toShow, cancel)
+  {
+    this.isFormShown = toShow;
+    if(!toShow)
+    {//send/cancel button clicked
+      if(!cancel)
+      {//send email
+
+      }
+    }
   }
 
   dismissMenu()
