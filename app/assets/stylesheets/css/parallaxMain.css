@@ -11,17 +11,7 @@
 /*----- SIZES  -----*/
 /*------------------*/
 .container {
-  max-width: 960px;
-  -webkit-transition: all 0.5s ease-in-out 0s;
-  transition: all 0.5s ease-in-out 0s; }
-  .container.overlay {
-    position: absolute;
-    width: 100%;
-    left: 0;
-    top: 100px; }
-  .container.inactive {
-    opacity: 0;
-    visibility: hidden; }
+  max-width: 960px; }
 
 section.module {
   font-family: "Muli", sans-serif;
@@ -57,11 +47,6 @@ section.module {
     height: 50px;
     -webkit-transition: all 0.2s ease-in-out 0s;
     transition: all 0.2s ease-in-out 0s; }
-    section.module button.cancel:focus {
-      outline: none; }
-    section.module button.cancel:hover {
-      background-color: #e74c3c;
-      color: #ffffff; }
     section.module button:focus {
       outline: none; }
     section.module button:hover {

@@ -1,0 +1,46 @@
+@import "variables";
+
+.contactUsSheet
+{
+  position: fixed;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  padding: 15px;
+
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  -webkit-transition: all 0.3s ease-in-out 0s;
+  transition: all 0.3s ease-in-out 0s;
+  font-family: $font-main;
+  z-index: 300;
+  visibility: visible;
+  opacity: 1;
+  &.inactive
+  {
+    visibility: hidden;
+    opacity: 0;
+  }
+  div
+  {
+    position: relative;
+    border-radius: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 900px;
+    max-height: 650px;
+    overflow-y: scroll;
+    background-color: $color-white;
+    opacity: 1;
+    -webkit-transition: all 0.5s ease-in-out 0s;
+    transition: all 0.5s ease-in-out 0s;
+    &.inactive
+    {
+      transform: translate3d(0, -25vw, 0);
+      opacity: 0;
+    }
+  }
+}

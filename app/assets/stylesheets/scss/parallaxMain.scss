@@ -2,19 +2,6 @@
 
 .container {
 	max-width: 960px;
-	-webkit-transition: all 0.5s ease-in-out 0s;
-	transition: all 0.5s ease-in-out 0s;
-	&.overlay{
-		position:absolute;
-		width:100%;
-		left:0;
-		top:100px;
-	}
-	&.inactive{
-		opacity: 0;
-		visibility: hidden;
-		// transform: translate3d(-25vw,0,0);
-	}
 }
 
 section.module {
@@ -25,7 +12,6 @@ section.module {
   padding: 0;
 	width: 100%;
 	overflow: hidden;
-	//display: inline-block;
 	display: flex;
   align-items: center;
   justify-content: center;
@@ -56,15 +42,6 @@ section.module {
     height: 50px;
 		-webkit-transition: all 0.2s ease-in-out 0s;
 		transition: all 0.2s ease-in-out 0s;
-		&.cancel{
-			&:focus{
-				outline: none;
-			}
-			&:hover{
-				background-color: $color-flat-red;
-				color: $color-white;
-			}
-		}
 		&:focus{
 			outline: none;
 		}

@@ -85,12 +85,6 @@ import './rxjs-operators';
         <p>{{contentContact?.content}}</p>
         <button (click)="showForm(true,false)">Contact Us</button>
       </div>
-      <div class="container overlay" [ngClass]="{ 'inactive' : !isFormShown}">
-        <h2>{{contentContact?.title}}</h2>
-        <p>{{contentContact?.content}}</p>
-        <button class="cancel" (click)="showForm(false,true)">Cancel</button>
-        <button (click)="showForm(false,false)">Send</button>
-      </div>
     </section>
 
     <section class="module parallax parallax-3" id="Careers">
@@ -106,6 +100,11 @@ import './rxjs-operators';
       </div>
     </section>
   </div>
+  <div class="contactUsSheet" [ngClass]="{ 'inactive' : !isFormShown }">
+    <div class="contactUsSheet div" [ngClass]="{ 'inactive' : !isFormShown }">
+      <button (click)="showForm(false,false)">Contact Us</button>
+    </div>
+  </div>
   <div>
     <footer class="footer">
       <p>Proair Sdn. Bhd.</p>
@@ -117,7 +116,8 @@ import './rxjs-operators';
         'app/assets/stylesheets/css/navbar.css',
         'app/assets/stylesheets/css/navMenu.css',
         'app/assets/stylesheets/css/parallaxMain.css',
-        'app/assets/stylesheets/css/footer.css'
+        'app/assets/stylesheets/css/footer.css',
+        'app/assets/stylesheets/css/contactUsSheet.css'
     ]
   ,
   providers: [AppService]
