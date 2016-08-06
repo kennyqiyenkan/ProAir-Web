@@ -7,7 +7,6 @@
   align-content: center;
   justify-content: center;
   padding: 15px;
-
   left: 0;
   top: 0;
   width: 100%;
@@ -26,6 +25,8 @@
   }
   div
   {
+    display: block;
+    padding: 25px;
     position: relative;
     border-radius: 5px;
     margin-left: auto;

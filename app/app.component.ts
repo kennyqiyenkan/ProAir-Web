@@ -102,6 +102,24 @@ import './rxjs-operators';
   </div>
   <div class="contactUsSheet" [ngClass]="{ 'inactive' : !isFormShown }">
     <div class="contactUsSheet div" [ngClass]="{ 'inactive' : !isFormShown }">
+      <div class="inputField">
+        <input id="nameField" class="inputField field" type="text" required>
+        <label for="nameField" class="inputField placeholder">Name</label>
+        <span class="inputField underline"></span>
+        <span class="inputField bar"></span>
+      </div>
+      <div class="inputField">
+        <input id="emailField" class="inputField field" type="text" required>
+        <label for="emailField" class="inputField placeholder">Email</label>
+        <span class="inputField underline"></span>
+        <span class="inputField bar"></span>
+      </div>
+      <div class="inputField">
+        <input id="titleField" class="inputField field" type="text" required>
+        <label for="titleField" class="inputField placeholder">Subject</label>
+        <span class="inputField underline"></span>
+        <span class="inputField bar"></span>
+      </div>
       <button (click)="showForm(false,false)">Contact Us</button>
     </div>
   </div>
@@ -117,7 +135,8 @@ import './rxjs-operators';
         'app/assets/stylesheets/css/navMenu.css',
         'app/assets/stylesheets/css/parallaxMain.css',
         'app/assets/stylesheets/css/footer.css',
-        'app/assets/stylesheets/css/contactUsSheet.css'
+        'app/assets/stylesheets/css/contactUsSheet.css',
+        'app/assets/stylesheets/css/inputField.css'
     ]
   ,
   providers: [AppService]

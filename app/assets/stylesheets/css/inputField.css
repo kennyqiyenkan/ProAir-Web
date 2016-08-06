@@ -11,32 +11,68 @@
 /*----- SIZES  -----*/
 /*------------------*/
 .inputField {
-  border-style: none;
+  position: relative;
   font-family: "Muli", sans-serif;
-  font-size: 18px;
-  -webkit-transition: all 0.3s ease-in-out 0s;
-  transition: all 0.3s ease-in-out 0s;
-  margin-bottom: 10px;
-  max-width: 960px;
-  width: 250px; }
-  .inputField:before {
-    content: "";
+  min-width: 200px;
+  max-width: 800px;
+  padding: 0; }
+  .inputField .bar {
+    position: relative;
+    display: block; }
+    .inputField .bar:before, .inputField .bar:after {
+      content: '';
+      height: 2px;
+      width: 100%;
+      bottom: -3px;
+      left: 0;
+      position: absolute;
+      background: #363DA7;
+      -webkit-transform: scaleX(0);
+      transform: scaleX(0);
+      -webkit-transition: all 0.3s ease-in-out 0s;
+      transition: all 0.3s ease-in-out 0s; }
+  .inputField .underline {
     position: absolute;
-    width: 100%;
+    display: block;
+    content: '';
     height: 2px;
-    bottom: -3px;
-    left: 0px;
-    background-color: #363DA7;
-    visibility: hidden;
-    -webkit-transform: scaleX(0);
-    transform: scaleX(0);
+    width: 100%;
+    bottom: 22px;
+    left: 25px;
+    background: #b3b3b3; }
+  .inputField .placeholder {
+    position: absolute;
+    color: #333;
+    width: 100%;
+    font-size: 20px;
+    top: 25px;
+    left: 35px;
+    bottom: 0;
     -webkit-transition: all 0.3s ease-in-out 0s;
     transition: all 0.3s ease-in-out 0s; }
-  .inputField:focus:before {
-    visibility: visible;
-    -webkit-transform: scaleX(1);
-    transform: scaleX(1); }
-  .inputField:focus {
-    outline: none; }
+    .inputField .placeholder:hover {
+      cursor: text; }
+  .inputField .field {
+    font-size: 20px;
+    width: 100%;
+    border: none;
+    padding-left: 10px;
+    padding-right: 10px; }
+    .inputField .field:focus {
+      outline: none; }
+      .inputField .field:focus ~ .bar:before, .inputField .field:focus ~ .bar:after {
+        -webkit-transform: scaleX(1);
+        transform: scaleX(1); }
+      .inputField .field:focus ~ .placeholder {
+        left: 25px;
+        font-size: 12px;
+        top: 10px; }
+    .inputField .field:valid ~ .bar:before, .inputField .field:valid ~ .bar:after {
+      -webkit-transform: scaleX(1);
+      transform: scaleX(1); }
+    .inputField .field:valid ~ .placeholder {
+      left: 25px;
+      font-size: 12px;
+      top: 10px; }
 
 /*# sourceMappingURL=inputField.css.map */

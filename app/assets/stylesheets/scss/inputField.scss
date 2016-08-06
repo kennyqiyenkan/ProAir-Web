@@ -1,38 +1,99 @@
 @import "variables";
+$font-norm-size: 20px;
+$font-mini-size: 12px;
+$label-invalid-top-position: 25px;
+$label-valid-top-position: 10px;
+$pading-size: 25px;
 
-.inputField{
-  border-style: none;
+.inputField
+{
+  position: relative;
   font-family: $font-main;
-  font-size: 18px;
-  -webkit-transition: all 0.3s ease-in-out 0s;
-  transition: all 0.3s ease-in-out 0s;
-  margin-bottom: 10px;
-  max-width: 960px;
-  width: 250px;
-  
-  &:before {
-    content: "";
+  min-width: 200px;
+  max-width: 800px;
+  padding: 0;
+  .bar {
+    position: relative;
+    display: block;
+    &:before,
+    &:after {
+      content: '';
+      height: 2px;
+      width: 100%;
+      bottom: -3px;
+      left: 0;
+      position: absolute;
+      background: $color-proairblue;
+      -webkit-transform: scaleX(0);
+      transform: scaleX(0);
+      -webkit-transition: all 0.3s ease-in-out 0s;
+      transition: all 0.3s ease-in-out 0s;
+    }
+  }
+
+  .underline {
     position: absolute;
-    width: 100%;
+    display: block;
+    content: '';
     height: 2px;
-    bottom: -3px;
-    left: 0px;
-    background-color: $color-proairblue;
-    visibility: hidden;
-    -webkit-transform: scaleX(0);
-    transform: scaleX(0);
+    width: 100%;
+    bottom: $pading-size - 3px; //this accounts for padding
+    left: $pading-size; //this accounts for padding
+    background: lighten($color-flat-black, 50%);
+  }
+
+  .placeholder
+  {
+    position:absolute;
+    color: $color-flat-black;
+    width: 100%;
+    font-size: $font-norm-size;
+    top: $label-invalid-top-position;
+    left: $pading-size + 10px;
+    bottom: 0;
     -webkit-transition: all 0.3s ease-in-out 0s;
     transition: all 0.3s ease-in-out 0s;
+    &:hover
+    {
+      cursor: text;
+    }
   }
 
-  &:focus:before {
-    visibility: visible;
-    -webkit-transform: scaleX(1);
-    transform: scaleX(1);
-  }
-
-  &:focus{
-    outline: none;
-    //border-bottom: solid 2px $color-proairblue;
+  .field
+  {
+    font-size: $font-norm-size;
+    width: 100%;
+    border: none;
+    padding-left: 10px;
+    padding-right: 10px;
+    &:focus
+    {
+      outline: none;
+      &~.bar:before, &~.bar:after
+      {
+        -webkit-transform: scaleX(1);
+        transform: scaleX(1);
+      }
+      &~.placeholder
+      {
+        left: $pading-size;
+        font-size: $font-mini-size;
+        top: $label-valid-top-position;
+      }
+    }
+    &:valid
+    {
+      &~.bar:before, &~.bar:after
+      {
+        -webkit-transform: scaleX(1);
+        transform: scaleX(1);
+      }
+      &~.placeholder
+      {
+        left: $pading-size;
+        font-size: $font-mini-size;
+        top: $label-valid-top-position;
+      }
+    }
   }
 }
