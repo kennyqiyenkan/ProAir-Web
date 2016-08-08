@@ -8,10 +8,11 @@ $pading-size: 25px;
 .inputField
 {
   position: relative;
+  display: block;
   font-family: $font-main;
   min-width: 200px;
-  max-width: 800px;
   padding: 0;
+  margin: 0;
   .bar {
     position: relative;
     display: block;
@@ -32,21 +33,26 @@ $pading-size: 25px;
   }
 
   .underline {
-    position: absolute;
+    position: relative;
     display: block;
-    content: '';
-    height: 2px;
-    width: 100%;
-    bottom: $pading-size - 3px; //this accounts for padding
-    left: $pading-size; //this accounts for padding
-    background: lighten($color-flat-black, 50%);
+    &:before,
+    &:after {
+      position: absolute;
+      left: 0;
+      content: '';
+      height: 2px;
+      width: 100%;
+      bottom: -3px; //this accounts for padding
+      background: lighten($color-flat-black, 50%);
+    }
   }
 
   .placeholder
   {
     position:absolute;
-    color: $color-flat-black;
+    color: lighten($color-flat-black, 50%);
     width: 100%;
+    height: 10px;
     font-size: $font-norm-size;
     top: $label-invalid-top-position;
     left: $pading-size + 10px;
@@ -59,8 +65,9 @@ $pading-size: 25px;
     }
   }
 
-  .field
+  .oneLineField
   {
+    position: relative;
     font-size: $font-norm-size;
     width: 100%;
     border: none;
@@ -76,6 +83,7 @@ $pading-size: 25px;
       }
       &~.placeholder
       {
+        color: $color-flat-black;
         left: $pading-size;
         font-size: $font-mini-size;
         top: $label-valid-top-position;
@@ -90,6 +98,48 @@ $pading-size: 25px;
       }
       &~.placeholder
       {
+        color: $color-flat-black;
+        left: $pading-size;
+        font-size: $font-mini-size;
+        top: $label-valid-top-position;
+      }
+    }
+  }
+
+  .multiLineField
+  {
+    font-size: $font-norm-size;
+    width: 100%;
+    height: 300px;
+    border: 1px solid;
+    padding: 10px;
+    border-radius: 10px;
+    border-color: lighten($color-flat-black, 50%);
+    -webkit-transition: all 0.3s ease-in-out 0s;
+    transition: all 0.3s ease-in-out 0s;
+    &~.placeholder
+    {
+      top: $pading-size + 12px;
+    }
+    &:focus
+    {
+      outline: none;
+      border-color: $color-proairblue;
+      &~.placeholder
+      {
+        color: $color-flat-black;
+        left: $pading-size;
+        font-size: $font-mini-size;
+        top: $label-valid-top-position;
+      }
+    }
+
+    &:valid
+    {
+      border-color: $color-proairblue;
+      &~.placeholder
+      {
+        color: $color-flat-black;
         left: $pading-size;
         font-size: $font-mini-size;
         top: $label-valid-top-position;

@@ -31,19 +31,29 @@
     visibility: hidden;
     opacity: 0; }
   .contactUsSheet div {
+    position: relative;
     display: block;
     padding: 25px;
-    position: relative;
     border-radius: 5px;
-    margin-left: auto;
-    margin-right: auto;
     max-width: 900px;
-    max-height: 650px;
+    max-height: 500px;
+    overflow-x: hidden;
     overflow-y: scroll;
     background-color: #ffffff;
+    color: #333;
     opacity: 1;
     -webkit-transition: all 0.5s ease-in-out 0s;
     transition: all 0.5s ease-in-out 0s; }
+    .contactUsSheet div ul {
+      padding: 0;
+      list-style: none;
+      display: inline-block; }
+      .contactUsSheet div ul li {
+        float: left;
+        padding: 5px 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center; }
     .contactUsSheet div.inactive {
       transform: translate3d(0, -25vw, 0);
       opacity: 0; }

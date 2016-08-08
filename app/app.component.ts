@@ -83,7 +83,7 @@ import './rxjs-operators';
       <div class="container" [ngClass]="{ 'inactive' : isFormShown }">
         <h2>{{contentContact?.title}}</h2>
         <p>{{contentContact?.content}}</p>
-        <button (click)="showForm(true,false)">Contact Us</button>
+        <button class="roundedButton default" (click)="showForm(true,false)">Contact Us</button>
       </div>
     </section>
 
@@ -102,25 +102,39 @@ import './rxjs-operators';
   </div>
   <div class="contactUsSheet" [ngClass]="{ 'inactive' : !isFormShown }">
     <div class="contactUsSheet div" [ngClass]="{ 'inactive' : !isFormShown }">
+      <h2>Leave Us A Message</h2>
+      <p>We will get back to you as soon as possible. Please note that solicitors and third parties will not be entertained.</p>
       <div class="inputField">
-        <input id="nameField" class="inputField field" type="text" required>
+        <input id="nameField" class="inputField oneLineField" type="text" required>
         <label for="nameField" class="inputField placeholder">Name</label>
         <span class="inputField underline"></span>
         <span class="inputField bar"></span>
       </div>
       <div class="inputField">
-        <input id="emailField" class="inputField field" type="text" required>
+        <input id="emailField" class="inputField oneLineField" type="email" required>
         <label for="emailField" class="inputField placeholder">Email</label>
         <span class="inputField underline"></span>
         <span class="inputField bar"></span>
       </div>
       <div class="inputField">
-        <input id="titleField" class="inputField field" type="text" required>
+        <input id="titleField" class="inputField oneLineField" type="text" required>
         <label for="titleField" class="inputField placeholder">Subject</label>
         <span class="inputField underline"></span>
         <span class="inputField bar"></span>
       </div>
-      <button (click)="showForm(false,false)">Contact Us</button>
+      <div class="inputField">
+        <textarea id="messageField" class="inputField multiLineField" type="text" required></textarea>
+        <label for="messageField" class="inputField placeholder">Message</label>
+      </div>
+      <ul>
+        <li>
+          <button class="roundedButton cancel" (click)="showForm(false,false)">Cancel</button>
+        </li>
+        <li>
+          <button class="roundedButton default" (click)="showForm(false,false)">Send</button>
+        </li>
+      </ul>
+
     </div>
   </div>
   <div>
@@ -136,7 +150,8 @@ import './rxjs-operators';
         'app/assets/stylesheets/css/parallaxMain.css',
         'app/assets/stylesheets/css/footer.css',
         'app/assets/stylesheets/css/contactUsSheet.css',
-        'app/assets/stylesheets/css/inputField.css'
+        'app/assets/stylesheets/css/inputField.css',
+        'app/assets/stylesheets/css/roundedButton.css'
     ]
   ,
   providers: [AppService]

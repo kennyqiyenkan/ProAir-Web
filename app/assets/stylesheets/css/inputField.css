@@ -12,10 +12,11 @@
 /*------------------*/
 .inputField {
   position: relative;
+  display: block;
   font-family: "Muli", sans-serif;
   min-width: 200px;
-  max-width: 800px;
-  padding: 0; }
+  padding: 0;
+  margin: 0; }
   .inputField .bar {
     position: relative;
     display: block; }
@@ -32,18 +33,21 @@
       -webkit-transition: all 0.3s ease-in-out 0s;
       transition: all 0.3s ease-in-out 0s; }
   .inputField .underline {
-    position: absolute;
-    display: block;
-    content: '';
-    height: 2px;
-    width: 100%;
-    bottom: 22px;
-    left: 25px;
-    background: #b3b3b3; }
+    position: relative;
+    display: block; }
+    .inputField .underline:before, .inputField .underline:after {
+      position: absolute;
+      left: 0;
+      content: '';
+      height: 2px;
+      width: 100%;
+      bottom: -3px;
+      background: #b3b3b3; }
   .inputField .placeholder {
     position: absolute;
-    color: #333;
+    color: #b3b3b3;
     width: 100%;
+    height: 10px;
     font-size: 20px;
     top: 25px;
     left: 35px;
@@ -52,27 +56,57 @@
     transition: all 0.3s ease-in-out 0s; }
     .inputField .placeholder:hover {
       cursor: text; }
-  .inputField .field {
+  .inputField .oneLineField {
+    position: relative;
     font-size: 20px;
     width: 100%;
     border: none;
     padding-left: 10px;
     padding-right: 10px; }
-    .inputField .field:focus {
+    .inputField .oneLineField:focus {
       outline: none; }
-      .inputField .field:focus ~ .bar:before, .inputField .field:focus ~ .bar:after {
+      .inputField .oneLineField:focus ~ .bar:before, .inputField .oneLineField:focus ~ .bar:after {
         -webkit-transform: scaleX(1);
         transform: scaleX(1); }
-      .inputField .field:focus ~ .placeholder {
+      .inputField .oneLineField:focus ~ .placeholder {
+        color: #333;
         left: 25px;
         font-size: 12px;
         top: 10px; }
-    .inputField .field:valid ~ .bar:before, .inputField .field:valid ~ .bar:after {
+    .inputField .oneLineField:valid ~ .bar:before, .inputField .oneLineField:valid ~ .bar:after {
       -webkit-transform: scaleX(1);
       transform: scaleX(1); }
-    .inputField .field:valid ~ .placeholder {
+    .inputField .oneLineField:valid ~ .placeholder {
+      color: #333;
       left: 25px;
       font-size: 12px;
       top: 10px; }
+  .inputField .multiLineField {
+    font-size: 20px;
+    width: 100%;
+    height: 300px;
+    border: 1px solid;
+    padding: 10px;
+    border-radius: 10px;
+    border-color: #b3b3b3;
+    -webkit-transition: all 0.3s ease-in-out 0s;
+    transition: all 0.3s ease-in-out 0s; }
+    .inputField .multiLineField ~ .placeholder {
+      top: 37px; }
+    .inputField .multiLineField:focus {
+      outline: none;
+      border-color: #363DA7; }
+      .inputField .multiLineField:focus ~ .placeholder {
+        color: #333;
+        left: 25px;
+        font-size: 12px;
+        top: 10px; }
+    .inputField .multiLineField:valid {
+      border-color: #363DA7; }
+      .inputField .multiLineField:valid ~ .placeholder {
+        color: #333;
+        left: 25px;
+        font-size: 12px;
+        top: 10px; }
 
 /*# sourceMappingURL=inputField.css.map */

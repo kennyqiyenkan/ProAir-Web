@@ -36,22 +36,6 @@ section.module {
     font-size: 16px; }
     section.module p:last-child {
       margin-bottom: 0; }
-  section.module button {
-    border-radius: 25px;
-    font-size: 1.2em;
-    line-height: 1.2em;
-    color: #333;
-    background-color: transparent;
-    border-color: #363DA7;
-    width: 200px;
-    height: 50px;
-    -webkit-transition: all 0.2s ease-in-out 0s;
-    transition: all 0.2s ease-in-out 0s; }
-    section.module button:focus {
-      outline: none; }
-    section.module button:hover {
-      background-color: #363DA7;
-      color: #ffffff; }
 
 section.module.content {
   padding: 100px 0;
@@ -91,10 +75,6 @@ section.module.parallax-3 {
     font-size: 42px; }
   section.module p {
     font-size: 20px; }
-  section.module button {
-    border-radius: 25px;
-    font-size: 1.0em;
-    line-height: 1.0em; }
 
   section.module.parallax {
     height: 450px; }

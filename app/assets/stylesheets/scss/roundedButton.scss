@@ -1,0 +1,45 @@
+@import "variables";
+
+.roundedButton
+{
+  padding: 0;
+  font-family: $font-main;
+  font-size: 1.0em;
+  line-height: 1.0em;
+  color: $color-flat-black;
+  background-color: transparent;
+  border: 2px solid;
+  border-radius: 25px;
+  border-color: $color-proairblue;
+  width: 200px;
+  height: 40px;
+  -webkit-transition: all 0.2s ease-in-out 0s;
+  transition: all 0.2s ease-in-out 0s;
+
+  &:focus
+  {
+    outline: none;
+  }
+  &:hover
+  {
+    font-size: 1.1em;
+
+  }
+  &.cancel
+  {
+    &:hover
+    {
+      border-color: $color-flat-red;
+      background-color: $color-flat-red;
+      color: $color-white;
+    }
+  }
+  &.default
+  {
+    &:hover
+    {
+      background-color: $color-proairblue;
+      color: $color-white;
+    }
+  }
+}
