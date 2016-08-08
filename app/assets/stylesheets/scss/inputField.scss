@@ -69,7 +69,7 @@ $pading-size: 25px;
   {
     position: relative;
     font-size: $font-norm-size;
-    width: 100%;
+    width: calc(100% - 20px);
     border: none;
     padding-left: 10px;
     padding-right: 10px;
@@ -115,6 +115,7 @@ $pading-size: 25px;
     padding: 10px;
     border-radius: 10px;
     border-color: lighten($color-flat-black, 50%);
+    resize: none;
     -webkit-transition: all 0.3s ease-in-out 0s;
     transition: all 0.3s ease-in-out 0s;
     &~.placeholder
