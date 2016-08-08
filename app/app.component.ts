@@ -33,7 +33,7 @@ import './rxjs-operators';
   </div>
    <!-- Parallax Body -->
   <div style="margin-top:50px;" id="Home">
-    <section class="module parallax parallax-1">
+    <section class="module parallax parallaxImage-Home">
       <div class="container">
         <img src={{logoSource}} alt="Proair">
         <h1 style="margin:5px;">Proair</h1>
@@ -47,7 +47,7 @@ import './rxjs-operators';
       </div>
     </section>
 
-    <section class="module parallax parallax-2" id="About">
+    <section class="module parallax parallaxImage-About" id="About">
       <div class="container">
         <h1>About</h1>
       </div>
@@ -60,7 +60,7 @@ import './rxjs-operators';
       </div>
     </section>
 
-    <section class="module parallax parallax-3" id="Services">
+    <section class="module parallax parallaxImage-Services" id="Services">
       <div class="container">
         <h1>Services</h1>
       </div>
@@ -73,7 +73,7 @@ import './rxjs-operators';
       </div>
     </section>
 
-    <section class="module parallax parallax-3" id="Contact">
+    <section class="module parallax parallaxImage-Contact" id="Contact">
       <div class="container">
         <h1>Contact</h1>
       </div>
@@ -87,7 +87,7 @@ import './rxjs-operators';
       </div>
     </section>
 
-    <section class="module parallax parallax-3" id="Careers">
+    <section class="module parallax parallaxImage-Careers" id="Careers">
       <div class="container">
         <h1>Careers</h1>
       </div>
@@ -139,7 +139,7 @@ import './rxjs-operators';
   </div>
   <div>
     <footer class="footer">
-      <p>Proair Sdn. Bhd.</p>
+      <p>Proair Sdn Bhd</p>
     </footer>
   </div>
   `
