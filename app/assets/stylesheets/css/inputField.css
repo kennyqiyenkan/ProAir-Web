@@ -81,6 +81,15 @@
       left: 25px;
       font-size: 12px;
       top: 10px; }
+    .inputField .oneLineField.incomplete ~ .bar:before, .inputField .oneLineField.incomplete ~ .bar:after {
+      background: #e74c3c;
+      -webkit-transform: scaleX(1);
+      transform: scaleX(1); }
+    .inputField .oneLineField.incomplete ~ .placeholder {
+      color: #333;
+      left: 25px;
+      font-size: 12px;
+      top: 10px; }
   .inputField .multiLineField {
     font-size: 20px;
     width: 100%;
@@ -105,6 +114,13 @@
     .inputField .multiLineField:valid {
       border-color: #363DA7; }
       .inputField .multiLineField:valid ~ .placeholder {
+        color: #333;
+        left: 25px;
+        font-size: 12px;
+        top: 10px; }
+    .inputField .multiLineField.incomplete {
+      border-color: #e74c3c; }
+      .inputField .multiLineField.incomplete ~ .placeholder {
         color: #333;
         left: 25px;
         font-size: 12px;

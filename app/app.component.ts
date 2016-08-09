@@ -32,8 +32,8 @@ import './rxjs-operators';
     </navMenu>
   </div>
    <!-- Parallax Body -->
-  <div style="margin-top:50px;" id="Home">
-    <section class="module parallax parallaxImage-Home">
+  <div id="Home">
+    <section style="padding-top:70px;" class="module parallax parallaxImage-Home">
       <div class="container">
         <img src={{logoSource}} alt="Proair">
         <h1 style="margin:5px;">Proair</h1>

@@ -11,9 +11,10 @@
 /*----- SIZES  -----*/
 /*------------------*/
 .container {
-  max-width: 960px; }
+  max-width: 960px;
+  overflow: auto; }
 
-section.module {
+.module {
   font-family: "Muli", sans-serif;
   color: #333;
   position: relative;
@@ -25,78 +26,77 @@ section.module {
   align-items: center;
   justify-content: center;
   flex-wrap: nowrap; }
-  section.module:last-child {
+  .module:last-child {
     margin-bottom: 0; }
-  section.module h2 {
+  .module h2 {
     padding: 10px;
     font-size: 30px; }
-  section.module p {
+  .module p {
     padding: 25px;
     margin-bottom: 40px;
     font-size: 16px; }
-    section.module p:last-child {
+    .module p:last-child {
       margin-bottom: 0; }
+  .module.content {
+    padding: 100px 0;
+    background: #ffffff; }
+  .module.parallax {
+    height: 400px;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center; }
+    .module.parallax h1 {
+      font-family: "Raleway", sans-serif;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 48px;
+      text-transform: uppercase;
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.2); }
+    .module.parallax img {
+      margin-top: 50px;
+      width: 100px;
+      height: auto;
+      max-width: 200px;
+      max-height: 200px; }
 
-section.module.content {
-  padding: 100px 0;
-  background: #ffffff; }
-
-section.module.parallax {
-  height: 400px;
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-  display: flex;
-  align-items: center;
-  justify-content: center; }
-  section.module.parallax h1 {
-    font-family: "Raleway", sans-serif;
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 48px;
-    text-transform: uppercase;
-    text-shadow: 0 0 10px rgba(0, 0, 0, 0.2); }
-  section.module.parallax img {
-    margin-top: 50px;
-    width: 100px;
-    height: auto;
-    max-width: 200px;
-    max-height: 200px; }
-
-section.module.parallaxImage-Home {
+.module.parallaxImage-Home {
   background-image: linear-gradient(rgba(20, 20, 20, 0.3), rgba(20, 20, 20, 0.3)), url("app/assets/images/proair-web-home-alt.jpg"); }
 
-section.module.parallaxImage-About {
+.module.parallaxImage-About {
   background-image: linear-gradient(rgba(20, 20, 20, 0.3), rgba(20, 20, 20, 0.3)), url("app/assets/images/proair-web-about.jpg"); }
 
-section.module.parallaxImage-Services {
+.module.parallaxImage-Services {
   background-image: linear-gradient(rgba(20, 20, 20, 0.3), rgba(20, 20, 20, 0.3)), url("app/assets/images/proair-web-services.jpg"); }
 
-section.module.parallaxImage-Contact {
+.module.parallaxImage-Contact {
   background-image: linear-gradient(rgba(20, 20, 20, 0.3), rgba(20, 20, 20, 0.3)), url("app/assets/images/proair-web-contact.jpg"); }
 
-section.module.parallaxImage-Careers {
+.module.parallaxImage-Careers {
   background-image: linear-gradient(rgba(20, 20, 20, 0.3), rgba(20, 20, 20, 0.3)), url("app/assets/images/proair-web-careers.jpg"); }
 
 @media all and (min-width: 600px) {
-  section.module h2 {
+  .module h2 {
     font-size: 42px; }
-  section.module p {
+  .module p {
     font-size: 20px; }
 
-  section.module.parallax {
+  .module.parallax {
     height: 450px; }
-    section.module.parallax h1 {
+    .module.parallax h1 {
       font-size: 96px; }
-    section.module.parallax img {
+    .module.parallax img {
       width: 150px;
       height: auto; } }
 @media all and (min-width: 960px) {
-  section.module.parallax {
+  .module.parallax {
     height: 500px; }
-    section.module.parallax h1 {
+    .module.parallax h1 {
       font-size: 160px; }
-    section.module.parallax img {
+    .module.parallax img {
       width: auto;
       height: 200px; } }
 
