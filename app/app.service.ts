@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {Http, Response} from '@angular/http'
-import { Observable } from 'rxjs/Observable';
 import './rxjs-operators';
 
 @Injectable()
@@ -27,7 +26,7 @@ export class AppService {
     return Observable.throw(errMsg);
   }
 
-  getHomeContent(): Observable<Object>
+  getHomeContent()
   {
     return this.http.get(this.contentHomeURL)
                 .map(this.extractData)

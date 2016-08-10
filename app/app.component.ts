@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AppService } from "./app.service";
+import { ContactSheetComponent } from "./contactsheet.component";
 import './rxjs-operators';
 
 @Component({
@@ -83,7 +84,7 @@ import './rxjs-operators';
       <div class="container" [ngClass]="{ 'inactive' : isFormShown }">
         <h2>{{contentContact?.title}}</h2>
         <p>{{contentContact?.content}}</p>
-        <button class="roundedButton default" (click)="showForm(true,false)">Contact Us</button>
+        <button class="roundedButton default" (click)="isFormShown=true">Contact Us</button>
       </div>
     </section>
 
@@ -100,43 +101,7 @@ import './rxjs-operators';
       </div>
     </section>
   </div>
-  <div class="contactUsSheet" [ngClass]="{ 'inactive' : !isFormShown }">
-    <div class="contactUsSheet div" [ngClass]="{ 'inactive' : !isFormShown }">
-      <h2>Leave Us A Message</h2>
-      <p>We will get back to you as soon as possible. Please note that solicitors and third parties will not be entertained.</p>
-      <div class="inputField">
-        <input id="nameField" class="inputField oneLineField" type="text" required>
-        <label for="nameField" class="inputField placeholder">Name</label>
-        <span class="inputField underline"></span>
-        <span class="inputField bar"></span>
-      </div>
-      <div class="inputField">
-        <input id="emailField" class="inputField oneLineField" type="email" required>
-        <label for="emailField" class="inputField placeholder">Email</label>
-        <span class="inputField underline"></span>
-        <span class="inputField bar"></span>
-      </div>
-      <div class="inputField">
-        <input id="titleField" class="inputField oneLineField" type="text" required>
-        <label for="titleField" class="inputField placeholder">Subject</label>
-        <span class="inputField underline"></span>
-        <span class="inputField bar"></span>
-      </div>
-      <div class="inputField">
-        <textarea id="messageField" class="inputField multiLineField" type="text" required></textarea>
-        <label for="messageField" class="inputField placeholder">Message</label>
-      </div>
-      <ul>
-        <li>
-          <button class="roundedButton cancel" (click)="showForm(false,false)">Cancel</button>
-        </li>
-        <li>
-          <button class="roundedButton default" (click)="showForm(false,false)">Send</button>
-        </li>
-      </ul>
-
-    </div>
-  </div>
+  <contact-sheet [toShow]="isFormShown" (change)="onContactSheetEvent($event)"></contact-sheet>
   <div>
     <footer class="footer">
       <p>Proair Sdn Bhd</p>
@@ -154,7 +119,8 @@ import './rxjs-operators';
         'app/assets/stylesheets/css/roundedButton.css'
     ]
   ,
-  providers: [AppService]
+  providers: [AppService],
+  directives: [ContactSheetComponent]
 })
 export class AppComponent{
   private errorMessage: string;
@@ -172,7 +138,6 @@ export class AppComponent{
   private contentCareers:Object;
 
   constructor(private appService: AppService) { }
-
   ngOnInit()
   {
     this.isMobileSizedWidth = this.checkIfMobileSized();
@@ -193,18 +158,6 @@ export class AppComponent{
   toggleMenu()
   {
     this.isMenuShown = !(this.isMenuShown);
-  }
-
-  showForm(toShow, cancel)
-  {
-    this.isFormShown = toShow;
-    if(!toShow)
-    {//send/cancel button clicked
-      if(!cancel)
-      {//send email
-
-      }
-    }
   }
 
   dismissMenu()
@@ -259,5 +212,10 @@ export class AppComponent{
                      .subscribe(
                        content => this.contentCareers = content,
                        error =>  console.log("app.component:getCareersContent() - \n" + <any>error));
+  }
+
+  onContactSheetEvent(toShow)
+  {
+    this.isFormShown = toShow;
   }
 }
