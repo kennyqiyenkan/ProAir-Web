@@ -1,0 +1,134 @@
+@import "variables";
+
+.container {
+	max-width: 960px;
+	overflow: auto;
+}
+
+.module {
+  font-family: $font-main;
+	color: $color-flat-black;
+	position: relative;
+  text-align: center;
+  padding: 0;
+	width: 100%;
+	overflow: hidden;
+	display: flex;
+  align-items: center;
+  justify-content: center;
+	flex-wrap: nowrap;
+	&:last-child {
+		margin-bottom: 0;
+	}
+	h2 {
+		padding: 10px;
+    font-size: 30px;
+	}
+	p {
+		max-width: 960px;
+		word-wrap: break-word;
+    padding: 25px;
+    margin-bottom: 40px;
+		font-size: 16px;
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	&.content
+	{
+		padding: 100px 0;
+	  background: $color-white;
+	}
+
+	&.parallax
+	{
+		height: 400px;
+		background-position: 50% 50%;
+		background-repeat: no-repeat;
+		background-attachment: fixed;
+		background-size: cover;
+		background-color: transparent;
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+	  h1 {
+	    font-family: $font-title;
+			color: rgba(255, 255, 255, 0.8);
+	    font-size: 48px;
+			text-transform: uppercase;
+			text-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	  }
+		img {
+			margin-top: 50px;
+			width: 100px;
+			height: auto;
+			max-width: 200px;
+			max-height: 200px;
+		}
+	}
+}
+
+.module.parallaxImage-Home {
+	background-image: linear-gradient(
+                     rgba(20,20,20, .3),
+                     rgba(20,20,20, .3)),
+                     url($folder-images + "proair-web-home-alt.jpg");
+}
+.module.parallaxImage-About {
+  background-image: linear-gradient(
+                     rgba(20,20,20, .3),
+                     rgba(20,20,20, .3)),
+                     url($folder-images + "proair-web-about.jpg");
+}
+.module.parallaxImage-Services {
+  background-image: linear-gradient(
+                     rgba(20,20,20, .3),
+                     rgba(20,20,20, .3)),
+                     url($folder-images + "proair-web-services.jpg");
+}
+.module.parallaxImage-Contact {
+  background-image: linear-gradient(
+                     rgba(20,20,20, .3),
+                     rgba(20,20,20, .3)),
+                     url($folder-images + "proair-web-contact.jpg");
+}
+.module.parallaxImage-Careers {
+  background-image: linear-gradient(
+                     rgba(20,20,20, .3),
+                     rgba(20,20,20, .3)),
+                     url($folder-images + "proair-web-careers.jpg");
+}
+
+@media all and (min-width: 600px) {
+	.module {
+		h2 {
+			font-size: 42px;
+		}
+		p {
+			font-size: 20px;
+		}
+	}
+	.module.parallax {
+    height: 450px;
+		h1 {
+			font-size: 96px;
+		}
+		img{
+			width: 150px;
+			height: auto;
+		}
+	}
+}
+@media all and (min-width: 960px) {
+	.module.parallax {
+    height: 500px;
+		h1 {
+			font-size: 160px;
+		}
+		img{
+			width: auto;
+			height: 200px;
+		}
+	}
+}
