@@ -30,11 +30,15 @@ var ContactSheetComponent = (function () {
     };
     ContactSheetComponent.prototype.sendEmail = function () {
         //only once send succeeds
-        this.emailService.sendEmail(this.name, this.email, this.title, this.message).subscribe();
+        this.emailService.sendEmail(this.name, this.email, this.title, this.message);
         this.toShow = false;
         this.change.emit(this.toShow);
     };
     ContactSheetComponent.prototype.dismissSheet = function () {
+        this.name = "";
+        this.email = "";
+        this.title = "";
+        this.message = "";
         this.toShow = false;
         this.change.emit(this.toShow);
     };
@@ -49,12 +53,13 @@ var ContactSheetComponent = (function () {
     ContactSheetComponent = __decorate([
         core_1.Component({
             selector: 'contact-sheet',
-            template: "\n  <div class=\"contactUsSheet\" [ngClass]=\"{ 'inactive' : !toShow }\">\n    <div class=\"contactUsSheet div\" [ngClass]=\"{ 'inactive' : !toShow }\">\n      <h2>Leave Us A Message</h2>\n      <p>We will get back to you as soon as possible. Please note that solicitors and third parties will not be entertained.</p>\n      <form>\n        <div class=\"inputField\">\n          <input id=\"nameField\" [(ngClass)]=\"name\" class=\"inputField oneLineField\" type=\"text\" required>\n          <label for=\"nameField\" class=\"inputField placeholder\">Name</label>\n          <span class=\"inputField underline\"></span>\n          <span class=\"inputField bar\"></span>\n        </div>\n        <div class=\"inputField\">\n          <input id=\"emailField\" [(ngClass)]=\"email\" class=\"inputField oneLineField\" type=\"email\" required>\n          <label for=\"emailField\" class=\"inputField placeholder\">Email</label>\n          <span class=\"inputField underline\"></span>\n          <span class=\"inputField bar\"></span>\n        </div>\n        <div class=\"inputField\">\n          <input id=\"titleField\" [(ngClass)]=\"title\" class=\"inputField oneLineField\" type=\"text\" required>\n          <label for=\"titleField\" class=\"inputField placeholder\">Subject</label>\n          <span class=\"inputField underline\"></span>\n          <span class=\"inputField bar\"></span>\n        </div>\n        <div class=\"inputField\">\n          <textarea id=\"messageField\" [(ngClass)]=\"message\" class=\"inputField multiLineField\" type=\"text\" required></textarea>\n          <label for=\"messageField\" class=\"inputField placeholder\">Message</label>\n        </div>\n        <ul>\n          <li>\n            <button class=\"roundedButton cancel\" (click)=\"close()\">Cancel</button>\n          </li>\n          <li>\n            <button class=\"roundedButton default\" (click)=\"close('send')\">Send</button>\n          </li>\n        </ul>\n      </form>\n    </div>\n  </div>\n  ",
+            template: "\n  <div class=\"contactUsSheet\" [ngClass]=\"{ 'inactive' : !toShow }\">\n    <div class=\"contactUsSheet div\" [ngClass]=\"{ 'inactive' : !toShow }\">\n      <h2>Leave Us A Message</h2>\n      <p>We will get back to you as soon as possible. Please note that solicitors and third parties will not be entertained.</p>\n      <form method=\"POST\">\n        <div class=\"inputField\">\n          <input id=\"nameField\" [(ngClass)]=\"name\" class=\"inputField oneLineField\" type=\"text\" required>\n          <label for=\"nameField\" class=\"inputField placeholder\">Name</label>\n          <span class=\"inputField underline\"></span>\n          <span class=\"inputField bar\"></span>\n        </div>\n        <div class=\"inputField\">\n          <input id=\"emailField\" [(ngClass)]=\"email\" class=\"inputField oneLineField\" type=\"email\" required>\n          <label for=\"emailField\" class=\"inputField placeholder\">Email</label>\n          <span class=\"inputField underline\"></span>\n          <span class=\"inputField bar\"></span>\n        </div>\n        <div class=\"inputField\">\n          <input id=\"titleField\" [(ngClass)]=\"title\" class=\"inputField oneLineField\" type=\"text\" required>\n          <label for=\"titleField\" class=\"inputField placeholder\">Subject</label>\n          <span class=\"inputField underline\"></span>\n          <span class=\"inputField bar\"></span>\n        </div>\n        <div class=\"inputField\">\n          <textarea id=\"messageField\" [(ngClass)]=\"message\" class=\"inputField multiLineField\" type=\"text\" required></textarea>\n          <label for=\"messageField\" class=\"inputField placeholder\">Message</label>\n        </div>\n        <ul>\n          <li>\n            <button class=\"roundedButton cancel\" (click)=\"close()\">Cancel</button>\n          </li>\n          <li>\n            <button class=\"roundedButton default\" (click)=\"close('send')\">Send</button>\n          </li>\n        </ul>\n      </form>\n    </div>\n  </div>\n  ",
             styleUrls: [
                 'app/assets/stylesheets/css/contactUsSheet.css',
                 'app/assets/stylesheets/css/inputField.css',
                 'app/assets/stylesheets/css/roundedButton.css'
             ],
+            directives: [],
             providers: [email_service_1.EmailService]
         }), 
         __metadata('design:paramtypes', [email_service_1.EmailService])

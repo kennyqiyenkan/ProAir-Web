@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
+var Observable_1 = require('rxjs/Observable');
 require('./rxjs-operators');
 var EmailService = (function () {
     function EmailService(http) {
@@ -24,7 +25,7 @@ var EmailService = (function () {
         var errMsg = (error.message) ? error.message :
             error.status ? error.status + " - " + error.statusText : 'Server error';
         console.error(errMsg); // log to console instead
-        return Observable.throw(errMsg);
+        return Observable_1.Observable.throw(errMsg);
     };
     EmailService = __decorate([
         core_1.Injectable(), 

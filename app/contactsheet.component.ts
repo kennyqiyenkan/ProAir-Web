@@ -8,7 +8,7 @@ import { EmailService } from './email.service';
     <div class="contactUsSheet div" [ngClass]="{ 'inactive' : !toShow }">
       <h2>Leave Us A Message</h2>
       <p>We will get back to you as soon as possible. Please note that solicitors and third parties will not be entertained.</p>
-      <form>
+      <form method="POST">
         <div class="inputField">
           <input id="nameField" [(ngClass)]="name" class="inputField oneLineField" type="text" required>
           <label for="nameField" class="inputField placeholder">Name</label>
@@ -50,6 +50,8 @@ import { EmailService } from './email.service';
         'app/assets/stylesheets/css/roundedButton.css'
     ]
   ,
+  directives: []
+  ,
   providers: [EmailService]
 })
 export class ContactSheetComponent implements OnInit{
@@ -83,13 +85,17 @@ export class ContactSheetComponent implements OnInit{
   sendEmail()
   {
     //only once send succeeds
-    this.emailService.sendEmail(this.name, this.email, this.title, this.message).subscribe();
+    this.emailService.sendEmail(this.name, this.email, this.title, this.message);
     this.toShow = false;
     this.change.emit(this.toShow);
   }
 
   dismissSheet()
   {
+    this.name = "";
+    this.email = "";
+    this.title = "";
+    this.message = "";
     this.toShow = false;
     this.change.emit(this.toShow);
   }

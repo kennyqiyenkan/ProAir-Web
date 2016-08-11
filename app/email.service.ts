@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Http, Response} from '@angular/http'
+import { Observable } from 'rxjs/Observable';
 import './rxjs-operators';
 
 @Injectable()
@@ -18,7 +19,7 @@ export class EmailService
       ${content}
     `;
   }
-  
+
   handleError (error: any) {
     // In a real world app, we might use a remote logging infrastructure
     // We'd also dig deeper into the error to get a better message
