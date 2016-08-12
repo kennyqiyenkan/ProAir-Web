@@ -44,4 +44,11 @@ export class GoogleRecaptchaDirective implements OnInit {
       });
     }, 1000);
   }
+
+  reset()
+  {
+    setTimeout(() => {
+      grecaptcha.reset();
+    }, 1000);
+  }
 }

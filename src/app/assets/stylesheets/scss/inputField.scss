@@ -125,7 +125,7 @@ $pading-size: 25px;
   .multiLineField
   {
     font-size: $font-norm-size;
-    width: 100%;
+    width: calc(100% - 20px);
     height: 300px;
     border: 1px solid;
     padding: 10px;
