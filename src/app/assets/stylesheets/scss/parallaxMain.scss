@@ -74,7 +74,7 @@
 	background-image: linear-gradient(
                      rgba(20,20,20, .3),
                      rgba(20,20,20, .3)),
-                     url($folder-images + "proair-web-home-alt.jpg");
+                     url($folder-images + "proair-web-home.jpg");
 }
 .module.parallaxImage-About {
   background-image: linear-gradient(
@@ -87,6 +87,12 @@
                      rgba(20,20,20, .3),
                      rgba(20,20,20, .3)),
                      url($folder-images + "proair-web-services.jpg");
+}
+.module.parallaxImage-Projects {
+  background-image: linear-gradient(
+                     rgba(20,20,20, .3),
+                     rgba(20,20,20, .3)),
+                     url($folder-images + "proair-web-projects.jpg");
 }
 .module.parallaxImage-Contact {
   background-image: linear-gradient(

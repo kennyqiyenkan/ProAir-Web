@@ -18,6 +18,12 @@
 
   }
   ,
+  "projects" :
+  {
+    "title" : "",
+    "content" : ""
+  }
+  ,
   "contact" :
   {
     "title" : "Where We Are",

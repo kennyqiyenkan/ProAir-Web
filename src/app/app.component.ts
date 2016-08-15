@@ -15,6 +15,7 @@ import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
         </a>
         <li *ngIf="!isMobileSizedWidth"><a href="#Careers">Careers</a></li>
         <li *ngIf="!isMobileSizedWidth"><a href="#Contact">Contact</a></li>
+        <li *ngIf="!isMobileSizedWidth"><a href="#Projects">Projects</a></li>
         <li *ngIf="!isMobileSizedWidth"><a href="#Services">Services</a></li>
         <li *ngIf="!isMobileSizedWidth"><a href="#About">About</a></li>
         <li *ngIf="isMobileSizedWidth"><button (click)="toggleMenu($event)">☰</button></li>
@@ -26,6 +27,7 @@ import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
       <ul>
         <li><a href="#About">About</a></li>
         <li><a href="#Services">Services</a></li>
+        <li><a href="#Projects">Projects</a></li>
         <li><a href="#Contact">Contact</a></li>
         <li><a href="#Careers">Careers</a></li>
       </ul>
@@ -70,6 +72,19 @@ import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
       <div class="container">
         <h2>{{(contentServices | async)?.title}}</h2>
         <p>{{(contentServices | async)?.content}}</p>
+      </div>
+    </section>
+
+    <section class="module parallax parallaxImage-Projects" id="Projects">
+      <div class="container">
+        <h1>Projects</h1>
+      </div>
+    </section>
+
+    <section class="module content">
+      <div class="container">
+        <h2>{{(contentProjects | async)?.title}}</h2>
+        <p>{{(contentProjects | async)?.content}}</p>
       </div>
     </section>
 
@@ -132,6 +147,7 @@ export class AppComponent{
   private contentHome:any;
   private contentAbout:any;
   private contentServices:any;
+  private contentProjects:any;
   private contentContact:any;
   private contentCareers:any;
 
@@ -169,6 +185,7 @@ export class AppComponent{
     this.getHomeContent();
     this.getAboutContent();
     this.getServicesContent();
+    this.getProjectsContent();
     this.getContactContent();
     this.getCareersContent();
   }
@@ -192,6 +209,13 @@ export class AppComponent{
     this.contentServices = this.af
                         .database
                         .object('/services');
+  }
+
+  getProjectsContent()
+  {
+    this.contentProjects = this.af
+                        .database
+                        .object('/projects');
   }
 
   getContactContent()
