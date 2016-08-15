@@ -93,8 +93,14 @@ export class ContactSheetComponent implements OnInit{
 
   validify()
   {//check fields and google reCAPTCHA
-
-    this.sendEmail();
+    if(this.contactSheetService.notARobot)
+    {
+      alert("recaptcha succeeded");
+      //this.sendEmail();
+    }else{
+      //TODO: make it look nice
+      alert("recaptcha failed");
+    }
   }
 
   sendEmail()
@@ -109,6 +115,7 @@ export class ContactSheetComponent implements OnInit{
 
   handleResponse(response)
   {
+    //TODO: MAKE IT LOOK NICE
       if(response.status =='success'){
         alert('Thank you for contacting us. We will get back to you as soon as possible.');
       }

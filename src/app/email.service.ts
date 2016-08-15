@@ -24,9 +24,9 @@ export class EmailService {
     let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
     let options = new RequestOptions({ headers: headers });
 
-    return (this.http.post(this.contactUrl, body, options)
+    return this.http.post(this.contactUrl, body, options)
                     .map(res =>  <string> res.json())
-                    .catch(this.handleError));
+                    .catch(this.handleError);
   }
 
   private handleError (error: Response)

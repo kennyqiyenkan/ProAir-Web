@@ -65,7 +65,7 @@ module.exports =
 	app.use('/assets', express.static(path.join(__dirname, 'assets'), { maxAge: 30 }));
 	app.use(express.static(path.join(ROOT, 'dist/client'), { index: false }));
 	var api_1 = __webpack_require__(9);
-	app.get('/data.json', api_1.serverApi);
+	app.post('/grecaptcha', api_1.gRecaptchaPost);
 	var main_node_1 = __webpack_require__(12);
 	app.get('/', main_node_1.ngApp);
 	function indexFile(req, res) {
@@ -77,20 +77,9 @@ module.exports =
 	    var json = JSON.stringify(pojo, null, 2);
 	    res.status(404).send(json);
 	});
-	app.post('/gRECAPTCHA', function (req, res) {
-	    console.log("app.post('/gRECAPTCHA') called");
-	    if (req.body['g-recaptcha-response'] === undefined || req.body['g-recaptcha-response'] === '' || req.body['g-recaptcha-response'] === null) {
-	        return res.json({ "responseCode": 1, "responseDesc": "Please select captcha" });
-	    }
-	    var secretKey = "6LfZuiYTAAAAAIe3D4NVVP9BSFWXOK7J5JYlZKRE";
-	    var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret=" + secretKey + "&response=" + req.body['g-recaptcha-response'] + "&remoteip=" + req.connection.remoteAddress;
-	    request(verificationUrl, function (error, response, body) {
-	        body = JSON.parse(body);
-	        if (body.success !== undefined && !body.success) {
-	            return res.json({ "responseCode": 1, "responseDesc": "Failed captcha verification" });
-	        }
-	        res.json({ "responseCode": 0, "responseDesc": "Sucess" });
-	    });
+	app.post('/', function (req, res) {
+	    console.log(req.body);
+	    res.status(200).end();
 	});
 	var server = app.listen(process.env.PORT || 3000, function () {
 	    console.log("Listening on: http://localhost:" + server.address().port);
@@ -151,63 +140,27 @@ module.exports =
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var db_1 = __webpack_require__(10);
-	var cache_1 = __webpack_require__(11);
-	var USER_ID = 'f9d98cf1-1b96-464e-8755-bcc2a5c09077';
-	function serverApi(req, res) {
-	    var key = USER_ID + '/data.json';
-	    var cache = cache_1.fakeDemoRedisCache.get(key);
-	    if (cache !== undefined) {
-	        console.log('/data.json Cache Hit');
-	        return res.json(cache);
+	var request = __webpack_require__(6);
+	function gRecaptchaPost(req, res) {
+	    if (req.body['g-recaptcha-response'] === undefined || req.body['g-recaptcha-response'] === '' || req.body['g-recaptcha-response'] === null) {
+	        return res.status(406).json({ "responseCode": 1, "responseDesc": "Please select captcha" });
 	    }
-	    console.log('/data.json Cache Miss');
-	    db_1.fakeDataBase.get()
-	        .then(function (data) {
-	        cache_1.fakeDemoRedisCache.set(key, data);
-	        return data;
-	    })
-	        .then(function (data) { return res.json(data); });
-	}
-	exports.serverApi = serverApi;
-
-
-/***/ },
-/* 10 */
-/***/ function(module, exports) {
-
-	"use strict";
-	exports.fakeDataBase = {
-	    get: function () {
-	        var res = { data: 'This fake data came from the db on the server.' };
-	        return Promise.resolve(res);
-	    }
-	};
-
-
-/***/ },
-/* 11 */
-/***/ function(module, exports) {
-
-	"use strict";
-	var _fakeLRUcount = 0;
-	exports.fakeDemoRedisCache = {
-	    _cache: {},
-	    get: function (key) {
-	        var cache = exports.fakeDemoRedisCache._cache[key];
-	        _fakeLRUcount++;
-	        if (_fakeLRUcount >= 10) {
-	            exports.fakeDemoRedisCache.clear();
-	            _fakeLRUcount = 0;
+	    var secretKey = "6LfZuiYTAAAAAIe3D4NVVP9BSFWXOK7J5JYlZKRE";
+	    var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret=" + secretKey + "&response=" + req.body['g-recaptcha-response'] + "&remoteip=" + req.connection.remoteAddress;
+	    request(verificationUrl, function (error, response, body) {
+	        body = JSON.parse(body);
+	        if (body.success !== undefined && !body.success) {
+	            return res.status(403).json({ "responseCode": 1, "responseDesc": "Failed captcha verification" });
 	        }
-	        return cache;
-	    },
-	    set: function (key, data) { return exports.fakeDemoRedisCache._cache[key] = data; },
-	    clear: function () { return exports.fakeDemoRedisCache._cache = {}; }
-	};
+	        res.status(200).json({ "responseCode": 0, "responseDesc": "Success" });
+	    });
+	}
+	exports.gRecaptchaPost = gRecaptchaPost;
 
 
 /***/ },
+/* 10 */,
+/* 11 */,
 /* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -443,7 +396,12 @@ module.exports =
 	        this.contactSheetService.gRecaptchaPost(response);
 	    };
 	    ContactSheetComponent.prototype.validify = function () {
-	        this.sendEmail();
+	        if (this.contactSheetService.notARobot) {
+	            alert("recaptcha succeeded");
+	        }
+	        else {
+	            alert("recaptcha failed");
+	        }
 	    };
 	    ContactSheetComponent.prototype.sendEmail = function () {
 	        var _this = this;
@@ -532,9 +490,9 @@ module.exports =
 	        var body = "name=" + name + "&email=" + email + "&title=" + title + "&message=" + message;
 	        var headers = new http_2.Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
 	        var options = new http_2.RequestOptions({ headers: headers });
-	        return (this.http.post(this.contactUrl, body, options)
+	        return this.http.post(this.contactUrl, body, options)
 	            .map(function (res) { return res.json(); })
-	            .catch(this.handleError));
+	            .catch(this.handleError);
 	    };
 	    EmailService.prototype.handleError = function (error) {
 	        console.error('Error in retrieving news: ' + error);
@@ -642,17 +600,25 @@ module.exports =
 	};
 	var core_1 = __webpack_require__(7);
 	var http_1 = __webpack_require__(20);
+	var Observable_1 = __webpack_require__(21);
 	var ContactSheetService = (function () {
 	    function ContactSheetService(http) {
 	        this.http = http;
+	        this.notARobot = false;
 	    }
 	    ContactSheetService.prototype.gRecaptchaPost = function (response) {
-	        console.log("gRecaptchaPost called");
+	        var _this = this;
 	        var body = JSON.stringify({ 'g-recaptcha-response': response });
-	        console.log("gRecaptchaPost body: " + body);
+	        console.log("gRecaptchaPost called with body " + body);
 	        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
 	        var options = new http_1.RequestOptions({ headers: headers });
-	        this.http.post('/gRECAPTCHA', body, options);
+	        this.http.post('/grecaptcha', body, options)
+	            .subscribe(function (res) { return _this.notARobot =
+	            (res.json().responseDesc === 'Success') ? true : false; });
+	    };
+	    ContactSheetService.prototype.handleError = function (error) {
+	        console.error('Error in retrieving news: ' + error);
+	        return Observable_1.Observable.throw(error.json().error || 'Server error');
 	    };
 	    ContactSheetService = __decorate([
 	        core_1.Injectable(), 

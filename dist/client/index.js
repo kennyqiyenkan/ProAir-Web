@@ -71443,7 +71443,12 @@
 	        this.contactSheetService.gRecaptchaPost(response);
 	    };
 	    ContactSheetComponent.prototype.validify = function () {
-	        this.sendEmail();
+	        if (this.contactSheetService.notARobot) {
+	            alert("recaptcha succeeded");
+	        }
+	        else {
+	            alert("recaptcha failed");
+	        }
 	    };
 	    ContactSheetComponent.prototype.sendEmail = function () {
 	        var _this = this;
@@ -71532,9 +71537,9 @@
 	        var body = "name=" + name + "&email=" + email + "&title=" + title + "&message=" + message;
 	        var headers = new http_2.Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
 	        var options = new http_2.RequestOptions({ headers: headers });
-	        return (this.http.post(this.contactUrl, body, options)
+	        return this.http.post(this.contactUrl, body, options)
 	            .map(function (res) { return res.json(); })
-	            .catch(this.handleError));
+	            .catch(this.handleError);
 	    };
 	    EmailService.prototype.handleError = function (error) {
 	        console.error('Error in retrieving news: ' + error);
@@ -71630,17 +71635,25 @@
 	};
 	var core_1 = __webpack_require__(38);
 	var http_1 = __webpack_require__(368);
+	var Observable_1 = __webpack_require__(71);
 	var ContactSheetService = (function () {
 	    function ContactSheetService(http) {
 	        this.http = http;
+	        this.notARobot = false;
 	    }
 	    ContactSheetService.prototype.gRecaptchaPost = function (response) {
-	        console.log("gRecaptchaPost called");
+	        var _this = this;
 	        var body = JSON.stringify({ 'g-recaptcha-response': response });
-	        console.log("gRecaptchaPost body: " + body);
+	        console.log("gRecaptchaPost called with body " + body);
 	        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
 	        var options = new http_1.RequestOptions({ headers: headers });
-	        this.http.post('/gRECAPTCHA', body, options);
+	        this.http.post('/grecaptcha', body, options)
+	            .subscribe(function (res) { return _this.notARobot =
+	            (res.json().responseDesc === 'Success') ? true : false; });
+	    };
+	    ContactSheetService.prototype.handleError = function (error) {
+	        console.error('Error in retrieving news: ' + error);
+	        return Observable_1.Observable.throw(error.json().error || 'Server error');
 	    };
 	    ContactSheetService = __decorate([
 	        core_1.Injectable(), 
