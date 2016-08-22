@@ -65,7 +65,8 @@ module.exports =
 	app.use('/assets', express.static(path.join(__dirname, 'assets'), { maxAge: 30 }));
 	app.use(express.static(path.join(ROOT, 'dist/client'), { index: false }));
 	var api_1 = __webpack_require__(9);
-	app.get('/data.json', api_1.serverApi);
+	app.post('/grecaptcha', api_1.gRecaptchaPost);
+	app.post('/mailgun', api_1.sendContactEmail);
 	var main_node_1 = __webpack_require__(11);
 	app.get('/', main_node_1.ngApp);
 	function indexFile(req, res) {
@@ -151,29 +152,49 @@ module.exports =
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var db_1 = __webpack_require__(38);
-	var cache_1 = __webpack_require__(39);
-	var USER_ID = 'f9d98cf1-1b96-464e-8755-bcc2a5c09077';
-	function serverApi(req, res) {
-	    var key = USER_ID + '/data.json';
-	    var cache = cache_1.fakeDemoRedisCache.get(key);
-	    if (cache !== undefined) {
-	        console.log('/data.json Cache Hit');
-	        return res.json(cache);
-	    }
-	    console.log('/data.json Cache Miss');
-	    db_1.fakeDataBase.get()
-	        .then(function (data) {
-	        cache_1.fakeDemoRedisCache.set(key, data);
-	        return data;
-	    })
-	        .then(function (data) { return res.json(data); });
+	var needle = __webpack_require__(10);
+	var request = __webpack_require__(6);
+	function sendContactEmail(req, res) {
+	    var DOMAIN = 'sandbox587d48a9dc7c4ef696a3a149c2d9747d.mailgun.org';
+	    var KEY = 'key-998712bea03a50212c650813b823352f';
+	    var options = req.body;
+	    var recipient = (process.env.NODE_ENV !== 'production') ?
+	        'qiyen77@gmail.com' :
+	        'proair@proairmarine.com';
+	    needle.post("https://api:" + KEY + "@api.mailgun.net/v3/" + DOMAIN + "/messages", {
+	        from: options.email,
+	        to: recipient,
+	        subject: "Email from " + options.name + " titled: " + options.title,
+	        text: options.message,
+	    }, function (err, response) { return (err) ?
+	        res.status(200).json({ sent: false, data: err }) :
+	        res.status(200).json({ sent: true, data: response.body }); });
 	}
-	exports.serverApi = serverApi;
+	exports.sendContactEmail = sendContactEmail;
+	function gRecaptchaPost(req, res) {
+	    if (req.body['g-recaptcha-response'] === undefined || req.body['g-recaptcha-response'] === '' || req.body['g-recaptcha-response'] === null) {
+	        return res.status(406).json({ "responseCode": 1, "responseDesc": "Please select captcha" });
+	    }
+	    var secretKey = "6LfZuiYTAAAAAIe3D4NVVP9BSFWXOK7J5JYlZKRE";
+	    var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret=" + secretKey + "&response=" + req.body['g-recaptcha-response'] + "&remoteip=" + req.connection.remoteAddress;
+	    request(verificationUrl, function (error, response, body) {
+	        body = JSON.parse(body);
+	        if (body.success !== undefined && !body.success) {
+	            return res.status(403).json({ "responseCode": 1, "responseDesc": "Failed captcha verification" });
+	        }
+	        res.status(200).json({ "responseCode": 0, "responseDesc": "Success" });
+	    });
+	}
+	exports.gRecaptchaPost = gRecaptchaPost;
 
 
 /***/ },
-/* 10 */,
+/* 10 */
+/***/ function(module, exports) {
+
+	module.exports = require("needle");
+
+/***/ },
 /* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -392,9 +413,11 @@ module.exports =
 	var core_1 = __webpack_require__(7);
 	var email_service_1 = __webpack_require__(18);
 	var recaptcha_component_1 = __webpack_require__(28);
+	var contactsheet_service_1 = __webpack_require__(29);
 	var ContactSheetComponent = (function () {
-	    function ContactSheetComponent(emailService) {
+	    function ContactSheetComponent(emailService, contactSheetService) {
 	        this.emailService = emailService;
+	        this.contactSheetService = contactSheetService;
 	        this.change = new core_1.EventEmitter();
 	        this.siteKey = "6LfZuiYTAAAAAMRzu7e-qsNfljAvyQkSvKpmSa4S";
 	    }
@@ -409,13 +432,32 @@ module.exports =
 	        }
 	    };
 	    ContactSheetComponent.prototype.resolved = function (response) {
+	        console.log("gRECAPTCHA response: " + response);
+	        this.contactSheetService.gRecaptchaPost(response);
 	    };
 	    ContactSheetComponent.prototype.validify = function () {
-	        this.sendEmail();
+	        if (this.contactSheetService.notARobot) {
+	            this.sendEmail();
+	        }
+	        else {
+	            alert("recaptcha failed");
+	        }
 	    };
 	    ContactSheetComponent.prototype.sendEmail = function () {
-	        this.emailService.sendEmail(this.name, this.email, this.title, this.message);
+	        var _this = this;
+	        this.emailService.postEmail(this.name, this.email, this.title, this.message).subscribe(function (response) {
+	            console.log(response);
+	            _this.handleResponse(response);
+	        }, function (error) { return _this.handleResponse(error); });
+	    };
+	    ContactSheetComponent.prototype.handleResponse = function (response) {
 	        this.dismissSheet();
+	        if (response.sent) {
+	            alert('Thank you for contacting us. We will get back to you as soon as possible.');
+	        }
+	        else {
+	            alert('There was an issue in contacting us. If the problem persists. Please email us directly at proair@proairmarine.com. Thank you for your understanding.');
+	        }
 	    };
 	    ContactSheetComponent.prototype.dismissSheet = function () {
 	        this.name = "";
@@ -448,9 +490,9 @@ module.exports =
 	                __webpack_require__(32),
 	            ],
 	            directives: [recaptcha_component_1.GoogleRecaptchaDirective],
-	            providers: [email_service_1.EmailService]
+	            providers: [email_service_1.EmailService, contactsheet_service_1.ContactSheetService]
 	        }), 
-	        __metadata('design:paramtypes', [email_service_1.EmailService])
+	        __metadata('design:paramtypes', [email_service_1.EmailService, contactsheet_service_1.ContactSheetService])
 	    ], ContactSheetComponent);
 	    return ContactSheetComponent;
 	}());
@@ -473,19 +515,38 @@ module.exports =
 	};
 	var core_1 = __webpack_require__(7);
 	var http_1 = __webpack_require__(19);
+	var http_2 = __webpack_require__(19);
 	var Observable_1 = __webpack_require__(20);
+	__webpack_require__(21);
+	__webpack_require__(22);
+	__webpack_require__(23);
+	__webpack_require__(24);
+	__webpack_require__(25);
+	__webpack_require__(26);
+	__webpack_require__(27);
 	var EmailService = (function () {
 	    function EmailService(http) {
 	        this.http = http;
 	    }
-	    EmailService.prototype.sendEmail = function (name, email, title, content) {
-	        var message = "\n      From    : " + name + "\n      Email   : " + email + "\n      Title   : " + title + "\n      Message :\n      " + content + "\n    ";
+	    EmailService.prototype.postEmail = function (name, email, title, message) {
+	        var _this = this;
+	        var body = { name: name,
+	            email: email,
+	            title: title,
+	            message: message };
+	        var headers = new http_2.Headers({ 'Content-Type': 'application/json' });
+	        var options = new http_2.RequestOptions({ headers: headers });
+	        return new Observable_1.Observable(function (observer) {
+	            _this.http.post('/mailgun', body, options)
+	                .subscribe(function (res) {
+	                observer.next(res.json());
+	                observer.complete();
+	            });
+	        });
 	    };
 	    EmailService.prototype.handleError = function (error) {
-	        var errMsg = (error.message) ? error.message :
-	            error.status ? error.status + " - " + error.statusText : 'Server error';
-	        console.error(errMsg);
-	        return Observable_1.Observable.throw(errMsg);
+	        console.error('Error in retrieving news: ' + error);
+	        return Observable_1.Observable.throw(error.json().error || 'Server error');
 	    };
 	    EmailService = __decorate([
 	        core_1.Injectable(), 
@@ -509,13 +570,48 @@ module.exports =
 	module.exports = require("rxjs/Observable");
 
 /***/ },
-/* 21 */,
-/* 22 */,
-/* 23 */,
-/* 24 */,
-/* 25 */,
-/* 26 */,
-/* 27 */,
+/* 21 */
+/***/ function(module, exports) {
+
+	module.exports = require("rxjs/add/observable/throw");
+
+/***/ },
+/* 22 */
+/***/ function(module, exports) {
+
+	module.exports = require("rxjs/add/operator/catch");
+
+/***/ },
+/* 23 */
+/***/ function(module, exports) {
+
+	module.exports = require("rxjs/add/operator/debounceTime");
+
+/***/ },
+/* 24 */
+/***/ function(module, exports) {
+
+	module.exports = require("rxjs/add/operator/distinctUntilChanged");
+
+/***/ },
+/* 25 */
+/***/ function(module, exports) {
+
+	module.exports = require("rxjs/add/operator/map");
+
+/***/ },
+/* 26 */
+/***/ function(module, exports) {
+
+	module.exports = require("rxjs/add/operator/switchMap");
+
+/***/ },
+/* 27 */
+/***/ function(module, exports) {
+
+	module.exports = require("rxjs/add/operator/toPromise");
+
+/***/ },
 /* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -581,7 +677,51 @@ module.exports =
 
 
 /***/ },
-/* 29 */,
+/* 29 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var core_1 = __webpack_require__(7);
+	var http_1 = __webpack_require__(19);
+	var Observable_1 = __webpack_require__(20);
+	var ContactSheetService = (function () {
+	    function ContactSheetService(http) {
+	        this.http = http;
+	        this.notARobot = false;
+	    }
+	    ContactSheetService.prototype.gRecaptchaPost = function (response) {
+	        var _this = this;
+	        var body = JSON.stringify({ 'g-recaptcha-response': response });
+	        console.log("gRecaptchaPost called with body " + body);
+	        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+	        var options = new http_1.RequestOptions({ headers: headers });
+	        this.http.post('/grecaptcha', body, options)
+	            .subscribe(function (res) { return _this.notARobot =
+	            (res.json().responseDesc === 'Success') ? true : false; });
+	    };
+	    ContactSheetService.prototype.handleError = function (error) {
+	        console.error('Error in retrieving news: ' + error);
+	        return Observable_1.Observable.throw(error.json().error || 'Server error');
+	    };
+	    ContactSheetService = __decorate([
+	        core_1.Injectable(), 
+	        __metadata('design:paramtypes', [http_1.Http])
+	    ], ContactSheetService);
+	    return ContactSheetService;
+	}());
+	exports.ContactSheetService = ContactSheetService;
+
+
+/***/ },
 /* 30 */
 /***/ function(module, exports) {
 
@@ -628,41 +768,6 @@ module.exports =
 /***/ function(module, exports) {
 
 	module.exports = ".footer{font-family:\"Muli\",sans-serif;position:relative;display:block;padding:0;min-height:50px;max-height:300px;background-color:#333;display:flex;align-items:center;justify-content:center}.footer p{color:#fff}\n"
-
-/***/ },
-/* 38 */
-/***/ function(module, exports) {
-
-	"use strict";
-	exports.fakeDataBase = {
-	    get: function () {
-	        var res = { data: 'This fake data came from the db on the server.' };
-	        return Promise.resolve(res);
-	    }
-	};
-
-
-/***/ },
-/* 39 */
-/***/ function(module, exports) {
-
-	"use strict";
-	var _fakeLRUcount = 0;
-	exports.fakeDemoRedisCache = {
-	    _cache: {},
-	    get: function (key) {
-	        var cache = exports.fakeDemoRedisCache._cache[key];
-	        _fakeLRUcount++;
-	        if (_fakeLRUcount >= 10) {
-	            exports.fakeDemoRedisCache.clear();
-	            _fakeLRUcount = 0;
-	        }
-	        return cache;
-	    },
-	    set: function (key, data) { return exports.fakeDemoRedisCache._cache[key] = data; },
-	    clear: function () { return exports.fakeDemoRedisCache._cache = {}; }
-	};
-
 
 /***/ }
 /******/ ]);

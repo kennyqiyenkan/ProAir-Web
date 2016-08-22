@@ -1,6 +1,7 @@
 import { Component, ViewChild, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { EmailService } from './email.service';
 import { GoogleRecaptchaDirective } from './recaptcha.component';
+import {ContactSheetService } from './contactsheet.service';
 @Component({
   selector: 'contact-sheet',
   template:
@@ -56,13 +57,14 @@ import { GoogleRecaptchaDirective } from './recaptcha.component';
   ,
   directives: [GoogleRecaptchaDirective]
   ,
-  providers: [EmailService]
+  providers: [EmailService, ContactSheetService]
 })
 export class ContactSheetComponent implements OnInit{
   @Input() toShow:boolean;
   @Output() change:EventEmitter<boolean> = new EventEmitter<boolean>();
   @ViewChild(GoogleRecaptchaDirective) gRecaptchaElement;
-  constructor(private emailService:EmailService) {}
+
+  constructor(private emailService:EmailService, private contactSheetService:ContactSheetService) {}
 
   private siteKey = "6LfZuiYTAAAAAMRzu7e-qsNfljAvyQkSvKpmSa4S";
 
@@ -85,19 +87,43 @@ export class ContactSheetComponent implements OnInit{
 
   resolved(response)
   {
-
+    console.log("gRECAPTCHA response: " + response);
+    this.contactSheetService.gRecaptchaPost(response);
   }
 
   validify()
   {//check fields and google reCAPTCHA
-    this.sendEmail();
+    if(this.contactSheetService.notARobot)
+    {
+      this.sendEmail();
+    }else{
+      //TODO: make it look nice
+      alert("recaptcha failed");
+    }
   }
 
   sendEmail()
   {
     //only once send succeeds
-    this.emailService.sendEmail(this.name, this.email, this.title, this.message);
+    this.emailService.postEmail(this.name, this.email, this.title, this.message).subscribe(
+        response => {
+          console.log(response);
+          this.handleResponse(response);
+        },
+        error => this.handleResponse(error)
+      );
+  }
+
+  handleResponse(response)
+  {
+    //TODO: MAKE IT LOOK NICE
     this.dismissSheet();
+    if(response.sent)
+    {
+      alert('Thank you for contacting us. We will get back to you as soon as possible.');
+    }else{
+      alert('There was an issue in contacting us. If the problem persists. Please email us directly at proair@proairmarine.com. Thank you for your understanding.');
+    }
   }
 
   dismissSheet()

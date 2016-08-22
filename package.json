@@ -22,6 +22,7 @@
     "debug": "node --debug-brk dist/server/index.js"
   },
   "contributors": [
+    "Kenny Kan <kanqiyen@gmail.com>",
     "Eric Adamski <ericadamski@zealigan.com>"
   ],
   "dependencies": {
@@ -41,6 +42,7 @@
     "firebase": "^3.2.1",
     "methods": "~1.1.2",
     "moment": "^2.14.1",
+    "needle": "^1.1.0",
     "ng2-cache": "^0.1.4",
     "ng2-page-scroll": "^1.2.1",
     "parse5": "^1.5.0",
