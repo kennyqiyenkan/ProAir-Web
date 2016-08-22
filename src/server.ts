@@ -33,10 +33,11 @@ app.use('/assets', express.static(path.join(__dirname, 'assets'), {maxAge: 30}))
 app.use(express.static(path.join(ROOT, 'dist/client'), {index: false}));
 
 
-import { gRecaptchaPost } from './backend/api';
+import { gRecaptchaPost, sendContactEmail } from './backend/api';
 
 // Our API
 app.post('/grecaptcha', gRecaptchaPost);
+app.post('/mailgun', sendContactEmail);
 
 import { ngApp } from './main.node';
 // Routes with html5pushstate
@@ -55,11 +56,6 @@ app.get('*', function(req, res) {
   var pojo = { status: 404, message: 'No Content' };
   var json = JSON.stringify(pojo, null, 2);
   res.status(404).send(json);
-});
-
-app.post('/', function(req, res) {
-  console.log(req.body);
-  res.status(200).end();
 });
 
 // Server

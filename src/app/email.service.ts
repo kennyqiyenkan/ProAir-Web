@@ -2,6 +2,7 @@ import {Injectable}               from '@angular/core';
 import {Http, Response}           from '@angular/http';
 import {Headers, RequestOptions}  from '@angular/http';
 import {Observable}               from 'rxjs/Observable';
+
 import 'rxjs/add/observable/throw';
 
 // Operators
@@ -16,17 +17,24 @@ import 'rxjs/add/operator/toPromise';
 export class EmailService {
   constructor (private http: Http) {}
 
-  private contactUrl = './email.php';
-
-  postEmail(name, email, title, message): Observable<string>
+  postEmail(name, email, title, message): Observable<Response>
   {
-    let body = `name=${name}&email=${email}&title=${title}&message=${message}`;
-    let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+    let body = {name:name,
+                email:email,
+                title:title,
+                message:message};
+    let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.post(this.contactUrl, body, options)
-                    .map(res =>  <string> res.json())
-                    .catch(this.handleError);
+    return new Observable<Response>(observer =>
+      {
+        this.http.post('/mailgun', body, options)
+          .subscribe(res =>
+            {
+              observer.next(res.json());
+              observer.complete();
+            });
+      });
   }
 
   private handleError (error: Response)

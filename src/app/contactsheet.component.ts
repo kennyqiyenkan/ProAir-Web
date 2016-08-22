@@ -95,8 +95,7 @@ export class ContactSheetComponent implements OnInit{
   {//check fields and google reCAPTCHA
     if(this.contactSheetService.notARobot)
     {
-      alert("recaptcha succeeded");
-      //this.sendEmail();
+      this.sendEmail();
     }else{
       //TODO: make it look nice
       alert("recaptcha failed");
@@ -107,23 +106,25 @@ export class ContactSheetComponent implements OnInit{
   {
     //only once send succeeds
     this.emailService.postEmail(this.name, this.email, this.title, this.message).subscribe(
-        response => this.handleResponse(response),
+        response => {
+          console.log(response);
+          this.handleResponse(response);
+        },
         error => this.handleResponse(error)
       );
-    this.dismissSheet();
   }
 
   handleResponse(response)
   {
     //TODO: MAKE IT LOOK NICE
-      if(response.status =='success'){
-        alert('Thank you for contacting us. We will get back to you as soon as possible.');
-      }
-
-      if(response.status =='error'){
-        alert('There was an issue in contacting us. If the problem persists. Please email us directly at proair@proairmarine.com. Thank you for your understanding.');
-      }
+    this.dismissSheet();
+    if(response.sent)
+    {
+      alert('Thank you for contacting us. We will get back to you as soon as possible.');
+    }else{
+      alert('There was an issue in contacting us. If the problem persists. Please email us directly at proair@proairmarine.com. Thank you for your understanding.');
     }
+  }
 
   dismissSheet()
   {

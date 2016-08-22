@@ -9,6 +9,7 @@
 /// <reference path="globals/imagesloaded/index.d.ts" />
 /// <reference path="globals/jquery/index.d.ts" />
 /// <reference path="globals/mime/index.d.ts" />
+/// <reference path="globals/needle/index.d.ts" />
 /// <reference path="globals/node/index.d.ts" />
 /// <reference path="globals/serve-static/index.d.ts" />
 /// <reference path="modules/es6-promise/index.d.ts" />
