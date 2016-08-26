@@ -20,26 +20,29 @@
   {
     outline: none;
   }
-  &:hover
+  &:enabled:hover
   {
     font-size: 1.1em;
-
+    color: $color-white;
+  }
+  &:disabled
+  {
+    color: lighten($color-flat-black, 50%);
+    border-color: lighten($color-flat-black, 50%);
   }
   &.cancel
   {
-    &:hover
+    &:enabled:hover
     {
       border-color: $color-flat-red;
       background-color: $color-flat-red;
-      color: $color-white;
     }
   }
   &.default
   {
-    &:hover
+    &:enabled:hover
     {
       background-color: $color-proairblue;
-      color: $color-white;
     }
   }
 }

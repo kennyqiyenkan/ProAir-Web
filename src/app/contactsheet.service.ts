@@ -10,13 +10,13 @@ export class ContactSheetService
   gRecaptchaPost(response)
   {
     let body = JSON.stringify({ 'g-recaptcha-response' : response });
-    console.log(`gRecaptchaPost called with body ${body}`);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     this.http.post('/grecaptcha', body, options)
       .subscribe(res => this.notARobot =
         (res.json().responseDesc === 'Success') ? true : false);
   }
+
   private handleError (error: Response)
   {
   // in a real world app, we may send the server to some remote logging infrastructure

@@ -98,7 +98,7 @@
 /* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_RESULT__;var require;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
+	var require;var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
 	 * @overview es6-promise - a tiny implementation of Promises/A+.
 	 * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
 	 * @license   Licensed under MIT license
@@ -71427,14 +71427,30 @@
 	var email_service_1 = __webpack_require__(485);
 	var recaptcha_component_1 = __webpack_require__(499);
 	var contactsheet_service_1 = __webpack_require__(500);
+	var notification_component_1 = __webpack_require__(508);
+	var angularfire2_1 = __webpack_require__(449);
 	var ContactSheetComponent = (function () {
-	    function ContactSheetComponent(emailService, contactSheetService) {
+	    function ContactSheetComponent(emailService, contactSheetService, af) {
 	        this.emailService = emailService;
 	        this.contactSheetService = contactSheetService;
+	        this.af = af;
 	        this.change = new core_1.EventEmitter();
 	        this.siteKey = "6LfZuiYTAAAAAMRzu7e-qsNfljAvyQkSvKpmSa4S";
+	        this.name = "";
+	        this.email = "";
+	        this.isEmailComplete = true;
+	        this.title = "";
+	        this.message = "";
+	        this.notificationIsShown = false;
+	        this.notificationIsError = false;
+	        this.notificationTitle = "";
+	        this.notificationMessage = "";
 	    }
-	    ContactSheetComponent.prototype.ngOnInit = function () { };
+	    ContactSheetComponent.prototype.ngOnInit = function () {
+	        this.notifications = this.af
+	            .database
+	            .object('/notifications');
+	    };
 	    ContactSheetComponent.prototype.close = function (command) {
 	        if (command === void 0) { command = "cancel"; }
 	        if (command === "cancel") {
@@ -71445,8 +71461,15 @@
 	        }
 	    };
 	    ContactSheetComponent.prototype.resolved = function (response) {
-	        console.log("gRECAPTCHA response: " + response);
 	        this.contactSheetService.gRecaptchaPost(response);
+	    };
+	    ContactSheetComponent.prototype.isFormValid = function () {
+	        if (this.name.trim() !== "" && this.email.trim() !== "" &&
+	            this.isEmailComplete && this.title.trim() !== "" &&
+	            this.message.trim() !== "" && this.contactSheetService.notARobot) {
+	            return true;
+	        }
+	        return false;
 	    };
 	    ContactSheetComponent.prototype.validify = function () {
 	        if (this.contactSheetService.notARobot) {
@@ -71456,21 +71479,45 @@
 	            alert("recaptcha failed");
 	        }
 	    };
-	    ContactSheetComponent.prototype.sendEmail = function () {
-	        var _this = this;
-	        this.emailService.postEmail(this.name, this.email, this.title, this.message).subscribe(function (response) {
-	            console.log(response);
-	            _this.handleResponse(response);
-	        }, function (error) { return _this.handleResponse(error); });
-	    };
-	    ContactSheetComponent.prototype.handleResponse = function (response) {
-	        this.dismissSheet();
-	        if (response.sent) {
-	            alert('Thank you for contacting us. We will get back to you as soon as possible.');
+	    ContactSheetComponent.prototype.validateEmail = function () {
+	        var EMAIL_REGEXP = new RegExp('^[A-Za-z0-9._%+-]+@(?:[A-Za-z0-9-]+\.)+[A-Za-z]{2,}$');
+	        if (this.email == '') {
+	            this.isEmailComplete = true;
 	        }
 	        else {
-	            alert('There was an issue in contacting us. If the problem persists. Please email us directly at proair@proairmarine.com. Thank you for your understanding.');
+	            this.isEmailComplete = EMAIL_REGEXP.test(this.email);
 	        }
+	    };
+	    ContactSheetComponent.prototype.sendEmail = function () {
+	        var _this = this;
+	        this.emailService.postEmail(this.name, this.email, this.title, this.message).subscribe(function (response) { return _this.handleResponse(response); }, function (error) { return _this.handleResponse(error); });
+	    };
+	    ContactSheetComponent.prototype.handleResponse = function (response) {
+	        if (response.sent) {
+	            this.showEmailNotification();
+	        }
+	        else {
+	            this.showEmailNotification(true);
+	        }
+	    };
+	    ContactSheetComponent.prototype.showEmailNotification = function (isError) {
+	        if (isError === void 0) { isError = false; }
+	        console.log("@showEmailNotification(" + isError + ");");
+	        if (isError) {
+	            this.notificationTitle = "Apologies";
+	            this.notificationMessage = this.notifications.email_failure;
+	            console.log(this.notificationMessage);
+	        }
+	        else {
+	            this.notificationTitle = "Thank You";
+	            this.notificationMessage = this.notifications.email_success;
+	        }
+	        this.notificationIsError = isError;
+	        this.notificationIsShown = true;
+	    };
+	    ContactSheetComponent.prototype.dismissNotification = function () {
+	        this.notificationIsShown = false;
+	        this.dismissSheet();
 	    };
 	    ContactSheetComponent.prototype.dismissSheet = function () {
 	        this.name = "";
@@ -71479,6 +71526,7 @@
 	        this.message = "";
 	        this.toShow = false;
 	        this.gRecaptchaElement.reset();
+	        this.contactSheetService.notARobot = false;
 	        this.change.emit(this.toShow);
 	    };
 	    __decorate([
@@ -71496,16 +71544,16 @@
 	    ContactSheetComponent = __decorate([
 	        core_1.Component({
 	            selector: 'contact-sheet',
-	            template: "\n  <div class=\"contactUsSheet\" [ngClass]=\"{ 'inactive' : !toShow }\">\n    <div class=\"contactUsSheet div\" [ngClass]=\"{ 'inactive' : !toShow }\">\n      <h2>Leave Us A Message</h2>\n      <p>We will get back to you as soon as possible. Please note that solicitors and third parties will not be entertained.</p>\n      <form>\n        <div class=\"inputField\">\n          <input id=\"nameField\" [(ngModel)]=\"name\" class=\"inputField oneLineField\" type=\"text\" required>\n          <label for=\"nameField\" class=\"inputField placeholder\">Name</label>\n          <span class=\"inputField underline\"></span>\n          <span class=\"inputField bar\"></span>\n        </div>\n        <div class=\"inputField\">\n          <input id=\"emailField\" [(ngModel)]=\"email\" class=\"inputField oneLineField\" type=\"email\" required>\n          <label for=\"emailField\" class=\"inputField placeholder\">Email</label>\n          <span class=\"inputField underline\"></span>\n          <span class=\"inputField bar\"></span>\n        </div>\n        <div class=\"inputField\">\n          <input id=\"titleField\" [(ngModel)]=\"title\" class=\"inputField oneLineField\" type=\"text\" required>\n          <label for=\"titleField\" class=\"inputField placeholder\">Subject</label>\n          <span class=\"inputField underline\"></span>\n          <span class=\"inputField bar\"></span>\n        </div>\n        <div class=\"inputField\">\n          <textarea id=\"messageField\" [(ngModel)]=\"message\" class=\"inputField multiLineField\" type=\"text\" required></textarea>\n          <label for=\"messageField\" class=\"inputField placeholder\">Message</label>\n        </div>\n        <div style=\"padding:5px;\" googlerecaptcha\n    (resolve)=\"resolved($event)\" [site-key]=\"siteKey\"></div>\n\n      </form>\n      <ul>\n        <li>\n          <button class=\"roundedButton cancel\" (click)=\"close()\">Cancel</button>\n        </li>\n        <li>\n          <button class=\"roundedButton default\" (click)=\"close('send')\">Send</button>\n        </li>\n      </ul>\n    </div>\n  </div>\n  ",
+	            template: "\n  <div class=\"contactUsSheet\" [ngClass]=\"{ 'inactive' : !toShow }\">\n    <div class=\"contactUsSheet div\" [ngClass]=\"{ 'inactive' : !toShow }\">\n      <h2>Leave Us A Message</h2>\n      <p>We will get back to you as soon as possible. Please note that solicitors and third parties will not be entertained.</p>\n      <form>\n        <div class=\"inputField\">\n          <input id=\"nameField\" [(ngModel)]=\"name\" class=\"oneLineField\"\n          type=\"text\" required>\n          <label for=\"nameField\" class=\"placeholder\">Name*</label>\n          <span class=\"underline\"></span>\n          <span class=\"bar\"></span>\n        </div>\n        <div class=\"inputField\">\n          <input id=\"emailField\" [(ngModel)]=\"email\" (keyup)=\"validateEmail()\"\n          class=\"oneLineField\" [ngClass]=\"{'incomplete': !isEmailComplete}\"\n          type=\"email\" required>\n          <label for=\"emailField\" class=\"placeholder\">Email*</label>\n          <span class=\"underline\"></span>\n          <span class=\"bar\"></span>\n        </div>\n        <div class=\"inputField\">\n          <input id=\"titleField\" [(ngModel)]=\"title\" class=\"oneLineField\"\n          type=\"text\" required>\n          <label for=\"titleField\" class=\"placeholder\">Subject*</label>\n          <span class=\"underline\"></span>\n          <span class=\"bar\"></span>\n        </div>\n        <div class=\"inputField\">\n          <textarea id=\"messageField\" [(ngModel)]=\"message\" class=\"multiLineField\"\n          type=\"text\" required></textarea>\n          <label for=\"messageField\" class=\"placeholder\">Message*</label>\n        </div>\n        <div style=\"padding:5px;\" googlerecaptcha\n    (resolve)=\"resolved($event)\" [site-key]=\"siteKey\"></div>\n        <ul>\n          <li>\n            <button class=\"roundedButton cancel\" (click)=\"close()\">Cancel</button>\n          </li>\n          <li>\n            <button class=\"roundedButton default\" [disabled]=\"!isFormValid()\"\n            type=\"submit\" (click)=\"close('send')\">Send</button>\n          </li>\n        </ul>\n      </form>\n    </div>\n  </div>\n  <notification [shown]=\"notificationIsShown\"\n                [isError]=\"notificationIsError\"\n                [title]=\"notificationTitle\"\n                [message]=\"notificationIsError ?\n                            (notifications | async)?.email_failure :\n                            (notifications | async)?.email_success\"\n                (toDismiss)=\"dismissNotification($event)\"></notification>\n  ",
 	            styles: [
 	                __webpack_require__(501),
 	                __webpack_require__(502),
 	                __webpack_require__(503),
 	            ],
-	            directives: [recaptcha_component_1.GoogleRecaptchaDirective],
+	            directives: [recaptcha_component_1.GoogleRecaptchaDirective, notification_component_1.NotificationComponent],
 	            providers: [email_service_1.EmailService, contactsheet_service_1.ContactSheetService]
 	        }), 
-	        __metadata('design:paramtypes', [email_service_1.EmailService, contactsheet_service_1.ContactSheetService])
+	        __metadata('design:paramtypes', [email_service_1.EmailService, contactsheet_service_1.ContactSheetService, angularfire2_1.AngularFire])
 	    ], ContactSheetComponent);
 	    return ContactSheetComponent;
 	}());
@@ -72227,7 +72275,6 @@
 	    ContactSheetService.prototype.gRecaptchaPost = function (response) {
 	        var _this = this;
 	        var body = JSON.stringify({ 'g-recaptcha-response': response });
-	        console.log("gRecaptchaPost called with body " + body);
 	        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
 	        var options = new http_1.RequestOptions({ headers: headers });
 	        this.http.post('/grecaptcha', body, options)
@@ -72257,13 +72304,13 @@
 /* 502 */
 /***/ function(module, exports) {
 
-	module.exports = ".inputField{position:relative;display:block;font-family:\"Muli\",sans-serif;min-width:200px;padding:0;margin:0}.inputField .bar{position:relative;display:block}.inputField .bar:before,.inputField .bar:after{content:'';height:2px;width:100%;bottom:-3px;left:0;position:absolute;background:#363DA7;-webkit-transform:scaleX(0);transform:scaleX(0);-webkit-transition:all 0.3s ease-in-out 0s;transition:all 0.3s ease-in-out 0s}.inputField .underline{position:relative;display:block}.inputField .underline:before,.inputField .underline:after{position:absolute;left:0;content:'';height:2px;width:100%;bottom:-3px;background:#b3b3b3}.inputField .placeholder{position:absolute;color:#b3b3b3;width:100%;height:10px;font-size:20px;top:25px;left:35px;bottom:0;-webkit-transition:all 0.3s ease-in-out 0s;transition:all 0.3s ease-in-out 0s}.inputField .placeholder:hover{cursor:text}.inputField .oneLineField{position:relative;font-size:20px;width:calc(100% - 20px);border:none;padding-left:10px;padding-right:10px}.inputField .oneLineField:focus{outline:none}.inputField .oneLineField:focus ~ .bar:before,.inputField .oneLineField:focus ~ .bar:after{-webkit-transform:scaleX(1);transform:scaleX(1)}.inputField .oneLineField:focus ~ .placeholder{color:#333;left:25px;font-size:12px;top:10px}.inputField .oneLineField:valid ~ .bar:before,.inputField .oneLineField:valid ~ .bar:after{-webkit-transform:scaleX(1);transform:scaleX(1)}.inputField .oneLineField:valid ~ .placeholder{color:#333;left:25px;font-size:12px;top:10px}.inputField .oneLineField.incomplete ~ .bar:before,.inputField .oneLineField.incomplete ~ .bar:after{background:#e74c3c;-webkit-transform:scaleX(1);transform:scaleX(1)}.inputField .oneLineField.incomplete ~ .placeholder{color:#333;left:25px;font-size:12px;top:10px}.inputField .multiLineField{font-size:20px;width:calc(100% - 20px);height:300px;border:1px solid;padding:10px;border-radius:10px;border-color:#b3b3b3;resize:none;-webkit-transition:all 0.3s ease-in-out 0s;transition:all 0.3s ease-in-out 0s}.inputField .multiLineField ~ .placeholder{top:37px}.inputField .multiLineField:focus{outline:none;border-color:#363DA7}.inputField .multiLineField:focus ~ .placeholder{color:#333;left:25px;font-size:12px;top:10px}.inputField .multiLineField:valid{border-color:#363DA7}.inputField .multiLineField:valid ~ .placeholder{color:#333;left:25px;font-size:12px;top:10px}.inputField .multiLineField.incomplete{border-color:#e74c3c}.inputField .multiLineField.incomplete ~ .placeholder{color:#333;left:25px;font-size:12px;top:10px}\n"
+	module.exports = ".inputField{position:relative;display:block;font-family:\"Muli\",sans-serif;min-width:200px;padding:0;margin:0}.inputField .bar{position:relative;display:block}.inputField .bar:before,.inputField .bar:after{content:'';height:2px;width:100%;bottom:-3px;left:0;position:absolute;background:#363DA7;-webkit-transform:scaleX(0);transform:scaleX(0);-webkit-transition:all 0.3s ease-in-out 0s;transition:all 0.3s ease-in-out 0s}.inputField .underline{position:relative;display:block}.inputField .underline:before,.inputField .underline:after{position:absolute;left:0;content:'';height:2px;width:100%;bottom:-3px;background:#b3b3b3}.inputField .placeholder{position:absolute;color:#b3b3b3;width:100%;height:10px;font-size:20px;top:25px;left:35px;bottom:0;-webkit-transition:all 0.3s ease-in-out 0s;transition:all 0.3s ease-in-out 0s}.inputField .placeholder:hover{cursor:text}.inputField .oneLineField{position:relative;font-size:20px;width:calc(100% - 20px);border:none;padding-left:10px;padding-right:10px}.inputField .oneLineField:focus{outline:none}.inputField .oneLineField:focus ~ .bar:before,.inputField .oneLineField:focus ~ .bar:after{-webkit-transform:scaleX(1);transform:scaleX(1)}.inputField .oneLineField:focus ~ .placeholder{color:#333;left:25px;font-size:12px;top:10px}.inputField .oneLineField:focus:required:invalid ~ .bar:before,.inputField .oneLineField:focus:required:invalid ~ .bar:after{background:#e74c3c;-webkit-transform:scaleX(1);transform:scaleX(1)}.inputField .oneLineField:focus:required:invalid ~ .placeholder{color:#333;left:25px;font-size:12px;top:10px}.inputField .oneLineField:valid ~ .bar:before,.inputField .oneLineField:valid ~ .bar:after{-webkit-transform:scaleX(1);transform:scaleX(1)}.inputField .oneLineField:valid ~ .placeholder{color:#333;left:25px;font-size:12px;top:10px}.inputField .oneLineField.incomplete ~ .bar:before,.inputField .oneLineField.incomplete ~ .bar:after{background:#e74c3c;-webkit-transform:scaleX(1);transform:scaleX(1)}.inputField .oneLineField.incomplete ~ .placeholder{color:#333;left:25px;font-size:12px;top:10px}.inputField .multiLineField{font-size:20px;width:calc(100% - 20px);height:300px;border:1px solid;padding:10px;border-radius:10px;border-color:#b3b3b3;resize:none;-webkit-transition:all 0.3s ease-in-out 0s;transition:all 0.3s ease-in-out 0s}.inputField .multiLineField ~ .placeholder{top:37px}.inputField .multiLineField:focus{outline:none;border-color:#363DA7}.inputField .multiLineField:focus ~ .placeholder{color:#333;left:25px;font-size:12px;top:10px}.inputField .multiLineField:focus:required:invalid{border-color:#e74c3c}.inputField .multiLineField:focus:required:invalid ~ .placeholder{color:#333;left:25px;font-size:12px;top:10px}.inputField .multiLineField:valid{border-color:#363DA7}.inputField .multiLineField:valid ~ .placeholder{color:#333;left:25px;font-size:12px;top:10px}\n"
 
 /***/ },
 /* 503 */
 /***/ function(module, exports) {
 
-	module.exports = ".roundedButton{padding:0;font-family:\"Muli\",sans-serif;font-size:1.0em;line-height:1.0em;color:#333;background-color:transparent;border:2px solid;border-radius:25px;border-color:#363DA7;width:200px;height:40px;-webkit-transition:all 0.2s ease-in-out 0s;transition:all 0.2s ease-in-out 0s}.roundedButton:focus{outline:none}.roundedButton:hover{font-size:1.1em}.roundedButton.cancel:hover{border-color:#e74c3c;background-color:#e74c3c;color:#fff}.roundedButton.default:hover{background-color:#363DA7;color:#fff}\n"
+	module.exports = ".roundedButton{padding:0;font-family:\"Muli\",sans-serif;font-size:1.0em;line-height:1.0em;color:#333;background-color:transparent;border:2px solid;border-radius:25px;border-color:#363DA7;width:200px;height:40px;-webkit-transition:all 0.2s ease-in-out 0s;transition:all 0.2s ease-in-out 0s}.roundedButton:focus{outline:none}.roundedButton:enabled:hover{font-size:1.1em;color:#fff}.roundedButton:disabled{color:#b3b3b3;border-color:#b3b3b3}.roundedButton.cancel:enabled:hover{border-color:#e74c3c;background-color:#e74c3c}.roundedButton.default:enabled:hover{background-color:#363DA7}\n"
 
 /***/ },
 /* 504 */
@@ -72288,6 +72335,75 @@
 /***/ function(module, exports) {
 
 	module.exports = ".footer{font-family:\"Muli\",sans-serif;position:relative;display:block;padding:0;min-height:50px;max-height:300px;background-color:#333;display:flex;align-items:center;justify-content:center}.footer p{color:#fff}\n"
+
+/***/ },
+/* 508 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var core_1 = __webpack_require__(38);
+	var NotificationComponent = (function () {
+	    function NotificationComponent() {
+	        this.toDismiss = new core_1.EventEmitter();
+	    }
+	    NotificationComponent.prototype.ngOnInit = function () { };
+	    NotificationComponent.prototype.dismiss = function () {
+	        this.shown = false;
+	        this.isError = false;
+	        this.title = "";
+	        this.message = "";
+	        this.toDismiss.emit(null);
+	    };
+	    __decorate([
+	        core_1.Input(), 
+	        __metadata('design:type', Boolean)
+	    ], NotificationComponent.prototype, "shown", void 0);
+	    __decorate([
+	        core_1.Input(), 
+	        __metadata('design:type', Boolean)
+	    ], NotificationComponent.prototype, "isError", void 0);
+	    __decorate([
+	        core_1.Input(), 
+	        __metadata('design:type', String)
+	    ], NotificationComponent.prototype, "title", void 0);
+	    __decorate([
+	        core_1.Input(), 
+	        __metadata('design:type', String)
+	    ], NotificationComponent.prototype, "message", void 0);
+	    __decorate([
+	        core_1.Output(), 
+	        __metadata('design:type', core_1.EventEmitter)
+	    ], NotificationComponent.prototype, "toDismiss", void 0);
+	    NotificationComponent = __decorate([
+	        core_1.Component({
+	            selector: 'notification',
+	            template: "\n  <div class=\"notification\" [ngClass]=\"{ 'inactive' : !shown }\">\n    <div class=\"notification card\"\n         [ngClass]=\"{ 'general' : !isError, 'error' : isError }\">\n      <h2>{{title}}</h2>\n      <div></div>\n      <p>{{message}}</p>\n      <button class=\"roundedButton default\" (click)=\"dismiss()\">Dismiss</button>\n    </div>\n  </div>\n  ",
+	            styles: [
+	                __webpack_require__(509),
+	                __webpack_require__(503),
+	            ]
+	        }), 
+	        __metadata('design:paramtypes', [])
+	    ], NotificationComponent);
+	    return NotificationComponent;
+	}());
+	exports.NotificationComponent = NotificationComponent;
+
+
+/***/ },
+/* 509 */
+/***/ function(module, exports) {
+
+	module.exports = ".notification{background-color:rgba(51,51,51,0.8);position:fixed;display:flex;flex-direction:column;align-content:center;justify-content:center;top:0;left:0;width:100%;height:100%;z-index:1000000;-webkit-transition:all 0.3s ease-in-out 0s;transition:all 0.3s ease-in-out 0s}.notification.inactive{visibility:hidden;opacity:0}.notification.card{position:relative;margin:0 auto;background-color:#fff;font-family:\"Muli\",sans-serif;color:#333;border-radius:5px;padding:10px;min-width:300px;max-width:500px;height:auto;max-height:500px}.notification.card h2{font-size:20px;margin-bottom:5px}.notification.card p{font-size:16px}.notification.card div{content:\"\";width:100%;height:1px}.notification.card.general div{background-color:#363DA7}.notification.card.error div{background-color:#e74c3c}\n"
 
 /***/ }
 /******/ ]);

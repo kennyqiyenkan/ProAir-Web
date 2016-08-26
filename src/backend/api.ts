@@ -12,7 +12,7 @@ export function sendContactEmail(req, res) {
 
   let recipient = (process.env.NODE_ENV !== 'production') ?
     'qiyen77@gmail.com' :
-    'proair@proairmarine.com';
+    ['proair@proairmarine.com','shiamary@proairmarine.com'];
 
   needle.post(`https://api:${KEY}@api.mailgun.net/v3/${DOMAIN}/messages`, {
     from: options.email,
