@@ -159,15 +159,11 @@ export class ContactSheetComponent implements OnInit{
 
   handleResponse(response)
   {
-    //TODO: MAKE IT LOOK NICE
     if(response.sent)
     {
-      //MAKE THIS LOOK NICE FOR GOD'S SAKE
       this.showEmailNotification();
-      //alert('Thank you for contacting us. We will get back to you as soon as possible.');
     }else{
       this.showEmailNotification(true);
-      //alert('There was an issue in contacting us. If the problem persists. Please email us directly at proair@proairmarine.com. Thank you for your understanding.');
     }
   }
 
