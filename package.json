@@ -10,7 +10,7 @@
     "url": "https://github.com/kennyqiyenkan/Proair-Web/issues"
   },
   "scripts": {
-    "postinstall": "npm install; typings install",
+    "postinstall": "typings install",
     "watch": "webpack --watch",
     "prebuild": "rimraf dist",
     "build": "webpack",
