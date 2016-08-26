@@ -434,9 +434,10 @@ module.exports =
 	        this.notificationMessage = "";
 	    }
 	    ContactSheetComponent.prototype.ngOnInit = function () {
-	        this.notifications = this.af
+	        var _this = this;
+	        this.af
 	            .database
-	            .object('/notifications');
+	            .object('/notifications').subscribe(function (n) { return _this.notifications = n; });
 	    };
 	    ContactSheetComponent.prototype.close = function (command) {
 	        if (command === void 0) { command = "cancel"; }
@@ -463,7 +464,7 @@ module.exports =
 	            this.sendEmail();
 	        }
 	        else {
-	            alert("recaptcha failed");
+	            this.showNotification("Oops!", this.notifications.email_recaptcha_failure, true);
 	        }
 	    };
 	    ContactSheetComponent.prototype.validateEmail = function () {
@@ -489,16 +490,17 @@ module.exports =
 	    };
 	    ContactSheetComponent.prototype.showEmailNotification = function (isError) {
 	        if (isError === void 0) { isError = false; }
-	        console.log("@showEmailNotification(" + isError + ");");
 	        if (isError) {
-	            this.notificationTitle = "Apologies";
-	            this.notificationMessage = this.notifications.email_failure;
-	            console.log(this.notificationMessage);
+	            this.showNotification("Apologies", this.notifications.email_failure, true);
 	        }
 	        else {
-	            this.notificationTitle = "Thank You";
-	            this.notificationMessage = this.notifications.email_success;
+	            this.showNotification("Thank You", this.notifications.email_success);
 	        }
+	    };
+	    ContactSheetComponent.prototype.showNotification = function (title, message, isError) {
+	        if (isError === void 0) { isError = false; }
+	        this.notificationTitle = title;
+	        this.notificationMessage = message;
 	        this.notificationIsError = isError;
 	        this.notificationIsShown = true;
 	    };
@@ -531,7 +533,7 @@ module.exports =
 	    ContactSheetComponent = __decorate([
 	        core_1.Component({
 	            selector: 'contact-sheet',
-	            template: "\n  <div class=\"contactUsSheet\" [ngClass]=\"{ 'inactive' : !toShow }\">\n    <div class=\"contactUsSheet div\" [ngClass]=\"{ 'inactive' : !toShow }\">\n      <h2>Leave Us A Message</h2>\n      <p>We will get back to you as soon as possible. Please note that solicitors and third parties will not be entertained.</p>\n      <form>\n        <div class=\"inputField\">\n          <input id=\"nameField\" [(ngModel)]=\"name\" class=\"oneLineField\"\n          type=\"text\" required>\n          <label for=\"nameField\" class=\"placeholder\">Name*</label>\n          <span class=\"underline\"></span>\n          <span class=\"bar\"></span>\n        </div>\n        <div class=\"inputField\">\n          <input id=\"emailField\" [(ngModel)]=\"email\" (keyup)=\"validateEmail()\"\n          class=\"oneLineField\" [ngClass]=\"{'incomplete': !isEmailComplete}\"\n          type=\"email\" required>\n          <label for=\"emailField\" class=\"placeholder\">Email*</label>\n          <span class=\"underline\"></span>\n          <span class=\"bar\"></span>\n        </div>\n        <div class=\"inputField\">\n          <input id=\"titleField\" [(ngModel)]=\"title\" class=\"oneLineField\"\n          type=\"text\" required>\n          <label for=\"titleField\" class=\"placeholder\">Subject*</label>\n          <span class=\"underline\"></span>\n          <span class=\"bar\"></span>\n        </div>\n        <div class=\"inputField\">\n          <textarea id=\"messageField\" [(ngModel)]=\"message\" class=\"multiLineField\"\n          type=\"text\" required></textarea>\n          <label for=\"messageField\" class=\"placeholder\">Message*</label>\n        </div>\n        <div style=\"padding:5px;\" googlerecaptcha\n    (resolve)=\"resolved($event)\" [site-key]=\"siteKey\"></div>\n        <ul>\n          <li>\n            <button class=\"roundedButton cancel\" (click)=\"close()\">Cancel</button>\n          </li>\n          <li>\n            <button class=\"roundedButton default\" [disabled]=\"!isFormValid()\"\n            type=\"submit\" (click)=\"close('send')\">Send</button>\n          </li>\n        </ul>\n      </form>\n    </div>\n  </div>\n  <notification [shown]=\"notificationIsShown\"\n                [isError]=\"notificationIsError\"\n                [title]=\"notificationTitle\"\n                [message]=\"notificationIsError ?\n                            (notifications | async)?.email_failure :\n                            (notifications | async)?.email_success\"\n                (toDismiss)=\"dismissNotification($event)\"></notification>\n  ",
+	            template: "\n  <div class=\"contactUsSheet\" [ngClass]=\"{ 'inactive' : !toShow }\">\n    <div class=\"contactUsSheet div\" [ngClass]=\"{ 'inactive' : !toShow }\">\n      <h2>Leave Us A Message</h2>\n      <p>We will get back to you as soon as possible. Please note that solicitors and third parties will not be entertained.</p>\n      <form>\n        <div class=\"inputField\">\n          <input id=\"nameField\" [(ngModel)]=\"name\" class=\"oneLineField\"\n          type=\"text\" required>\n          <label for=\"nameField\" class=\"placeholder\">Name*</label>\n          <span class=\"underline\"></span>\n          <span class=\"bar\"></span>\n        </div>\n        <div class=\"inputField\">\n          <input id=\"emailField\" [(ngModel)]=\"email\" (keyup)=\"validateEmail()\"\n          class=\"oneLineField\" [ngClass]=\"{'incomplete': !isEmailComplete}\"\n          type=\"email\" required>\n          <label for=\"emailField\" class=\"placeholder\">Email*</label>\n          <span class=\"underline\"></span>\n          <span class=\"bar\"></span>\n        </div>\n        <div class=\"inputField\">\n          <input id=\"titleField\" [(ngModel)]=\"title\" class=\"oneLineField\"\n          type=\"text\" required>\n          <label for=\"titleField\" class=\"placeholder\">Subject*</label>\n          <span class=\"underline\"></span>\n          <span class=\"bar\"></span>\n        </div>\n        <div class=\"inputField\">\n          <textarea id=\"messageField\" [(ngModel)]=\"message\" class=\"multiLineField\"\n          type=\"text\" required></textarea>\n          <label for=\"messageField\" class=\"placeholder\">Message*</label>\n        </div>\n        <div style=\"padding:5px;\" googlerecaptcha\n    (resolve)=\"resolved($event)\" [site-key]=\"siteKey\"></div>\n        <ul>\n          <li>\n            <button class=\"roundedButton cancel\" (click)=\"close()\">Cancel</button>\n          </li>\n          <li>\n            <button class=\"roundedButton default\" [disabled]=\"!isFormValid()\"\n            type=\"submit\" (click)=\"close('send')\">Send</button>\n          </li>\n        </ul>\n      </form>\n    </div>\n  </div>\n  <notification [shown]=\"notificationIsShown\"\n                [isError]=\"notificationIsError\"\n                [title]=\"notificationTitle\"\n                [message]=\"notificationMessage\"\n                (toDismiss)=\"dismissNotification($event)\"></notification>\n  ",
 	            styles: [
 	                __webpack_require__(30),
 	                __webpack_require__(31),
@@ -839,11 +841,9 @@ module.exports =
 	    }
 	    NotificationComponent.prototype.ngOnInit = function () { };
 	    NotificationComponent.prototype.dismiss = function () {
+	        this.toDismiss.emit(null);
 	        this.shown = false;
 	        this.isError = false;
-	        this.title = "";
-	        this.message = "";
-	        this.toDismiss.emit(null);
 	    };
 	    __decorate([
 	        core_1.Input(), 
@@ -868,10 +868,9 @@ module.exports =
 	    NotificationComponent = __decorate([
 	        core_1.Component({
 	            selector: 'notification',
-	            template: "\n  <div class=\"notification\" [ngClass]=\"{ 'inactive' : !shown }\">\n    <div class=\"notification card\"\n         [ngClass]=\"{ 'general' : !isError, 'error' : isError }\">\n      <h2>{{title}}</h2>\n      <div></div>\n      <p>{{message}}</p>\n      <button class=\"roundedButton default\" (click)=\"dismiss()\">Dismiss</button>\n    </div>\n  </div>\n  ",
+	            template: "\n  <div class=\"notification\" [ngClass]=\"{ 'inactive' : !shown }\">\n    <div class=\"card\">\n      <div class=\"header\">\n        <h2 class=\"title\">{{title}}</h2>\n        <span class=\"dismiss\" (click)=\"dismiss()\"></span>\n      </div>\n      <div class=\"underline\"\n           [ngClass]=\"{ 'general' : !isError, 'error' : isError }\"></div>\n      <p>{{message}}</p>\n    </div>\n  </div>\n  ",
 	            styles: [
-	                __webpack_require__(41),
-	                __webpack_require__(32),
+	                __webpack_require__(41)
 	            ]
 	        }), 
 	        __metadata('design:paramtypes', [])
@@ -885,7 +884,7 @@ module.exports =
 /* 41 */
 /***/ function(module, exports) {
 
-	module.exports = ".notification{background-color:rgba(51,51,51,0.8);position:fixed;display:flex;flex-direction:column;align-content:center;justify-content:center;top:0;left:0;width:100%;height:100%;z-index:1000000;-webkit-transition:all 0.3s ease-in-out 0s;transition:all 0.3s ease-in-out 0s}.notification.inactive{visibility:hidden;opacity:0}.notification.card{position:relative;margin:0 auto;background-color:#fff;font-family:\"Muli\",sans-serif;color:#333;border-radius:5px;padding:10px;min-width:300px;max-width:500px;height:auto;max-height:500px}.notification.card h2{font-size:20px;margin-bottom:5px}.notification.card p{font-size:16px}.notification.card div{content:\"\";width:100%;height:1px}.notification.card.general div{background-color:#363DA7}.notification.card.error div{background-color:#e74c3c}\n"
+	module.exports = "@import url(http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);.notification{background-color:rgba(51,51,51,0.8);position:fixed;display:flex;flex-direction:column;align-content:center;justify-content:center;top:0;left:0;width:100%;height:100%;z-index:1000000;-webkit-transition:all 0.3s ease-in-out 0s;transition:all 0.3s ease-in-out 0s}.notification.inactive{visibility:hidden;opacity:0}.card{position:relative;margin:0 auto;background-color:#fff;font-family:\"Muli\",sans-serif;color:#333;border-radius:5px;padding:15px;min-width:300px;max-width:500px;height:auto;max-height:500px;box-shadow:0px 20px 20px -10px}.card .header{display:flex;flex-direction:row;flex-wrap:nowrap;width:100%;padding:0;align-items:center}.card .header .title{flex-basis:100%;font-size:22px;padding:0;margin:0}.card .header .dismiss{-webkit-transition:-webkit-transform 0.25s ease-in-out;-moz-transition:-moz-transform 0.25s ease-in-out;transition:transform 0.25s ease-in-out;will-change:transform}.card .header .dismiss:hover{cursor:pointer;-webkit-transform:rotateZ(90deg);-moz-transform:rotateZ(90deg);-ms-transform:rotateZ(90deg);-o-transform:rotateZ(90deg);transform:rotateZ(90deg)}.card .header .dismiss:after{font-family:'Ionicons';content:'\\f404';font-size:2.5em}.card p{position:relative;padding:0;width:100%;font-size:16px}.card .underline{position:relative;content:\"\";padding:0;width:100%;height:1px}.card .underline.general{background-color:#363DA7}.card .underline.error{background-color:#e74c3c}\n"
 
 /***/ }
 /******/ ]);

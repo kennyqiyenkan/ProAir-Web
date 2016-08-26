@@ -57,9 +57,7 @@ import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
   <notification [shown]="notificationIsShown"
                 [isError]="notificationIsError"
                 [title]="notificationTitle"
-                [message]="notificationIsError ?
-                            (notifications | async)?.email_failure :
-                            (notifications | async)?.email_success"
+                [message]="notificationMessage"
                 (toDismiss)="dismissNotification($event)"></notification>
   `
   ,
@@ -98,9 +96,9 @@ export class ContactSheetComponent implements OnInit{
 
   ngOnInit()
   {
-    this.notifications = this.af
-                          .database
-                          .object('/notifications');
+    this.af
+      .database
+      .object('/notifications').subscribe(n => this.notifications = n);
   }
 
   close(command = "cancel")
@@ -135,8 +133,7 @@ export class ContactSheetComponent implements OnInit{
     {
       this.sendEmail();
     }else{
-      //TODO: make it look nice
-      alert("recaptcha failed");
+      this.showNotification("Oops!", this.notifications.email_recaptcha_failure, true);
     }
   }
 
@@ -176,16 +173,18 @@ export class ContactSheetComponent implements OnInit{
 
   showEmailNotification(isError = false)
   {
-    console.log(`@showEmailNotification(${isError});`);
     if(isError)
     {
-      this.notificationTitle = "Apologies";
-      this.notificationMessage = this.notifications.email_failure;
-      console.log(this.notificationMessage);
+      this.showNotification("Apologies", this.notifications.email_failure, true);
     }else{
-      this.notificationTitle = "Thank You";
-      this.notificationMessage = this.notifications.email_success;
+      this.showNotification("Thank You", this.notifications.email_success);
     }
+  }
+
+  showNotification(title,message,isError = false)
+  {
+    this.notificationTitle = title;
+    this.notificationMessage = message;
     this.notificationIsError = isError;
     this.notificationIsShown = true;
   }
