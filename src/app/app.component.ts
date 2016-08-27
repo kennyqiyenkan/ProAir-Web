@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ContactSheetComponent } from "./contactsheet.component";
+import { ImageGridComponent } from "./image-grid.component";
 import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
 
 @Component({
@@ -59,6 +60,7 @@ import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
       <div class="container">
         <h2>{{(contentAbout | async)?.title}}</h2>
         <p>{{(contentAbout | async)?.content}}</p>
+        <image-grid></image-grid>
       </div>
     </section>
 
@@ -133,7 +135,7 @@ import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
     require('./assets/stylesheets/css/roundedButton.css')
   ]
   ,
-  directives: [ContactSheetComponent]
+  directives: [ContactSheetComponent, ImageGridComponent]
 })
 export class AppComponent{
   private errorMessage: string;

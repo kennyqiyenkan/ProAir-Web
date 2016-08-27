@@ -1,0 +1,30 @@
+@import "variables";
+
+.grid
+{
+  display:flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 20px;
+  width: calc(100% - 40px);
+  justify-content: center;
+  list-style: none;
+  .content
+  {
+    img
+    {
+      -webkit-filter: grayscale(100%); /* Chrome, Safari, Opera */
+      filter: grayscale(100%);
+      margin: 15px;
+      max-height: 100px;
+      -webkit-transition: all 0.2s ease-in-out 0s;
+      transition: all 0.2s ease-in-out 0s;
+      &:hover
+      {
+        -webkit-filter: none; /* Chrome, Safari, Opera */
+        filter: none;
+        cursor: pointer;
+      }
+    }
+  }
+}
