@@ -1,0 +1,54 @@
+@import "variables";
+
+.iconDescriptor
+{
+  position: relative;
+  list-style: none;
+  max-width: 960px;
+  width:100%;
+}
+
+.icon
+{
+  max-width:64px;
+  max-height:64px;
+  background-repeat: no-repeat;
+  &.cold
+  {
+    background-image: url($folder-images +
+     "originals/servicesSVG/cold-creative-commons.svg");
+     background-repeat: no-repeat;
+    -webkit-animation: rotation 15s infinite linear;
+  }
+
+  &.electrical
+  {
+    background-image: url($folder-images +
+     "originals/servicesSVG/electrical-services-free.svg");
+  }
+
+  &.fire-protection
+  {
+    //source:https://www.iconfinder.com/DOTonPAPER
+    background-image: url($folder-images +
+     "originals/servicesSVG/fire-protection-free.svg");
+  }
+
+  &.hvac
+  {
+    background-image: url($folder-images +
+     "originals/servicesSVG/hvac-creative-commons.svg");
+  }
+}
+
+.description
+{
+  font-family: $font-main;
+  font-size: 16px;
+  margin-right: 25px;
+}
+
+@-webkit-keyframes rotation {
+    from {-webkit-transform: rotate(0deg);}
+    to   {-webkit-transform: rotate(359deg);}
+}

@@ -98,7 +98,7 @@
 /* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_RESULT__;var require;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
+	var require;var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
 	 * @overview es6-promise - a tiny implementation of Promises/A+.
 	 * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
 	 * @license   Licensed under MIT license
@@ -71276,7 +71276,7 @@
 	    MyHomeComponent = __decorate([
 	        core_1.Component({
 	            selector: 'my-home',
-	            template: '<router-outlet></router-outlet>',
+	            template: "<router-outlet></router-outlet>",
 	            directives: router_1.ROUTER_DIRECTIVES.slice()
 	        }), 
 	        __metadata('design:paramtypes', [])
@@ -71314,7 +71314,7 @@
 	};
 	var core_1 = __webpack_require__(38);
 	var contactsheet_component_1 = __webpack_require__(484);
-	var image_grid_component_1 = __webpack_require__(510);
+	var image_grid_component_1 = __webpack_require__(506);
 	var angularfire2_1 = __webpack_require__(449);
 	var AppComponent = (function () {
 	    function AppComponent(af) {
@@ -71364,6 +71364,9 @@
 	        this.contentAbout = this.af
 	            .database
 	            .object('/about');
+	        this.contentProfile = this.af
+	            .database
+	            .object('/about/profile');
 	    };
 	    AppComponent.prototype.getServicesContent = function () {
 	        this.contentServices = this.af
@@ -71391,15 +71394,16 @@
 	    AppComponent = __decorate([
 	        core_1.Component({
 	            selector: 'app',
-	            template: "\n  <div (window:resize)=\"onResize($event)\"> <!-- Navigation Bar -->\n    <navbar class=navbar id=\"navBar\">\n      <ul>\n        <!-- test logo. replace with proair logo\u0095\u0095\u0095 -->\n        <a href=\"#Home\">\n          <img src={{logoSource}} alt=\"Proair\">\n        </a>\n        <li *ngIf=\"!isMobileSizedWidth\"><a href=\"#Careers\">Careers</a></li>\n        <li *ngIf=\"!isMobileSizedWidth\"><a href=\"#Contact\">Contact</a></li>\n        <li *ngIf=\"!isMobileSizedWidth\"><a href=\"#Projects\">Projects</a></li>\n        <li *ngIf=\"!isMobileSizedWidth\"><a href=\"#Services\">Services</a></li>\n        <li *ngIf=\"!isMobileSizedWidth\"><a href=\"#About\">About</a></li>\n        <li *ngIf=\"isMobileSizedWidth\"><button (click)=\"toggleMenu($event)\">\u2630</button></li>\n      </ul>\n    </navbar>\n  </div>\n  <div *ngIf=\"isMenuShown\" (window:scroll)=\"dismissMenu($event)\"> <!-- Navigation Menu Dropdown -->\n    <navMenu class=navMenu>\n      <ul>\n        <li><a href=\"#About\">About</a></li>\n        <li><a href=\"#Services\">Services</a></li>\n        <li><a href=\"#Projects\">Projects</a></li>\n        <li><a href=\"#Contact\">Contact</a></li>\n        <li><a href=\"#Careers\">Careers</a></li>\n      </ul>\n    </navMenu>\n  </div>\n   <!-- Parallax Body -->\n  <div id=\"Home\">\n    <section style=\"padding-top:70px;\" class=\"module parallax parallaxImage-Home\">\n      <div class=\"container\">\n        <img src={{logoSource}} alt=\"Proair\">\n        <h1 style=\"margin:5px;\">Proair</h1>\n      </div>\n    </section>\n\n    <section class=\"module content\">\n      <div class=\"container\">\n        <h2>{{(contentHome | async)?.title}}</h2>\n        <p>{{(contentHome | async)?.content}}</p>\n      </div>\n    </section>\n\n    <section class=\"module parallax parallaxImage-About\" id=\"About\">\n      <div class=\"container\">\n        <h1>About</h1>\n      </div>\n    </section>\n\n    <section class=\"module content\">\n      <div class=\"container\">\n        <h2>{{(contentAbout | async)?.title}}</h2>\n        <p>{{(contentAbout | async)?.content}}</p>\n        <image-grid></image-grid>\n      </div>\n    </section>\n\n    <section class=\"module parallax parallaxImage-Services\" id=\"Services\">\n      <div class=\"container\">\n        <h1>Services</h1>\n      </div>\n    </section>\n\n    <section class=\"module content\">\n      <div class=\"container\">\n        <h2>{{(contentServices | async)?.title}}</h2>\n        <p>{{(contentServices | async)?.content}}</p>\n      </div>\n    </section>\n\n    <section class=\"module parallax parallaxImage-Projects\" id=\"Projects\">\n      <div class=\"container\">\n        <h1>Projects</h1>\n      </div>\n    </section>\n\n    <section class=\"module content\">\n      <div class=\"container\">\n        <h2>{{(contentProjects | async)?.title}}</h2>\n        <p>{{(contentProjects | async)?.content}}</p>\n      </div>\n    </section>\n\n    <section class=\"module parallax parallaxImage-Contact\" id=\"Contact\">\n      <div class=\"container\">\n        <h1>Contact</h1>\n      </div>\n    </section>\n\n    <section class=\"module content\">\n      <div class=\"container\" [ngClass]=\"{ 'inactive' : isFormShown }\">\n        <h2>{{(contentContact | async)?.title}}</h2>\n        <p>{{(contentContact | async)?.content}}</p>\n        <button class=\"roundedButton default\" (click)=\"isFormShown=true\">Contact Us</button>\n      </div>\n    </section>\n\n    <section class=\"module parallax parallaxImage-Careers\" id=\"Careers\">\n      <div class=\"container\">\n        <h1>Careers</h1>\n      </div>\n    </section>\n\n    <section class=\"module content\">\n      <div class=\"container\">\n        <h2>{{(contentCareers | async)?.title}}</h2>\n        <p>{{(contentCareers | async)?.content}}</p>\n      </div>\n    </section>\n  </div>\n  <contact-sheet [toShow]=\"isFormShown\" (change)=\"onContactSheetEvent($event)\"></contact-sheet>\n  <div>\n    <footer class=\"footer\">\n      <p>Proair Sdn Bhd</p>\n    </footer>\n  </div>\n  ",
+	            template: "\n  <div (window:resize)=\"onResize($event)\"> <!-- Navigation Bar -->\n    <navbar class=navbar id=\"navBar\">\n      <ul>\n        <!-- test logo. replace with proair logo\u0095\u0095\u0095 -->\n        <a href=\"#Home\">\n          <img src={{logoSource}} alt=\"Proair\">\n        </a>\n        <li *ngIf=\"!isMobileSizedWidth\"><a href=\"#Careers\">Careers</a></li>\n        <li *ngIf=\"!isMobileSizedWidth\"><a href=\"#Contact\">Contact</a></li>\n        <li *ngIf=\"!isMobileSizedWidth\"><a href=\"#Projects\">Projects</a></li>\n        <li *ngIf=\"!isMobileSizedWidth\"><a href=\"#Services\">Services</a></li>\n        <li *ngIf=\"!isMobileSizedWidth\"><a href=\"#About\">About</a></li>\n        <li *ngIf=\"isMobileSizedWidth\"><button (click)=\"toggleMenu($event)\">\u2630</button></li>\n      </ul>\n    </navbar>\n  </div>\n  <div *ngIf=\"isMenuShown\" (window:scroll)=\"dismissMenu($event)\"> <!-- Navigation Menu Dropdown -->\n    <navMenu class=navMenu>\n      <ul>\n        <li><a href=\"#About\">About</a></li>\n        <li><a href=\"#Services\">Services</a></li>\n        <li><a href=\"#Projects\">Projects</a></li>\n        <li><a href=\"#Contact\">Contact</a></li>\n        <li><a href=\"#Careers\">Careers</a></li>\n      </ul>\n    </navMenu>\n  </div>\n   <!-- Parallax Body -->\n  <div id=\"Home\">\n    <section style=\"padding-top:70px;\" class=\"module parallax parallaxImage-Home\">\n      <div class=\"container\">\n        <img src={{logoSource}} alt=\"Proair\">\n        <h1 style=\"margin:5px;\">Proair</h1>\n      </div>\n    </section>\n\n    <section class=\"module content\">\n      <div class=\"container\">\n        <h2>{{(contentHome | async)?.title}}</h2>\n        <p>{{(contentHome | async)?.content}}</p>\n      </div>\n    </section>\n\n    <section class=\"module parallax parallaxImage-About\" id=\"About\">\n      <div class=\"container\">\n        <h1>About</h1>\n      </div>\n    </section>\n\n    <section class=\"module content\">\n      <div class=\"container\">\n        <h2>{{(contentAbout | async)?.title}}</h2>\n        <p>{{(contentAbout | async)?.content}}</p>\n        <image-grid></image-grid>\n        <p>{{(contentProfile | async)?.content}}</p>\n        <a class=\"roundedButton default\"\n           href=\"{{(contentProfile | async)?.link}}\">Download Profile</a>\n      </div>\n    </section>\n\n    <section class=\"module parallax parallaxImage-Services\" id=\"Services\">\n      <div class=\"container\">\n        <h1>Services</h1>\n      </div>\n    </section>\n\n    <section class=\"module content\">\n      <div class=\"container\">\n        <h2>{{(contentServices | async)?.title}}</h2>\n        <p>{{(contentServices | async)?.content}}</p>\n        <ul class=\"iconDescriptor\">\n          <li>\n            <div>\n              <svg class=\"icon hvac\"></svg>\n              <p>Air-conditioning & ventilation systems (Marine & Offshore Industries)</p>\n            </div>\n          </li>\n        </ul>\n      </div>\n    </section>\n\n    <section class=\"module parallax parallaxImage-Projects\" id=\"Projects\">\n      <div class=\"container\">\n        <h1>Projects</h1>\n      </div>\n    </section>\n\n    <section class=\"module content\">\n      <div class=\"container\">\n        <h2>{{(contentProjects | async)?.title}}</h2>\n        <p>{{(contentProjects | async)?.content}}</p>\n      </div>\n    </section>\n\n    <section class=\"module parallax parallaxImage-Contact\" id=\"Contact\">\n      <div class=\"container\">\n        <h1>Contact</h1>\n      </div>\n    </section>\n\n    <section class=\"module content\">\n      <div class=\"container\" [ngClass]=\"{ 'inactive' : isFormShown }\">\n        <h2>{{(contentContact | async)?.title}}</h2>\n        <p>{{(contentContact | async)?.content}}</p>\n        <button class=\"roundedButton default\" (click)=\"isFormShown=true\">Contact Us</button>\n      </div>\n    </section>\n\n    <section class=\"module parallax parallaxImage-Careers\" id=\"Careers\">\n      <div class=\"container\">\n        <h1>Careers</h1>\n      </div>\n    </section>\n\n    <section class=\"module content\">\n      <div class=\"container\">\n        <h2>{{(contentCareers | async)?.title}}</h2>\n        <p>{{(contentCareers | async)?.content}}</p>\n      </div>\n    </section>\n  </div>\n  <contact-sheet [toShow]=\"isFormShown\" (change)=\"onContactSheetEvent($event)\"></contact-sheet>\n  <div>\n    <footer class=\"footer\">\n      <p>Proair Sdn Bhd</p>\n    </footer>\n  </div>\n  ",
 	            styles: [
+	                __webpack_require__(508),
+	                __webpack_require__(509),
+	                __webpack_require__(510),
+	                __webpack_require__(511),
+	                __webpack_require__(512),
+	                __webpack_require__(503),
 	                __webpack_require__(504),
-	                __webpack_require__(505),
-	                __webpack_require__(506),
-	                __webpack_require__(507),
-	                __webpack_require__(501),
-	                __webpack_require__(502),
-	                __webpack_require__(503)
+	                __webpack_require__(505)
 	            ],
 	            directives: [contactsheet_component_1.ContactSheetComponent, image_grid_component_1.ImageGridComponent]
 	        }), 
@@ -71428,7 +71432,7 @@
 	var email_service_1 = __webpack_require__(485);
 	var recaptcha_component_1 = __webpack_require__(499);
 	var contactsheet_service_1 = __webpack_require__(500);
-	var notification_component_1 = __webpack_require__(508);
+	var notification_component_1 = __webpack_require__(501);
 	var angularfire2_1 = __webpack_require__(449);
 	var ContactSheetComponent = (function () {
 	    function ContactSheetComponent(emailService, contactSheetService, af) {
@@ -71549,9 +71553,9 @@
 	            selector: 'contact-sheet',
 	            template: "\n  <div class=\"contactUsSheet\" [ngClass]=\"{ 'inactive' : !toShow }\">\n    <div class=\"contactUsSheet div\" [ngClass]=\"{ 'inactive' : !toShow }\">\n      <h2>Leave Us A Message</h2>\n      <p>We will get back to you as soon as possible. Please note that solicitors and third parties will not be entertained.</p>\n      <form>\n        <div class=\"inputField\">\n          <input id=\"nameField\" [(ngModel)]=\"name\" class=\"oneLineField\"\n          type=\"text\" required>\n          <label for=\"nameField\" class=\"placeholder\">Name*</label>\n          <span class=\"underline\"></span>\n          <span class=\"bar\"></span>\n        </div>\n        <div class=\"inputField\">\n          <input id=\"emailField\" [(ngModel)]=\"email\" (keyup)=\"validateEmail()\"\n          class=\"oneLineField\" [ngClass]=\"{'incomplete': !isEmailComplete}\"\n          type=\"email\" required>\n          <label for=\"emailField\" class=\"placeholder\">Email*</label>\n          <span class=\"underline\"></span>\n          <span class=\"bar\"></span>\n        </div>\n        <div class=\"inputField\">\n          <input id=\"titleField\" [(ngModel)]=\"title\" class=\"oneLineField\"\n          type=\"text\" required>\n          <label for=\"titleField\" class=\"placeholder\">Subject*</label>\n          <span class=\"underline\"></span>\n          <span class=\"bar\"></span>\n        </div>\n        <div class=\"inputField\">\n          <textarea id=\"messageField\" [(ngModel)]=\"message\" class=\"multiLineField\"\n          type=\"text\" required></textarea>\n          <label for=\"messageField\" class=\"placeholder\">Message*</label>\n        </div>\n        <div style=\"padding:5px;\" googlerecaptcha\n    (resolve)=\"resolved($event)\" [site-key]=\"siteKey\"></div>\n        <ul>\n          <li>\n            <button class=\"roundedButton cancel\" (click)=\"close()\">Cancel</button>\n          </li>\n          <li>\n            <button class=\"roundedButton default\" [disabled]=\"!isFormValid()\"\n            type=\"submit\" (click)=\"close('send')\">Send</button>\n          </li>\n        </ul>\n      </form>\n    </div>\n  </div>\n  <notification [shown]=\"notificationIsShown\"\n                [isError]=\"notificationIsError\"\n                [title]=\"notificationTitle\"\n                [message]=\"notificationMessage\"\n                (toDismiss)=\"dismissNotification($event)\"></notification>\n  ",
 	            styles: [
-	                __webpack_require__(501),
-	                __webpack_require__(502),
 	                __webpack_require__(503),
+	                __webpack_require__(504),
+	                __webpack_require__(505),
 	            ],
 	            directives: [recaptcha_component_1.GoogleRecaptchaDirective, notification_component_1.NotificationComponent],
 	            providers: [email_service_1.EmailService, contactsheet_service_1.ContactSheetService]
@@ -72299,48 +72303,6 @@
 
 /***/ },
 /* 501 */
-/***/ function(module, exports) {
-
-	module.exports = ".contactUsSheet{position:fixed;display:flex;flex-direction:column;align-content:center;justify-content:center;overflow:auto;padding:15px;left:0;top:0;width:calc(100% - 30px);height:calc(100% - 30px);background-color:rgba(0,0,0,0.8);-webkit-transition:all 0.3s ease-in-out 0s;transition:all 0.3s ease-in-out 0s;font-family:\"Muli\",sans-serif;z-index:300;visibility:visible;opacity:1}.contactUsSheet.inactive{visibility:hidden;opacity:0}.contactUsSheet div{position:relative;display:block;margin:0 auto;padding:25px;border-radius:5px;width:calc(100% - 50px);max-width:calc(900px - 50px);max-height:calc(650px - 50px);overflow-x:hidden;overflow-y:scroll;background-color:#fff;color:#333;opacity:1;-webkit-transition:all 0.5s ease-in-out 0s;transition:all 0.5s ease-in-out 0s}.contactUsSheet div ul{display:flex;flex-direction:row;flex-wrap:wrap;align-content:center;justify-content:center;width:100%;padding:0;list-style:none}.contactUsSheet div ul li{padding:5px 25px}.contactUsSheet div.g-recaptcha{margin:auto !important;width:auto !important;height:auto !important;overflow-y:hidden;text-align:-webkit-center;text-align:-moz-center;text-align:-o-center;text-align:-ms-center}.contactUsSheet div.inactive{transform:translate3d(0, -25vw, 0);opacity:0}\n"
-
-/***/ },
-/* 502 */
-/***/ function(module, exports) {
-
-	module.exports = ".inputField{position:relative;display:block;font-family:\"Muli\",sans-serif;min-width:200px;padding:0;margin:0}.inputField .bar{position:relative;display:block}.inputField .bar:before,.inputField .bar:after{content:'';height:2px;width:100%;bottom:-3px;left:0;position:absolute;background:#363DA7;-webkit-transform:scaleX(0);transform:scaleX(0);-webkit-transition:all 0.3s ease-in-out 0s;transition:all 0.3s ease-in-out 0s}.inputField .underline{position:relative;display:block}.inputField .underline:before,.inputField .underline:after{position:absolute;left:0;content:'';height:2px;width:100%;bottom:-3px;background:#b3b3b3}.inputField .placeholder{position:absolute;color:#b3b3b3;width:100%;height:10px;font-size:20px;top:25px;left:35px;bottom:0;-webkit-transition:all 0.3s ease-in-out 0s;transition:all 0.3s ease-in-out 0s}.inputField .placeholder:hover{cursor:text}.inputField .oneLineField{position:relative;font-size:20px;width:calc(100% - 20px);border:none;padding-left:10px;padding-right:10px}.inputField .oneLineField:focus{outline:none}.inputField .oneLineField:focus ~ .bar:before,.inputField .oneLineField:focus ~ .bar:after{-webkit-transform:scaleX(1);transform:scaleX(1)}.inputField .oneLineField:focus ~ .placeholder{color:#333;left:25px;font-size:12px;top:10px}.inputField .oneLineField:focus:required:invalid ~ .bar:before,.inputField .oneLineField:focus:required:invalid ~ .bar:after{background:#e74c3c;-webkit-transform:scaleX(1);transform:scaleX(1)}.inputField .oneLineField:focus:required:invalid ~ .placeholder{color:#333;left:25px;font-size:12px;top:10px}.inputField .oneLineField:valid ~ .bar:before,.inputField .oneLineField:valid ~ .bar:after{-webkit-transform:scaleX(1);transform:scaleX(1)}.inputField .oneLineField:valid ~ .placeholder{color:#333;left:25px;font-size:12px;top:10px}.inputField .oneLineField.incomplete ~ .bar:before,.inputField .oneLineField.incomplete ~ .bar:after{background:#e74c3c;-webkit-transform:scaleX(1);transform:scaleX(1)}.inputField .oneLineField.incomplete ~ .placeholder{color:#333;left:25px;font-size:12px;top:10px}.inputField .multiLineField{font-size:20px;width:calc(100% - 20px);height:300px;border:1px solid;padding:10px;border-radius:10px;border-color:#b3b3b3;resize:none;-webkit-transition:all 0.3s ease-in-out 0s;transition:all 0.3s ease-in-out 0s}.inputField .multiLineField ~ .placeholder{top:37px}.inputField .multiLineField:focus{outline:none;border-color:#363DA7}.inputField .multiLineField:focus ~ .placeholder{color:#333;left:25px;font-size:12px;top:10px}.inputField .multiLineField:focus:required:invalid{border-color:#e74c3c}.inputField .multiLineField:focus:required:invalid ~ .placeholder{color:#333;left:25px;font-size:12px;top:10px}.inputField .multiLineField:valid{border-color:#363DA7}.inputField .multiLineField:valid ~ .placeholder{color:#333;left:25px;font-size:12px;top:10px}\n"
-
-/***/ },
-/* 503 */
-/***/ function(module, exports) {
-
-	module.exports = ".roundedButton{padding:0;font-family:\"Muli\",sans-serif;font-size:1.0em;line-height:1.0em;color:#333;background-color:transparent;border:2px solid;border-radius:25px;border-color:#363DA7;width:200px;height:40px;-webkit-transition:all 0.2s ease-in-out 0s;transition:all 0.2s ease-in-out 0s}.roundedButton:focus{outline:none}.roundedButton:enabled:hover{font-size:1.1em;color:#fff}.roundedButton:disabled{color:#b3b3b3;border-color:#b3b3b3}.roundedButton.cancel:enabled:hover{border-color:#e74c3c;background-color:#e74c3c}.roundedButton.default:enabled:hover{background-color:#363DA7}\n"
-
-/***/ },
-/* 504 */
-/***/ function(module, exports) {
-
-	module.exports = ".navbar{font-family:\"Muli\",sans-serif;position:fixed;width:100%;z-index:150}.navbar ul{padding:0;margin:0;top:0;height:70px;list-style:none;overflow:hidden;background-color:#333;box-shadow:0 2px 3px rgba(0,0,0,0.4)}.navbar ul img{float:left;margin-left:25px;padding:12px;max-width:45px;max-height:45px}.navbar ul li{float:right;padding:25px 25px;display:flex;align-items:center;justify-content:center}.navbar ul li a{padding-top:3px;position:relative;display:inline-block;color:#fff;text-align:center;opacity:0.8;text-decoration:none;font-size:16px;-webkit-transition:all 0.3s ease-in-out 0s;transition:all 0.3s ease-in-out 0s}.navbar ul li a:before{content:\"\";position:absolute;width:100%;height:2px;bottom:-3px;left:0px;background-color:#fff;visibility:hidden;-webkit-transform:scaleX(0);transform:scaleX(0);-webkit-transition:all 0.3s ease-in-out 0s;transition:all 0.3s ease-in-out 0s}.navbar ul li a:hover:before{visibility:visible;-webkit-transform:scaleX(1);transform:scaleX(1)}.navbar ul li a:hover{opacity:1.0}.navbar ul li button{background:transparent;color:#fff;font-size:16px;border:none;text-align:center;text-decoration:none;display:inline-block;cursor:pointer}.navbar ul li button:focus{outline:none}.navbar ul li:last-child{border-left:none}.navbar ul li .icon{display:none}\n"
-
-/***/ },
-/* 505 */
-/***/ function(module, exports) {
-
-	module.exports = ".navMenu{font-family:\"Muli\",sans-serif;position:fixed;right:0;z-index:151}.navMenu ul{padding:0;margin-right:0;list-style:none;overflow:hidden;background-color:#333;box-shadow:0 2px 3px rgba(0,0,0,0.4)}.navMenu ul li{padding:10px 40px;display:flex;align-items:center;justify-content:center}.navMenu ul li a{position:relative;display:block;color:#fff;text-align:center;opacity:0.8;text-decoration:none;font-size:16px;-webkit-transition:all 0.3s ease-in-out 0s;transition:all 0.3s ease-in-out 0s}.navMenu ul li a:before{content:\"\";position:absolute;width:100%;height:2px;bottom:-3px;left:0px;background-color:#fff;visibility:hidden;-webkit-transform:scaleX(0);transform:scaleX(0);-webkit-transition:all 0.3s ease-in-out 0s;transition:all 0.3s ease-in-out 0s}.navMenu ul li a:hover:before{visibility:visible;-webkit-transform:scaleX(1);transform:scaleX(1)}.navMenu ul li a:hover{opacity:1.0}.navMenu ul li button{background:transparent;color:#fff;font-size:16px;border:none;text-align:center;text-decoration:none;display:inline-block;cursor:pointer}.navMenu ul li:last-child{border-left:none}.navMenu ul li .icon{display:none}\n"
-
-/***/ },
-/* 506 */
-/***/ function(module, exports) {
-
-	module.exports = ".container{max-width:960px;overflow:hidden}.module{font-family:\"Muli\",sans-serif;color:#333;position:relative;text-align:center;padding:0;width:100%;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-wrap:nowrap}.module:last-child{margin-bottom:0}.module h2{padding:10px;font-size:30px}.module p{white-space:pre-wrap;max-width:960px;word-wrap:break-word;padding:25px;margin-bottom:40px;font-size:16px}.module p:last-child{margin-bottom:0}.module.content{padding:100px 0;background:#fff}.module.parallax{height:400px;background-position:50% 50%;background-repeat:no-repeat;background-attachment:fixed;background-size:cover;background-color:transparent;display:flex;align-items:center;justify-content:center}.module.parallax h1{font-family:\"Raleway\",sans-serif;color:rgba(255,255,255,0.8);font-size:48px;text-transform:uppercase;text-shadow:0 0 10px rgba(0,0,0,0.2)}.module.parallax img{margin-top:50px;width:100px;height:auto;max-width:200px;max-height:200px}.module.parallaxImage-Home{background-image:linear-gradient(rgba(20,20,20,0.3), rgba(20,20,20,0.3)),url(\"../../../../assets/images/proair-web-home.jpg\")}.module.parallaxImage-About{background-image:linear-gradient(rgba(20,20,20,0.3), rgba(20,20,20,0.3)),url(\"../../../../assets/images/proair-web-about.jpg\")}.module.parallaxImage-Services{background-image:linear-gradient(rgba(20,20,20,0.3), rgba(20,20,20,0.3)),url(\"../../../../assets/images/proair-web-services.jpg\")}.module.parallaxImage-Projects{background-image:linear-gradient(rgba(20,20,20,0.3), rgba(20,20,20,0.3)),url(\"../../../../assets/images/proair-web-projects.jpg\")}.module.parallaxImage-Contact{background-image:linear-gradient(rgba(20,20,20,0.3), rgba(20,20,20,0.3)),url(\"../../../../assets/images/proair-web-contact.jpg\")}.module.parallaxImage-Careers{background-image:linear-gradient(rgba(20,20,20,0.3), rgba(20,20,20,0.3)),url(\"../../../../assets/images/proair-web-careers.jpg\")}@media all and (min-width: 600px){.module h2{font-size:42px}.module p{font-size:20px}.module.parallax{height:450px}.module.parallax h1{font-size:96px}.module.parallax img{width:150px;height:auto}}@media all and (min-width: 960px){.module.parallax{height:500px}.module.parallax h1{font-size:160px}.module.parallax img{width:auto;height:200px}}\n"
-
-/***/ },
-/* 507 */
-/***/ function(module, exports) {
-
-	module.exports = ".footer{font-family:\"Muli\",sans-serif;position:relative;display:block;padding:0;min-height:50px;max-height:300px;background-color:#333;display:flex;align-items:center;justify-content:center}.footer p{color:#fff}\n"
-
-/***/ },
-/* 508 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -72389,7 +72351,7 @@
 	            selector: 'notification',
 	            template: "\n  <div class=\"notification\" [ngClass]=\"{ 'inactive' : !shown }\">\n    <div class=\"card\">\n      <div class=\"header\">\n        <h2 class=\"title\">{{title}}</h2>\n        <span class=\"dismiss\" (click)=\"dismiss()\"></span>\n      </div>\n      <div class=\"underline\"\n           [ngClass]=\"{ 'general' : !isError, 'error' : isError }\"></div>\n      <p>{{message}}</p>\n    </div>\n  </div>\n  ",
 	            styles: [
-	                __webpack_require__(509)
+	                __webpack_require__(502)
 	            ]
 	        }), 
 	        __metadata('design:paramtypes', [])
@@ -72400,13 +72362,31 @@
 
 
 /***/ },
-/* 509 */
+/* 502 */
 /***/ function(module, exports) {
 
 	module.exports = "@import url(https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);.notification{background-color:rgba(51,51,51,0.8);position:fixed;display:flex;flex-direction:column;align-content:center;justify-content:center;top:0;left:0;width:100%;height:100%;z-index:1000000;-webkit-transition:all 0.3s ease-in-out 0s;transition:all 0.3s ease-in-out 0s}.notification.inactive{visibility:hidden;opacity:0}.card{position:relative;margin:0 auto;background-color:#fff;font-family:\"Muli\",sans-serif;color:#333;border-radius:5px;padding:15px;min-width:300px;max-width:500px;height:auto;max-height:500px;box-shadow:0px 20px 20px -10px}.card .header{display:flex;flex-direction:row;flex-wrap:nowrap;width:100%;padding:0;align-items:center}.card .header .title{flex-basis:100%;font-size:22px;padding:0;margin:0}.card .header .dismiss{-webkit-transition:-webkit-transform 0.25s ease-in-out;-moz-transition:-moz-transform 0.25s ease-in-out;transition:transform 0.25s ease-in-out;will-change:transform}.card .header .dismiss:hover{cursor:pointer;-webkit-transform:rotateZ(90deg);-moz-transform:rotateZ(90deg);-ms-transform:rotateZ(90deg);-o-transform:rotateZ(90deg);transform:rotateZ(90deg)}.card .header .dismiss:after{font-family:'Ionicons';content:'\\f404';font-size:2.5em}.card p{position:relative;padding:0;width:100%;font-size:16px}.card .underline{position:relative;content:\"\";padding:0;width:100%;height:1px}.card .underline.general{background-color:#363DA7}.card .underline.error{background-color:#e74c3c}\n"
 
 /***/ },
-/* 510 */
+/* 503 */
+/***/ function(module, exports) {
+
+	module.exports = ".contactUsSheet{position:fixed;display:flex;flex-direction:column;align-content:center;justify-content:center;overflow:auto;padding:15px;left:0;top:0;width:calc(100% - 30px);height:calc(100% - 30px);background-color:rgba(0,0,0,0.8);-webkit-transition:all 0.3s ease-in-out 0s;transition:all 0.3s ease-in-out 0s;font-family:\"Muli\",sans-serif;z-index:300;visibility:visible;opacity:1}.contactUsSheet.inactive{visibility:hidden;opacity:0}.contactUsSheet div{position:relative;display:block;margin:0 auto;padding:25px;border-radius:5px;width:calc(100% - 50px);max-width:calc(900px - 50px);max-height:calc(650px - 50px);overflow-x:hidden;overflow-y:scroll;background-color:#fff;color:#333;opacity:1;-webkit-transition:all 0.5s ease-in-out 0s;transition:all 0.5s ease-in-out 0s}.contactUsSheet div ul{display:flex;flex-direction:row;flex-wrap:wrap;align-content:center;justify-content:center;width:100%;padding:0;list-style:none}.contactUsSheet div ul li{padding:5px 25px}.contactUsSheet div.g-recaptcha{margin:auto !important;width:auto !important;height:auto !important;overflow-y:hidden;text-align:-webkit-center;text-align:-moz-center;text-align:-o-center;text-align:-ms-center}.contactUsSheet div.inactive{transform:translate3d(0, -25vw, 0);opacity:0}\n"
+
+/***/ },
+/* 504 */
+/***/ function(module, exports) {
+
+	module.exports = ".inputField{position:relative;display:block;font-family:\"Muli\",sans-serif;min-width:200px;padding:0;margin:0}.inputField .bar{position:relative;display:block}.inputField .bar:before,.inputField .bar:after{content:'';height:2px;width:100%;bottom:-3px;left:0;position:absolute;background:#363DA7;-webkit-transform:scaleX(0);transform:scaleX(0);-webkit-transition:all 0.3s ease-in-out 0s;transition:all 0.3s ease-in-out 0s}.inputField .underline{position:relative;display:block}.inputField .underline:before,.inputField .underline:after{position:absolute;left:0;content:'';height:2px;width:100%;bottom:-3px;background:#b3b3b3}.inputField .placeholder{position:absolute;color:#b3b3b3;width:100%;height:10px;font-size:20px;top:25px;left:35px;bottom:0;-webkit-transition:all 0.3s ease-in-out 0s;transition:all 0.3s ease-in-out 0s}.inputField .placeholder:hover{cursor:text}.inputField .oneLineField{position:relative;font-size:20px;width:calc(100% - 20px);border:none;padding-left:10px;padding-right:10px}.inputField .oneLineField:focus{outline:none}.inputField .oneLineField:focus ~ .bar:before,.inputField .oneLineField:focus ~ .bar:after{-webkit-transform:scaleX(1);transform:scaleX(1)}.inputField .oneLineField:focus ~ .placeholder{color:#333;left:25px;font-size:12px;top:10px}.inputField .oneLineField:focus:required:invalid ~ .bar:before,.inputField .oneLineField:focus:required:invalid ~ .bar:after{background:#e74c3c;-webkit-transform:scaleX(1);transform:scaleX(1)}.inputField .oneLineField:focus:required:invalid ~ .placeholder{color:#333;left:25px;font-size:12px;top:10px}.inputField .oneLineField:valid ~ .bar:before,.inputField .oneLineField:valid ~ .bar:after{-webkit-transform:scaleX(1);transform:scaleX(1)}.inputField .oneLineField:valid ~ .placeholder{color:#333;left:25px;font-size:12px;top:10px}.inputField .oneLineField.incomplete ~ .bar:before,.inputField .oneLineField.incomplete ~ .bar:after{background:#e74c3c;-webkit-transform:scaleX(1);transform:scaleX(1)}.inputField .oneLineField.incomplete ~ .placeholder{color:#333;left:25px;font-size:12px;top:10px}.inputField .multiLineField{font-size:20px;width:calc(100% - 20px);height:300px;border:1px solid;padding:10px;border-radius:10px;border-color:#b3b3b3;resize:none;-webkit-transition:all 0.3s ease-in-out 0s;transition:all 0.3s ease-in-out 0s}.inputField .multiLineField ~ .placeholder{top:37px}.inputField .multiLineField:focus{outline:none;border-color:#363DA7}.inputField .multiLineField:focus ~ .placeholder{color:#333;left:25px;font-size:12px;top:10px}.inputField .multiLineField:focus:required:invalid{border-color:#e74c3c}.inputField .multiLineField:focus:required:invalid ~ .placeholder{color:#333;left:25px;font-size:12px;top:10px}.inputField .multiLineField:valid{border-color:#363DA7}.inputField .multiLineField:valid ~ .placeholder{color:#333;left:25px;font-size:12px;top:10px}\n"
+
+/***/ },
+/* 505 */
+/***/ function(module, exports) {
+
+	module.exports = ".roundedButton{padding:10px;font-family:\"Muli\",sans-serif;text-decoration:none;font-size:1.0em;line-height:1.0em;color:#333;background-color:transparent;border:2px solid;border-radius:25px;border-color:#363DA7;min-width:200px;min-height:40px;-webkit-transition:all 0.2s ease-in-out 0s;transition:all 0.2s ease-in-out 0s}.roundedButton:focus{outline:none}.roundedButton:enabled:hover{font-size:1.1em;color:#fff}.roundedButton:disabled{color:#b3b3b3;border-color:#b3b3b3}.roundedButton.cancel:enabled:hover{border-color:#e74c3c;background-color:#e74c3c}.roundedButton.default:enabled:hover{background-color:#363DA7}\n"
+
+/***/ },
+/* 506 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -72433,7 +72413,7 @@
 	            selector: 'image-grid',
 	            template: "\n  <div>\n    <ul class=\"grid\">\n      <li class=\"content\" *ngFor=\"let image of imageSource | async\">\n        <a href=\"{{image.link}}\"><img src=\"{{image.img}}\" alt=\"{{image.name}}\"></a>\n      </li>\n    </ul>\n  </div>\n  ",
 	            styles: [
-	                __webpack_require__(511)
+	                __webpack_require__(507)
 	            ]
 	        }), 
 	        __metadata('design:paramtypes', [angularfire2_1.AngularFire])
@@ -72444,10 +72424,40 @@
 
 
 /***/ },
-/* 511 */
+/* 507 */
 /***/ function(module, exports) {
 
 	module.exports = ".grid{display:flex;flex-wrap:wrap;margin:0;padding:20px;width:calc(100% - 40px);justify-content:center;list-style:none}.grid .content img{-webkit-filter:grayscale(100%);filter:grayscale(100%);margin:15px;max-height:100px;-webkit-transition:all 0.2s ease-in-out 0s;transition:all 0.2s ease-in-out 0s}.grid .content img:hover{-webkit-filter:none;filter:none;cursor:pointer}\n"
+
+/***/ },
+/* 508 */
+/***/ function(module, exports) {
+
+	module.exports = ".navbar{font-family:\"Muli\",sans-serif;position:fixed;width:100%;z-index:150}.navbar ul{padding:0;margin:0;top:0;height:70px;list-style:none;overflow:hidden;background-color:#333;box-shadow:0 2px 3px rgba(0,0,0,0.4)}.navbar ul img{float:left;margin-left:25px;padding:12px;max-width:45px;max-height:45px}.navbar ul li{float:right;padding:25px 25px;display:flex;align-items:center;justify-content:center}.navbar ul li a{padding-top:3px;position:relative;display:inline-block;color:#fff;text-align:center;opacity:0.8;text-decoration:none;font-size:16px;-webkit-transition:all 0.3s ease-in-out 0s;transition:all 0.3s ease-in-out 0s}.navbar ul li a:before{content:\"\";position:absolute;width:100%;height:2px;bottom:-3px;left:0px;background-color:#fff;visibility:hidden;-webkit-transform:scaleX(0);transform:scaleX(0);-webkit-transition:all 0.3s ease-in-out 0s;transition:all 0.3s ease-in-out 0s}.navbar ul li a:hover:before{visibility:visible;-webkit-transform:scaleX(1);transform:scaleX(1)}.navbar ul li a:hover{opacity:1.0}.navbar ul li button{background:transparent;color:#fff;font-size:16px;border:none;text-align:center;text-decoration:none;display:inline-block;cursor:pointer}.navbar ul li button:focus{outline:none}.navbar ul li:last-child{border-left:none}.navbar ul li .icon{display:none}\n"
+
+/***/ },
+/* 509 */
+/***/ function(module, exports) {
+
+	module.exports = ".navMenu{font-family:\"Muli\",sans-serif;position:fixed;right:0;z-index:151}.navMenu ul{padding:0;margin-right:0;list-style:none;overflow:hidden;background-color:#333;box-shadow:0 2px 3px rgba(0,0,0,0.4)}.navMenu ul li{padding:10px 40px;display:flex;align-items:center;justify-content:center}.navMenu ul li a{position:relative;display:block;color:#fff;text-align:center;opacity:0.8;text-decoration:none;font-size:16px;-webkit-transition:all 0.3s ease-in-out 0s;transition:all 0.3s ease-in-out 0s}.navMenu ul li a:before{content:\"\";position:absolute;width:100%;height:2px;bottom:-3px;left:0px;background-color:#fff;visibility:hidden;-webkit-transform:scaleX(0);transform:scaleX(0);-webkit-transition:all 0.3s ease-in-out 0s;transition:all 0.3s ease-in-out 0s}.navMenu ul li a:hover:before{visibility:visible;-webkit-transform:scaleX(1);transform:scaleX(1)}.navMenu ul li a:hover{opacity:1.0}.navMenu ul li button{background:transparent;color:#fff;font-size:16px;border:none;text-align:center;text-decoration:none;display:inline-block;cursor:pointer}.navMenu ul li:last-child{border-left:none}.navMenu ul li .icon{display:none}\n"
+
+/***/ },
+/* 510 */
+/***/ function(module, exports) {
+
+	module.exports = ".container{max-width:960px;overflow:hidden}.module{font-family:\"Muli\",sans-serif;color:#333;position:relative;text-align:center;padding:0;width:100%;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-wrap:nowrap}.module:last-child{margin-bottom:0}.module h2{padding:10px;font-size:30px}.module p{white-space:pre-wrap;max-width:960px;word-wrap:break-word;padding:25px;margin-bottom:40px;font-size:16px}.module p:last-child{margin-bottom:0}.module.content{padding:100px 0;background:#fff}.module.parallax{height:400px;background-position:50% 50%;background-repeat:no-repeat;background-attachment:fixed;background-size:cover;background-color:transparent;display:flex;align-items:center;justify-content:center}.module.parallax h1{font-family:\"Raleway\",sans-serif;color:rgba(255,255,255,0.8);font-size:48px;text-transform:uppercase;text-shadow:0 0 10px rgba(0,0,0,0.2)}.module.parallax img{margin-top:50px;width:100px;height:auto;max-width:200px;max-height:200px}.module.parallaxImage-Home{background-image:linear-gradient(rgba(20,20,20,0.3), rgba(20,20,20,0.3)),url(\"../../../../assets/images/proair-web-home.jpg\")}.module.parallaxImage-About{background-image:linear-gradient(rgba(20,20,20,0.3), rgba(20,20,20,0.3)),url(\"../../../../assets/images/proair-web-about.jpg\")}.module.parallaxImage-Services{background-image:linear-gradient(rgba(20,20,20,0.3), rgba(20,20,20,0.3)),url(\"../../../../assets/images/proair-web-services.jpg\")}.module.parallaxImage-Projects{background-image:linear-gradient(rgba(20,20,20,0.3), rgba(20,20,20,0.3)),url(\"../../../../assets/images/proair-web-projects.jpg\")}.module.parallaxImage-Contact{background-image:linear-gradient(rgba(20,20,20,0.3), rgba(20,20,20,0.3)),url(\"../../../../assets/images/proair-web-contact.jpg\")}.module.parallaxImage-Careers{background-image:linear-gradient(rgba(20,20,20,0.3), rgba(20,20,20,0.3)),url(\"../../../../assets/images/proair-web-careers.jpg\")}@media all and (min-width: 600px){.module h2{font-size:42px}.module p{font-size:20px}.module.parallax{height:450px}.module.parallax h1{font-size:96px}.module.parallax img{width:150px;height:auto}}@media all and (min-width: 960px){.module.parallax{height:500px}.module.parallax h1{font-size:160px}.module.parallax img{width:auto;height:200px}}\n"
+
+/***/ },
+/* 511 */
+/***/ function(module, exports) {
+
+	module.exports = ".footer{font-family:\"Muli\",sans-serif;position:relative;display:block;padding:0;min-height:50px;max-height:300px;background-color:#333;display:flex;align-items:center;justify-content:center}.footer p{color:#fff}\n"
+
+/***/ },
+/* 512 */
+/***/ function(module, exports) {
+
+	module.exports = ".iconDescriptor{position:relative;list-style:none;max-width:960px;width:100%}.icon{max-width:64px;max-height:64px;background-repeat:no-repeat}.icon.cold{background-image:url(\"../../../../assets/images/originals/servicesSVG/cold-creative-commons.svg\");background-repeat:no-repeat;-webkit-animation:rotation 15s infinite linear}.icon.electrical{background-image:url(\"../../../../assets/images/originals/servicesSVG/electrical-services-free.svg\")}.icon.fire-protection{background-image:url(\"../../../../assets/images/originals/servicesSVG/fire-protection-free.svg\")}.icon.hvac{background-image:url(\"../../../../assets/images/originals/servicesSVG/hvac-creative-commons.svg\")}.description{font-family:\"Muli\",sans-serif;font-size:16px;margin-right:25px}@-webkit-keyframes rotation{from{-webkit-transform:rotate(0deg)}to{-webkit-transform:rotate(359deg)}}\n"
 
 /***/ }
 /******/ ]);

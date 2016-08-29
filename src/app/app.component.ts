@@ -61,6 +61,9 @@ import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
         <h2>{{(contentAbout | async)?.title}}</h2>
         <p>{{(contentAbout | async)?.content}}</p>
         <image-grid></image-grid>
+        <p>{{(contentProfile | async)?.content}}</p>
+        <a class="roundedButton default"
+           href="{{(contentProfile | async)?.link}}">Download Profile</a>
       </div>
     </section>
 
@@ -74,6 +77,14 @@ import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
       <div class="container">
         <h2>{{(contentServices | async)?.title}}</h2>
         <p>{{(contentServices | async)?.content}}</p>
+        <ul class="iconDescriptor">
+          <li>
+            <div>
+              <svg class="icon hvac"></svg>
+              <p>Air-conditioning & ventilation systems (Marine & Offshore Industries)</p>
+            </div>
+          </li>
+        </ul>
       </div>
     </section>
 
@@ -130,6 +141,7 @@ import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
     require('./assets/stylesheets/css/navMenu.css'),
     require('./assets/stylesheets/css/parallaxMain.css'),
     require('./assets/stylesheets/css/footer.css'),
+    require('./assets/stylesheets/css/iconDescriptor.css'),
     require('./assets/stylesheets/css/contactUsSheet.css'),
     require('./assets/stylesheets/css/inputField.css'),
     require('./assets/stylesheets/css/roundedButton.css')
@@ -148,6 +160,7 @@ export class AppComponent{
 
   private contentHome:any;
   private contentAbout:any;
+  private contentProfile:any;
   private contentServices:any;
   private contentProjects:any;
   private contentContact:any;
@@ -201,9 +214,12 @@ export class AppComponent{
 
   getAboutContent()
   {
-    this.contentAbout = this.af
-                        .database
-                        .object('/about');
+      this.contentAbout = this.af
+                          .database
+                          .object('/about');
+    this.contentProfile = this.af
+                          .database
+                          .object('/about/profile');
   }
 
   getServicesContent()

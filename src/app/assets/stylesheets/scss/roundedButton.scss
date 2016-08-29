@@ -2,8 +2,9 @@
 
 .roundedButton
 {
-  padding: 0;
+  padding: 10px;
   font-family: $font-main;
+  text-decoration: none;
   font-size: 1.0em;
   line-height: 1.0em;
   color: $color-flat-black;
@@ -11,8 +12,8 @@
   border: 2px solid;
   border-radius: 25px;
   border-color: $color-proairblue;
-  width: 200px;
-  height: 40px;
+  min-width: 200px;
+  min-height: 40px;
   -webkit-transition: all 0.2s ease-in-out 0s;
   transition: all 0.2s ease-in-out 0s;
 
