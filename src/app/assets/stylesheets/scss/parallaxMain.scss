@@ -2,6 +2,7 @@
 
 .container {
 	max-width: 960px;
+	width: 100%;
 	overflow: hidden;
 }
 
@@ -39,6 +40,12 @@
 	.generalList
 	{
 		list-style: none;
+		display: inline-block;
+		padding:0;
+		li
+		{
+			padding: 10px;
+		}
 	}
 
 	&.content

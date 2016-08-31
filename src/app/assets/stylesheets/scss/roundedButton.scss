@@ -14,12 +14,16 @@
   border-color: $color-proairblue;
   min-width: 200px;
   min-height: 40px;
+  max-height: 40px;
   -webkit-transition: all 0.2s ease-in-out 0s;
   transition: all 0.2s ease-in-out 0s;
 
   //custom for this website
-  margin-bottom: 40px;
-  
+  &.container
+  {
+    margin-bottom: 40px;
+  }
+
   &:focus
   {
     outline: none;

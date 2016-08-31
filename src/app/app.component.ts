@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ContactSheetComponent } from "./contactsheet.component";
 import { ImageGridComponent } from "./image-grid.component";
+import { CareerListingsComponent } from "./career-listings.component";
 import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
 
 @Component({
@@ -87,7 +88,7 @@ import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
               <div class="iconContainer">
                 <div class="icon hvac"></div>
               </div>
-              <p>Air-conditioning & ventilation systems (Marine & Offshore Industries)</p>
+              <p class="description">Air-conditioning & ventilation systems (Marine & Offshore Industries)</p>
             </div>
           </li>
           <li>
@@ -95,7 +96,7 @@ import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
               <div class="iconContainer">
                 <div class="icon fire"></div>
               </div>
-              <p>Fire protection systems</p>
+              <p class="description">Fire protection systems</p>
             </div>
           </li>
           <li>
@@ -103,7 +104,7 @@ import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
               <div class="iconContainer">
                 <div class="icon cold"></div>
               </div>
-              <p>Refrigeration and cold rooms(Marine & Offshore Industries)</p>
+              <p class="description">Refrigeration and cold rooms(Marine & Offshore Industries)</p>
             </div>
           </li>
           <li>
@@ -111,7 +112,7 @@ import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
               <div class="iconContainer">
                 <div class="icon electrical"></div>
               </div>
-              <p>Electrical Services – Wiring & Control Panel</p>
+              <p class="description">Electrical Services – Wiring & Control Panel</p>
             </div>
           </li>
         </ul>
@@ -128,8 +129,8 @@ import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
       <div class="container">
         <h2>{{(contentProjects | async)?.title}}</h2>
         <p>{{(contentProjects | async)?.content}}</p>
-        <ul class="generalList" *ngFor="let project of contentProjectList | async">
-          <li>{{project}}</li>
+        <ul class="generalList">
+          <li *ngFor="let project of contentProjectList | async">{{project}}</li>
         </ul>
       </div>
     </section>
@@ -159,6 +160,7 @@ import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
         <h2>{{(contentCareers | async)?.title}}</h2>
         <p *ngIf="isHiring">{{(contentCareers | async)?.content}}</p>
         <p *ngIf="!isHiring">{{(contentCareers | async)?.content_alt}}</p>
+        <career-listings *ngIf="isHiring"></career-listings>
       </div>
     </section>
   </div>
@@ -181,7 +183,11 @@ import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
     require('./assets/stylesheets/css/roundedButton.css')
   ]
   ,
-  directives: [ContactSheetComponent, ImageGridComponent]
+  directives: [
+    ContactSheetComponent,
+    ImageGridComponent,
+    CareerListingsComponent
+  ]
 })
 export class AppComponent{
   private errorMessage: string;
