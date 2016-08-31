@@ -1,54 +1,65 @@
-@import "variables";
-
 .iconDescriptor
 {
   position: relative;
   list-style: none;
+  margin: 0 auto;
   max-width: 960px;
-  width:100%;
+  padding:20px;
+  width:calc(100% - 40px);
+  li
+  {
+    width: auto;
+    padding:10px;
+  }
 }
 
-.icon
+.descriptor
 {
-  max-width:64px;
-  max-height:64px;
-  background-repeat: no-repeat;
-  &.cold
+  display: flex;
+  flex-direction: row;
+  margin-left: 0;
+  justify-content: center;
+
+  .iconContainer
   {
-    background-image: url($folder-images +
-     "originals/servicesSVG/cold-creative-commons.svg");
-     background-repeat: no-repeat;
-    -webkit-animation: rotation 15s infinite linear;
+    min-width: 75px;
+    min-height: 75px;
+    max-width: 75px;
+    max-height: 75px;
   }
-
-  &.electrical
+  .icon
   {
-    background-image: url($folder-images +
-     "originals/servicesSVG/electrical-services-free.svg");
-  }
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    &.cold
+    {
+      //Source: http://www.iconsdb.com/custom-color/fridge-icon.html
+      background-image: url("https://firebasestorage.googleapis.com/v0/b/proair-web.appspot.com/o/cold.png?alt=media&token=00b2d45f-ca40-4ae8-bd0e-315c6836fd6a");
+    }
 
-  &.fire-protection
+    &.electrical
+    {
+      //Source: http://www.iconsdb.com/custom-color/speedometer-icon.html
+      background-image: url("https://firebasestorage.googleapis.com/v0/b/proair-web.appspot.com/o/electrical.png?alt=media&token=811b49b7-ba2b-44ec-8214-b09fe40e4945");
+    }
+
+    &.fire
+    {
+      //Source: http://www.iconsdb.com/custom-color/fire-icon.html
+      background-image: url("https://firebasestorage.googleapis.com/v0/b/proair-web.appspot.com/o/fire.png?alt=media&token=786e7e97-95b0-4025-be84-ff9826d653e8");
+    }
+
+    &.hvac
+    {
+      background-image: url("https://firebasestorage.googleapis.com/v0/b/proair-web.appspot.com/o/hvac.png?alt=media&token=8cdd2236-128e-4a55-9237-17f3a45bb4e2");
+    }
+  }
+  p
   {
-    //source:https://www.iconfinder.com/DOTonPAPER
-    background-image: url($folder-images +
-     "originals/servicesSVG/fire-protection-free.svg");
+    margin-top: 0;
+    font-size: 16px;
+    margin-right: 25px;
   }
-
-  &.hvac
-  {
-    background-image: url($folder-images +
-     "originals/servicesSVG/hvac-creative-commons.svg");
-  }
-}
-
-.description
-{
-  font-family: $font-main;
-  font-size: 16px;
-  margin-right: 25px;
-}
-
-@-webkit-keyframes rotation {
-    from {-webkit-transform: rotate(0deg);}
-    to   {-webkit-transform: rotate(359deg);}
 }

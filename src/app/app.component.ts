@@ -7,6 +7,7 @@ import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
   selector: 'app',
   template:
   `
+  <div class='uil-ring-css' style='transform:scale(0.95);'></div>
   <div (window:resize)="onResize($event)"> <!-- Navigation Bar -->
     <navbar class=navbar id="navBar">
       <ul>
@@ -61,9 +62,12 @@ import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
         <h2>{{(contentAbout | async)?.title}}</h2>
         <p>{{(contentAbout | async)?.content}}</p>
         <image-grid></image-grid>
-        <p>{{(contentProfile | async)?.content}}</p>
-        <a class="roundedButton default"
-           href="{{(contentProfile | async)?.link}}">Download Profile</a>
+        <p>
+          {{(contentProfile | async)?.content}}
+        </p>
+        <a href="{{(contentProfile | async)?.link}}">
+          <button class="roundedButton default">Download Profile</button>
+        </a>
       </div>
     </section>
 
@@ -79,9 +83,35 @@ import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
         <p>{{(contentServices | async)?.content}}</p>
         <ul class="iconDescriptor">
           <li>
-            <div>
-              <svg class="icon hvac"></svg>
+            <div class="descriptor">
+              <div class="iconContainer">
+                <div class="icon hvac"></div>
+              </div>
               <p>Air-conditioning & ventilation systems (Marine & Offshore Industries)</p>
+            </div>
+          </li>
+          <li>
+            <div class="descriptor">
+              <div class="iconContainer">
+                <div class="icon fire"></div>
+              </div>
+              <p>Fire protection systems</p>
+            </div>
+          </li>
+          <li>
+            <div class="descriptor">
+              <div class="iconContainer">
+                <div class="icon cold"></div>
+              </div>
+              <p>Refrigeration and cold rooms(Marine & Offshore Industries)</p>
+            </div>
+          </li>
+          <li>
+            <div class="descriptor">
+              <div class="iconContainer">
+                <div class="icon electrical"></div>
+              </div>
+              <p>Electrical Services – Wiring & Control Panel</p>
             </div>
           </li>
         </ul>
@@ -98,6 +128,9 @@ import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
       <div class="container">
         <h2>{{(contentProjects | async)?.title}}</h2>
         <p>{{(contentProjects | async)?.content}}</p>
+        <ul class="generalList" *ngFor="let project of contentProjectList | async">
+          <li>{{project}}</li>
+        </ul>
       </div>
     </section>
 
@@ -124,14 +157,15 @@ import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
     <section class="module content">
       <div class="container">
         <h2>{{(contentCareers | async)?.title}}</h2>
-        <p>{{(contentCareers | async)?.content}}</p>
+        <p *ngIf="isHiring">{{(contentCareers | async)?.content}}</p>
+        <p *ngIf="!isHiring">{{(contentCareers | async)?.content_alt}}</p>
       </div>
     </section>
   </div>
   <contact-sheet [toShow]="isFormShown" (change)="onContactSheetEvent($event)"></contact-sheet>
   <div>
     <footer class="footer">
-      <p>Proair Sdn Bhd</p>
+      <p>Proair Sdn Bhd, 2016</p>
     </footer>
   </div>
   `
@@ -153,18 +187,22 @@ export class AppComponent{
   private errorMessage: string;
 
   private logoSource = "./assets/images/proairlogo.png";
+  private imageSource = "./assets/images/";
 
   private isMobileSizedWidth = true;
   private isMenuShown = false;
   private isFormShown = false;
+  private isHiring = false;
 
   private contentHome:any;
   private contentAbout:any;
   private contentProfile:any;
   private contentServices:any;
   private contentProjects:any;
+  private contentProjectList:any;
   private contentContact:any;
   private contentCareers:any;
+  private contentCareerListings:any;
 
   constructor(private af: AngularFire) { }
 
@@ -234,6 +272,9 @@ export class AppComponent{
     this.contentProjects = this.af
                         .database
                         .object('/projects');
+    this.contentProjectList = this.af
+                              .database
+                              .object('/projects/list');
   }
 
   getContactContent()
@@ -248,6 +289,11 @@ export class AppComponent{
     this.contentCareers = this.af
                         .database
                         .object('/careers');
+    this.af.database.object('/careers')
+      .subscribe(r => this.isHiring = r.isHiring);
+    this.contentCareerListings = this.af
+                                .database
+                                .list('/careers/listings');
   }
 
   onContactSheetEvent(toShow)

@@ -1,0 +1,59 @@
+{
+  "about" : {
+    "content" : "PROAIR SDN BHD, a contracting mechanical and electrical company was established in 1990 with the main objective of providing engineering services to the commercial and marine industries. The firm has since successfully completed, in the field of mechanical and electrical engineering works which include hotels, factories, office etc. Included are many local and foreign vessels ( ocean tankers, Offshore Supply Vessels) for the marine Oil and Gas industry as well as specialized jobs for the defense industry.\n\nProair has completed the HVAC package for navy ships and is a registered HVAC and Refrigeration contractor with the following and more:",
+    "partners" : [ {
+      "img" : "https://firebasestorage.googleapis.com/v0/b/proair-web.appspot.com/o/BNS.jpg?alt=media&token=677e7668-e41f-492a-98c6-25e4283dfaef",
+      "link" : "http://www.bnshipyard.com.my/",
+      "name" : "Bousted Naval Shipyard"
+    }, {
+      "img" : "https://firebasestorage.googleapis.com/v0/b/proair-web.appspot.com/o/LSE.png?alt=media&token=0b761249-bbf1-4803-af28-226562d42a53",
+      "link" : "http://www.labuanship.com/",
+      "name" : "Labuan Shipyard & Engineering"
+    }, {
+      "img" : "https://firebasestorage.googleapis.com/v0/b/proair-web.appspot.com/o/MMHE.jpg?alt=media&token=adc0cc16-43e3-494b-9087-593dae915830",
+      "link" : "http://www.mhb.com.my/",
+      "name" : "Malaysian Marine & Heavy Engineering"
+    }, {
+      "img" : "https://firebasestorage.googleapis.com/v0/b/proair-web.appspot.com/o/GOMS.jpg?alt=media&token=b2efdcfa-9da4-407e-b815-def1d1d4641f",
+      "link" : "http://goms.com.my/",
+      "name" : "Grade One Marine & Shipyard"
+    } ],
+    "profile" : {
+      "content" : "If you desire to know more about our company, feel free to download our company's profile which contains more details as well as the information found here by pressing the button below.",
+      "link" : "#"
+    },
+    "title" : "Who We Are"
+  },
+  "careers" : {
+    "content" : "These are the positions we are currently seeking:",
+    "content_alt" : "Unfortunately, we are currently not looking for new hires. Do come back for future openings.",
+    "isHiring" : true,
+    "listings" : [ {
+      "link" : "#",
+      "title" : "Test Title"
+    } ],
+    "title" : "Want To Work Here?"
+  },
+  "contact" : {
+    "content" : "Contact information here. Please get contents from a file",
+    "title" : "How To Contact Us"
+  },
+  "home" : {
+    "content" : "Make it concise",
+    "title" : "We Handle All Your Marine HVAC Needs"
+  },
+  "notifications" : {
+    "email_failure" : "There was an issue in contacting us. If the problem persists. Please email us directly at proair@proairmarine.com. Thank you for your understanding.",
+    "email_recaptcha_failed" : "reCAPTCHA failed. Please try again.",
+    "email_success" : "Thank you for contacting us. We will get back to you as soon as possible."
+  },
+  "projects" : {
+    "content" : "PROAIR SDN BHD has a respectable portfolio of completed projects. These projects are testament to the company’s capabilities of providing top class service to our clientele. Among our notable projects are as follows :",
+    "list" : [ "Teleconso Electronics, Johor Bharu P&E Electronics, Johor Bahru", "Mawar Complex, Johor Bharu", "Niro Ceramic, Johor Bahru", "KIG Glass, Johor Bharu", "Paper Automation, Johor Bharu", "Perstima (retrofit), Johor Bharu", "Bank Negara (retrofit), Johor Bharu", "Bukit Nenas Underground Carpark, Kuala Lumpur", "Weapons Tactical Training Building, TUDM Butterworth", "Aviation School & Electronic Centre, TUDM Butterworth" ],
+    "title" : "Our Track Record"
+  },
+  "services" : {
+    "content" : "The firm is capable of providing engineering contracting services on a turnkey basis, to provide engineering services independently, in one single contract.\n\nThe full scope of services include all phases of mechanical and electrical engineering with details in each discipline as follows:",
+    "title" : "What We Do"
+  }
+}
