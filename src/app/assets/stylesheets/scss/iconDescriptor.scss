@@ -48,10 +48,16 @@
       background-image: url("https://firebasestorage.googleapis.com/v0/b/proair-web.appspot.com/o/electrical.png?alt=media&token=811b49b7-ba2b-44ec-8214-b09fe40e4945");
     }
 
+    &.electrical_alt
+    {
+      //Source: http://www.iconsdb.com/custom-color/speedometer-icon.html
+      background-image: url("https://firebasestorage.googleapis.com/v0/b/proair-web.appspot.com/o/electrical-alt.png?alt=media&token=200539aa-c254-4832-8f71-b1a0b1acb61f");
+    }
+
     &.fire
     {
       //Source: http://www.iconsdb.com/custom-color/fire-icon.html
-      background-image: url("https://firebasestorage.googleapis.com/v0/b/proair-web.appspot.com/o/fire.png?alt=media&token=786e7e97-95b0-4025-be84-ff9826d653e8");
+      background-image: url("https://firebasestorage.googleapis.com/v0/b/proair-web.appspot.com/o/fire.png?alt=media&token=3b91c561-3018-4c45-81a5-b4b3051cce68");
     }
 
     &.hvac

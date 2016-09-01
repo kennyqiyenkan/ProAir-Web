@@ -110,7 +110,7 @@ import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
           <li>
             <div class="descriptor">
               <div class="iconContainer">
-                <div class="icon electrical"></div>
+                <div class="icon electrical_alt"></div>
               </div>
               <p class="description">Electrical Services – Wiring & Control Panel</p>
             </div>

@@ -78,6 +78,8 @@
 			height: auto;
 			max-width: 200px;
 			max-height: 200px;
+			-webkit-filter: none;
+		  filter: none;
 		}
 	}
 }
@@ -87,36 +89,48 @@
                      rgba(20,20,20, .3),
                      rgba(20,20,20, .3)),
                      url($folder-images + "proair-web-home.jpg");
+ // -webkit-filter: grayscale(100%);
+ // filter: grayscale(100%);
 }
 .module.parallaxImage-About {
-  background-image: linear-gradient(
+	background-image: linear-gradient(
                      rgba(20,20,20, .3),
                      rgba(20,20,20, .3)),
                      url($folder-images + "proair-web-about.jpg");
+	 -webkit-filter: grayscale(100%);
+	 filter: grayscale(100%);
 }
 .module.parallaxImage-Services {
   background-image: linear-gradient(
                      rgba(20,20,20, .3),
                      rgba(20,20,20, .3)),
                      url($folder-images + "proair-web-services.jpg");
+  -webkit-filter: grayscale(100%);
+	filter: grayscale(100%);
 }
 .module.parallaxImage-Projects {
   background-image: linear-gradient(
                      rgba(20,20,20, .3),
                      rgba(20,20,20, .3)),
                      url($folder-images + "proair-web-projects.jpg");
+	-webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
 }
 .module.parallaxImage-Contact {
   background-image: linear-gradient(
                      rgba(20,20,20, .3),
                      rgba(20,20,20, .3)),
                      url($folder-images + "proair-web-contact.jpg");
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
 }
 .module.parallaxImage-Careers {
   background-image: linear-gradient(
                      rgba(20,20,20, .3),
                      rgba(20,20,20, .3)),
                      url($folder-images + "proair-web-careers.jpg");
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
 }
 
 @media all and (min-width: 600px) {

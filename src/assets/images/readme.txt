@@ -6,5 +6,5 @@ cold.png 	-> Creative Commons Attribution-NoDerivs 3.0.
 electrical.png -> Creative Commons Attribution-NoDerivs 3.0.
 			- Source: http://www.iconsdb.com/custom-color/speedometer-icon.html
 
-fire.png	-> MIT License
-			- Source: http://www.iconsdb.com/custom-color/fire-icon.html
+fire.png	-> Creative Commons Attribution-NoDerivs 3.0
+			- Source: http://www.iconsdb.com/custom-color/gas-icon.html
