@@ -158,9 +158,9 @@ import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
     <section class="module content">
       <div class="container">
         <h2>{{(contentCareers | async)?.title}}</h2>
-        <p *ngIf="isHiring">{{(contentCareers | async)?.content}}</p>
-        <p *ngIf="!isHiring">{{(contentCareers | async)?.content_alt}}</p>
-        <career-listings *ngIf="isHiring"></career-listings>
+        <p *ngIf="(contentCareers | async)?.isHiring">{{(contentCareers | async)?.content}}</p>
+        <p *ngIf="!(contentCareers | async)?.isHiring">{{(contentCareers | async)?.content_alt}}</p>
+        <career-listings *ngIf="(contentCareers | async)?.isHiring"></career-listings>
       </div>
     </section>
   </div>
@@ -198,7 +198,6 @@ export class AppComponent{
   private isMobileSizedWidth = true;
   private isMenuShown = false;
   private isFormShown = false;
-  private isHiring = false;
 
   private contentHome:any;
   private contentAbout:any;
@@ -295,8 +294,8 @@ export class AppComponent{
     this.contentCareers = this.af
                         .database
                         .object('/careers');
-    this.af.database.object('/careers')
-      .subscribe(r => this.isHiring = r.isHiring);
+    // this.af.database.object('/careers')
+    //   .subscribe(r => this.isHiring = r.isHiring);
     this.contentCareerListings = this.af
                                 .database
                                 .list('/careers/listings');
